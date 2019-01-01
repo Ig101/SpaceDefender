@@ -7,12 +7,14 @@ using GameMaker;
 using Ignitus;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Game.Engine;
 
 namespace Game
 {
     class GameElement:GameElementShell
     {
-        
+        Scene tempScene;
+                
         public GameElement(string fon)
             :base(fon)
         {
@@ -27,7 +29,10 @@ namespace Game
 
         protected override void UpdateAll(GameElementShell gameElement, ControlsState state, ControlsState prevState, float milliseconds)
         {
-
+            if(tempScene!=null)
+            {
+                tempScene.Update(milliseconds);
+            }
         }
 
         protected override void UpdateButtons(GameElementShell gameElement, ControlsState state, ControlsState prevState, float milliseconds)
