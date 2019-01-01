@@ -72,7 +72,7 @@ namespace Game.Engine
         {
             foreach (Ship ship in Parent.Ships)
             {
-                if (ship != owner)
+                if (ship.Team != owner.Team)
                 {
                     foreach (ModulePosition position in ship.Positions)
                     {

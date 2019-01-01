@@ -12,23 +12,17 @@ namespace Game.Engine
         float xShift;
         float yShift;
         Direction direction;
-        bool frame;
-        int frameSize;
 
-        public bool Frame { get { return frame; } }
-        public int FrameSize { get { return frameSize; } }
         public Direction Direction { get { return direction; } }
         public Module TempModule { get { return tempModule; } set { tempModule = value; } }
         public float XShift { get { return xShift; } }
         public float YShift { get { return yShift; } }
 
-        public ModulePosition (float xShift, float yShift, Direction direction, bool frame, int frameSize)
+        public ModulePosition (float xShift, float yShift, Direction direction)
         {
             this.xShift = xShift;
             this.yShift = yShift;
             this.direction = direction;
-            this.frame = frame;
-            this.frameSize = frameSize;
         }
     }
 }

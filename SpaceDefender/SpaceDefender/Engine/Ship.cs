@@ -13,6 +13,9 @@ namespace Game.Engine
         float acceleration;
         float targetSpeed;
 
+        float height;
+        int team;
+
         ModulePosition[] positions;
         Module engineModule;
         Module coreModule;
@@ -20,6 +23,8 @@ namespace Game.Engine
 
         float resources;
 
+        public float Height { get { return height; } }
+        public int Team { get { return team; } }
         public DeathEffect Death { get { return death; } }
         public float Resources { get { return resources; } set { resources = value; } }
         public Module EngineModule { get { return engineModule; } }
@@ -30,9 +35,11 @@ namespace Game.Engine
         public ModulePosition[] Positions { get { return positions; } }
 
         public Ship(Scene parent, float x, float y, float speed, Sprite sprite, ModulePosition[] positions, Module engineModule, int enginePosition, 
-            Module coreModule, int corePosition, DeathEffect death)
+            Module coreModule, int corePosition, DeathEffect death, float height, int team)
     :       base(parent, x, y, sprite)
         {
+            this.height = height;
+            this.team = team;
             this.death = death;
             this.speed = speed;
             this.positions = positions;
