@@ -18,6 +18,7 @@ namespace Game.Engine
         public override void Update(float milliseconds)
         {
             this.Y += Parent.PlayerShip.Speed;
+            if (this.Y > Parent.PlayerShip.Y + 3000) this.IsAlive = false;
         }
     }
 }

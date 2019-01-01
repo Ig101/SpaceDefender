@@ -12,6 +12,7 @@ namespace Game.Engine
     delegate bool SceneAction(Scene scene, Module owner);
     delegate bool TargetSceneAction(Scene scene, Module target, Missle owner);
     delegate void MoveRule(Scene scene, Missle obj, float milliseconds);
+    delegate void DeathEffect(Scene scene, float x, float y);
 
     class Misc
     {

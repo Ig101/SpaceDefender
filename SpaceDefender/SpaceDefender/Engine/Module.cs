@@ -12,6 +12,7 @@ namespace Game.Engine
         Ship parent;
         int tempPosition;
 
+        DeathEffect death;
         bool isAlive;
         bool repairs;
         bool working;
@@ -30,6 +31,7 @@ namespace Game.Engine
         float width;
         float height;
 
+        public DeathEffect Death { get { return death; } }
         public int TempPosition { get { return tempPosition; } set { tempPosition = value; } }
         public float CooldownTimer { get { return cooldownTimer; } set { cooldownTimer = value; } }
         public Ship Parent { get { return parent; } }
@@ -47,21 +49,21 @@ namespace Game.Engine
         public int MaxHealth { get { return maxHealth; } }
         public int Cost { get { return cost; } }
 
-        public Direction direction
+        public Direction Direction
         {
             get
             {
                 return parent.Positions[tempPosition].Direction;
             }
         }
-        public float absoluteX
+        public float AbsoluteX
         {
             get
             {
                 return parent.X + parent.Positions[tempPosition].XShift;
             }
         }
-        public float absoluteY
+        public float AbsoluteY
         {
             get
             {
@@ -70,8 +72,9 @@ namespace Game.Engine
         }
 
         public Module(Ship parent, float width, float height, float cooldown, float actionCost, SceneAction action, float[] defence, Sprite sprite,
-            int maxHealth, int cost)
+            int maxHealth, int cost, DeathEffect death)
         {
+            this.death = death;
             this.parent = parent;
             this.width = width;
             this.height = height;

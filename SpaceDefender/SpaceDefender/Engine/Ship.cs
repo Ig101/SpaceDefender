@@ -16,9 +16,11 @@ namespace Game.Engine
         ModulePosition[] positions;
         Module engineModule;
         Module coreModule;
+        DeathEffect death;
 
         float resources;
 
+        public DeathEffect Death { get { return death; } }
         public float Resources { get { return resources; } set { resources = value; } }
         public Module EngineModule { get { return engineModule; } }
         public Module CoreModule { get { return coreModule; } }
@@ -28,9 +30,10 @@ namespace Game.Engine
         public ModulePosition[] Positions { get { return positions; } }
 
         public Ship(Scene parent, float x, float y, float speed, Sprite sprite, ModulePosition[] positions, Module engineModule, int enginePosition, 
-            Module coreModule, int corePosition)
+            Module coreModule, int corePosition, DeathEffect death)
     :       base(parent, x, y, sprite)
         {
+            this.death = death;
             this.speed = speed;
             this.positions = positions;
             this.coreModule = coreModule;
@@ -41,12 +44,17 @@ namespace Game.Engine
 
         public override void Update(float milliseconds)
         {
-            if(targetSpeed>speed)
+            if (!engineModule.Working)
+            {
+                targetSpeed = 0;
+                acceleration = 40;
+            }
+            if (targetSpeed > speed)
             {
                 speed += acceleration;
                 if (speed > targetSpeed) speed = targetSpeed;
             }
-            else if(targetSpeed<speed)
+            else if (targetSpeed < speed)
             {
                 speed -= acceleration;
                 if (speed < targetSpeed) speed = targetSpeed;
@@ -55,7 +63,15 @@ namespace Game.Engine
             this.Y -= absoluteSpeed * milliseconds / 1000;
             foreach(ModulePosition pos in positions)
             {
-                if (pos.TempModule != null) pos.TempModule.Update(milliseconds);
+                if (pos.TempModule != null)
+                {
+                    pos.TempModule.Update(milliseconds);
+                    if(!pos.TempModule.IsAlive)
+                    {
+                        pos.TempModule.Death?.Invoke(Parent, pos.TempModule.AbsoluteX, pos.TempModule.AbsoluteY);
+                        pos.TempModule = null;
+                    }
+                }
             }
             if (!coreModule.IsAlive) this.IsAlive = false;
             base.Update(milliseconds);

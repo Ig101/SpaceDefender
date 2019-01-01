@@ -56,6 +56,9 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Catalogues\Catalogue.cs" />
+    <Compile Include="Catalogues\Delegates.cs" />
+    <Compile Include="Catalogues\ShipNative.cs" />
     <Compile Include="Engine\GameObject.cs" />
     <Compile Include="Engine\Misc.cs" />
     <Compile Include="Engine\Missle.cs" />

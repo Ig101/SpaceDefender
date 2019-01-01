@@ -8,6 +8,7 @@ namespace Game.Engine
 {
     class Missle : GameObject
     {
+        DeathEffect death;
         Ship owner;
         float angle;
         MoveRule moveRule;
@@ -17,6 +18,7 @@ namespace Game.Engine
         float lifeTime;
         float speedOnStart;
 
+        public DeathEffect Death { get { return death; } }
         public float SpeedOnStart { get { return speedOnStart; } }
         public Ship Owner { get { return owner; } set { owner= value; } }
         public float LifeTime { get { return lifeTime; } set { lifeTime = value; } }
@@ -31,9 +33,10 @@ namespace Game.Engine
         }
 
         public Missle (Scene parent, float x, float y, Sprite sprite, float lifeTime, float speed, float angle, MoveRule rule, 
-            TargetSceneAction action, float strength, Ship owner)
+            TargetSceneAction action, float strength, Ship owner, DeathEffect death)
             :base (parent, x,y, sprite)
         {
+            this.death = death;
             this.speedOnStart = owner.Speed;
             this.owner = owner;
             this.lifeTime = lifeTime;
@@ -74,10 +77,10 @@ namespace Game.Engine
                     foreach (ModulePosition position in ship.Positions)
                     {
                         if (position.TempModule != null 
-                            && this.X >= (position.TempModule.absoluteX - position.TempModule.Width / 2) 
-                            && this.X <= (position.TempModule.absoluteX + position.TempModule.Width / 2)
-                            && this.Y >= (position.TempModule.absoluteY - position.TempModule.Height / 2)
-                            && this.Y <= (position.TempModule.absoluteY + position.TempModule.Height / 2))
+                            && this.X >= (position.TempModule.AbsoluteX - position.TempModule.Width / 2) 
+                            && this.X <= (position.TempModule.AbsoluteX + position.TempModule.Width / 2)
+                            && this.Y >= (position.TempModule.AbsoluteY - position.TempModule.Height / 2)
+                            && this.Y <= (position.TempModule.AbsoluteY + position.TempModule.Height / 2))
                         {
                             return position.TempModule;
                         }
