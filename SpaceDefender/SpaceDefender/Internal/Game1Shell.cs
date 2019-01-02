@@ -5,6 +5,8 @@ using Ignitus;
 using System.IO;
 using System;
 using System.Text;
+using Game;
+using Game.Catalogues;
 
 namespace GameMaker
 {
@@ -183,10 +185,28 @@ namespace GameMaker
 
         protected override void LoadProfile()
         {
-            HudElement[] elements = new HudElement[gameElement != null ? 2 : 1];
+            HudElement[] elements = new HudElement[13];
             elements[0] = gameElement;
-            elements[gameElement == null ? 0 : 1] = new GameButtonElement("pause", 50, 50, 150, 150, c_color, c_selected_color, c_pressed_color,
+            elements[1] = new GameButtonElement("pause", 50, 50, 150, 150, c_color, c_selected_color, c_pressed_color,
                 "pause_button", null, null, new Rectangle(0, 0, 512, 512), MenuActions.PauseGame, gameElement);
+            elements[2] = new GameSpriteElement("resources", 2210, 50, 300, 150,c_color, "resources", new Rectangle(0, 0, 1024, 512), gameElement);
+            elements[3] = new GameSpriteElement("actionPanel", 730, 1425, 1100, 170, c_color, "actionPanel", new Rectangle(0, 0, 3072, 512), gameElement);
+            elements[4] = new GameResourcesLabelElement("resources", 2305, 75, 200, "99", false, false, Color.White, "largeFont", gameElement);
+            elements[5] = new GameSkillButtonElement("blaster", 766, 1446, 128, 128, Color.White, new Color(230,230,230), new Color(0, 0, 0, 255),
+                "blaster", "blaster", "blaster", new Rectangle(0, 0, 64, 64), (GameElement)gameElement,1, Delegates.AssembleBlasterModule);
+            elements[6] = new GameSkillButtonElement("actionPanel", 916, 1446, 128, 128, Color.White, new Color(230, 230, 230), new Color(0, 0, 0, 255),
+                "rocket", "rocket", "rocket", new Rectangle(0, 0, 64, 64), (GameElement)gameElement,1, Delegates.AssembleRocketModule);
+            elements[7] = new GameSkillButtonElement("actionPanel", 1066, 1446, 128, 128, Color.White, new Color(230, 230, 230), new Color(0, 0, 0, 255),
+                "annihilator", "annihilator", "annihilator", new Rectangle(0, 0, 64, 64), (GameElement)gameElement,1, Delegates.AssembleAnniModule);
+            elements[8] = new GameSkillButtonElement("actionPanel", 1216, 1446, 128, 128, Color.White, new Color(230, 230, 230), new Color(0, 0, 0, 255),
+                "generator", "generator", "generator", new Rectangle(0, 0, 64, 64), (GameElement)gameElement,1, Delegates.AssembleGeneratorModule);
+            elements[9] = new GameSkillButtonElement("actionPanel", 1366, 1446, 128, 128, Color.White, new Color(230, 230, 230), new Color(0, 0, 0, 255),
+                "armor", "armor", "armor", new Rectangle(0, 0, 64, 64), (GameElement)gameElement,1, Delegates.AssembleArmorModule);
+            elements[10] = new GameSkillButtonElement("actionPanel", 1516, 1446, 128, 128, Color.White, new Color(230, 230, 230), new Color(0, 0, 0, 255),
+                "shield", "shield", "shield", new Rectangle(0, 0, 64, 64), (GameElement)gameElement,1, Delegates.AssembleShieldModule);
+            elements[11] = new GameSkillButtonElement("actionPanel", 1666, 1446, 128, 128, Color.White, new Color(230, 230, 230), new Color(0, 0, 0, 255),
+                "demolish", "demolish", "emptyModule", new Rectangle(0, 0, 64, 64), (GameElement)gameElement,0, Delegates.DemolishModule);
+            elements[12] = new GameOverlayElement("skill_overlay", 128, 128, new Rectangle(0, 0, 64, 64), (GameElement)gameElement);
             modes.Add("game_mode", new Mode(null, elements, 5, "game", Mode.BlackGlow, null, false));
             if (mainElements != null)
             {
@@ -321,6 +341,7 @@ namespace GameMaker
             game.LoadEngineContent();
             game.LoadMainInformation();
             game.LoadMainContent();
+            game.LoadTexturePack("game");
             game.GameElement.SetFon((Texture2D)game.ContentTex[game.GameElement.FonName]);
         }
         #endregion

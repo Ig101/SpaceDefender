@@ -17,53 +17,58 @@ namespace Game.Engine
         int team;
 
         ModulePosition[] positions;
-        Module engineModule;
-        Module coreModule;
+        int enginePosition;
+        int corePosition;
         DeathEffect death;
 
         float resources;
+        float resourceGeneration;
 
+        public float ResourceGeneration { get { return resourceGeneration; } }
+        public int EnginePosition { get { return enginePosition; } }
+        public int CorePosition { get { return corePosition; } }
         public float Height { get { return height; } }
         public int Team { get { return team; } }
         public DeathEffect Death { get { return death; } }
-        public float Resources { get { return resources; } set { resources = value; } }
-        public Module EngineModule { get { return engineModule; } }
-        public Module CoreModule { get { return coreModule; } }
+        public float Resources { get { return resources; } set { resources = value>99.9f?99.9f:value; } }
+        public Module EngineModule { get { return positions[enginePosition].TempModule; } }
+        public Module CoreModule { get { return positions[corePosition].TempModule; } }
         public float Speed { get { return speed; } }
         public float TargetSpeed { get { return targetSpeed; } set { targetSpeed = value; } }
         public float Acceleration { get { return acceleration; } set { acceleration = value; } }
         public ModulePosition[] Positions { get { return positions; } }
 
-        public Ship(Scene parent, float x, float y, float speed, Sprite sprite, ModulePosition[] positions, Module engineModule, int enginePosition, 
-            Module coreModule, int corePosition, DeathEffect death, float height, int team)
+        public Ship(Scene parent, float x, float y, float speed, Sprite sprite, ModulePosition[] positions, int enginePosition, 
+            int corePosition, DeathEffect death, float height, int team, int resources, float resourceGeneration)
     :       base(parent, x, y, sprite)
         {
+            this.resourceGeneration = resourceGeneration;
+            this.resources = resources;
             this.height = height;
             this.team = team;
             this.death = death;
             this.speed = speed;
             this.positions = positions;
-            this.coreModule = coreModule;
-            this.engineModule = engineModule;
-            AssembleModule(engineModule, enginePosition);
-            AssembleModule(coreModule, corePosition);
+            this.corePosition = corePosition;
+            this.enginePosition = enginePosition;
         }
 
         public override void Update(float milliseconds)
         {
-            if (!engineModule.Working)
+            if (!EngineModule.Working)
             {
                 targetSpeed = 0;
                 acceleration = 40;
             }
+            Resources += resourceGeneration * milliseconds/1000;
             if (targetSpeed > speed)
             {
-                speed += acceleration;
+                speed += acceleration * milliseconds/1000;
                 if (speed > targetSpeed) speed = targetSpeed;
             }
             else if (targetSpeed < speed)
             {
-                speed -= acceleration;
+                speed -= acceleration * milliseconds/1000;
                 if (speed < targetSpeed) speed = targetSpeed;
             }
             float absoluteSpeed = this.Speed - Parent.PlayerShip.Speed;
@@ -80,7 +85,7 @@ namespace Game.Engine
                     }
                 }
             }
-            if (!coreModule.IsAlive) this.IsAlive = false;
+            if (!CoreModule.Working) this.IsAlive = false;
             base.Update(milliseconds);
         }
 

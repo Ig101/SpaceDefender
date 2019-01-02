@@ -31,6 +31,9 @@ namespace Game.Engine
         float width;
         float height;
 
+        float damageTimer;
+
+        public float DamageTimer { get { return damageTimer; } }
         public DeathEffect Death { get { return death; } }
         public int TempPosition { get { return tempPosition; } set { tempPosition = value; } }
         public float CooldownTimer { get { return cooldownTimer; } set { cooldownTimer = value; } }
@@ -72,8 +75,11 @@ namespace Game.Engine
         }
 
         public Module(Ship parent, float width, float height, float cooldown, float actionCost, SceneAction action, float[] defence, Sprite sprite,
-            int maxHealth, int cost, DeathEffect death)
+            int maxHealth, int cost, DeathEffect death, bool repairs)
         {
+            this.working = true;
+            this.isAlive = true;
+            this.repairs = repairs;
             this.death = death;
             this.parent = parent;
             this.width = width;
@@ -86,23 +92,26 @@ namespace Game.Engine
             this.maxHealth = maxHealth;
             this.health = maxHealth;
             this.cost = cost;
-            this.cooldownTimer = cooldown * 5;
+            this.cooldownTimer = cooldown;
         }
 
         public void Update (float milliseconds)
         {
-            cooldownTimer -= milliseconds;
-            if(cooldownTimer<=0)
+            if (Action != null)
             {
-                if (cost > parent.Resources)
+                cooldownTimer -= milliseconds/1000;
+                if (cooldownTimer <= 0)
                 {
-                    cooldownTimer = 0;
-                }
-                else
-                {
-                    parent.Resources -= cost;
-                    cooldownTimer = cooldown;
-                    Action(parent.Parent, this);
+                    if (actionCost > parent.Resources)
+                    {
+                        cooldownTimer = 0;
+                    }
+                    else
+                    {
+                        parent.Resources -= actionCost;
+                        cooldownTimer = cooldown;
+                        Action(parent.Parent, this);
+                    }
                 }
             }
             if(repairs && !working)
@@ -114,11 +123,17 @@ namespace Game.Engine
                     working = true;
                 }
             }
+            if(IsAlive) sprite.Animation = (int)((1-health / maxHealth) * sprite.MaxAnimation);
+            if (damageTimer > 0)
+            {
+                damageTimer -= milliseconds;
+            }
         }
 
         public bool Damage (float amount, DamageType type)
         {
             this.health -= amount * defence[(int)type];
+            damageTimer = 100;
             if(health <= 0)
             {
                 if(!repairs)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,11 @@ namespace Game.Catalogues
 {
     class Catalogue
     {
-        List<ShipNative> shipNatives = new List<ShipNative>();
+        Hashtable shipNatives = new Hashtable();
+        Hashtable moduleNatives = new Hashtable();
 
-        public List<ShipNative> ShipNatives { get { return shipNatives; } }
+        public Hashtable ShipNatives { get { return shipNatives; } }
+        public Hashtable ModuleNatives { get { return moduleNatives; } }
 
         public Catalogue()
         {

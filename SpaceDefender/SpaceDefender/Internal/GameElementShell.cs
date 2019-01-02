@@ -162,7 +162,7 @@ namespace GameMaker
         {
             screenshotDone = false;
             screenshotNeed = false;
-            screenshotShow = true;
+            screenshotShow = false;
             buttonDirection = true;
         }
 

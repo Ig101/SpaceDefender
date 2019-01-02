@@ -69,6 +69,10 @@
     <Compile Include="Engine\SpecEffect.cs" />
     <Compile Include="Engine\Sprite.cs" />
     <Compile Include="Engine\Star.cs" />
+    <Compile Include="Internal\GameSkillButtonElement.cs" />
+    <Compile Include="Internal\GameLabelElement.cs" />
+    <Compile Include="Internal\GameOverlayElement.cs" />
+    <Compile Include="Internal\GameSpriteElement.cs" />
     <Compile Include="Templates\ConstsTemplate.cs" />
     <Compile Include="Game\Consts.cs" />
     <Compile Include="Templates\GameElementTemplate.cs" />
@@ -82,7 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Ignitus">
-      <HintPath>..\IgnitusProducts\bin\Debug\Ignitus.dll</HintPath>
+      <HintPath>..\..\..\Ignitus\IgnitusProducts\bin\Debug\Ignitus.dll</HintPath>
     </Reference>
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>

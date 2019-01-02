@@ -50,15 +50,15 @@ namespace Game.Engine
         public override void Update(float milliseconds)
         {
             MoveRule(Parent, this, milliseconds);
-            Module target = CollisionCheck();
-            if (target != null)
+            List<Module> targets = CollisionCheck();
+            foreach (Module target in targets)
             {
-                ActionOnCollision(Parent, target, this);
-                this.IsAlive = false;
+                    ActionOnCollision(Parent, target, this);
+                    this.IsAlive = false;
             }
-            else
+            if (this.IsAlive)
             {
-                this.lifeTime -= milliseconds;
+                this.lifeTime -= milliseconds/1000;
                 if (lifeTime <= 0)
                 {
                     ActionOnCollision(Parent, null, this);
@@ -68,8 +68,9 @@ namespace Game.Engine
             base.Update(milliseconds);
         }
 
-        public Module CollisionCheck ()
+        public List<Module> CollisionCheck ()
         {
+            List<Module> targets = new List<Module>();
             foreach (Ship ship in Parent.Ships)
             {
                 if (ship.Team != owner.Team)
@@ -77,17 +78,17 @@ namespace Game.Engine
                     foreach (ModulePosition position in ship.Positions)
                     {
                         if (position.TempModule != null 
-                            && this.X >= (position.TempModule.AbsoluteX - position.TempModule.Width / 2) 
-                            && this.X <= (position.TempModule.AbsoluteX + position.TempModule.Width / 2)
-                            && this.Y >= (position.TempModule.AbsoluteY - position.TempModule.Height / 2)
-                            && this.Y <= (position.TempModule.AbsoluteY + position.TempModule.Height / 2))
+                            && this.X >= (position.TempModule.AbsoluteX - position.TempModule.Width / 2 - 3) 
+                            && this.X <= (position.TempModule.AbsoluteX + position.TempModule.Width / 2 + 3)
+                            && this.Y >= (position.TempModule.AbsoluteY - position.TempModule.Height / 2 - 3)
+                            && this.Y <= (position.TempModule.AbsoluteY + position.TempModule.Height / 2 + 3))
                         {
-                            return position.TempModule;
+                            targets.Add(position.TempModule);
                         }
                     }
                 }
             }
-            return null;
+            return targets;
         }
     }
 }
