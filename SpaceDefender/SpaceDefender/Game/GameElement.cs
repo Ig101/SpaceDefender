@@ -156,6 +156,14 @@ namespace Game
                     }
                     else
                     {
+                        foreach (LevelEnemySpawn spawn in tempLevelManager.TempLevel.Spawns)
+                        {
+                            if (spawn.Enemy != null && !spawn.Enemy.IsAlive && !spawn.Billed)
+                            {
+                                tempLevelManager.KilledCount++;
+                                spawn.Billed = true;
+                            }
+                        }
                         ((LabelElement)((Mode)game.Modes["game_mode_victory"]).Elements[2]).Text = game.Id2Str("killed") + " " + tempLevelManager.KilledCount;
                         PrepareFrom(game, "game_mode_victory");
                     }

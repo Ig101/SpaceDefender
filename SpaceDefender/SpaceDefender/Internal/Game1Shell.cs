@@ -233,9 +233,9 @@ namespace GameMaker
                 MenuActions.SoundVolume, 130, false, true, 0.13f, false, false);
             ((SlideElement)elements[elements.Length - 3]).Position = volume / 100f;
             elements[elements.Length - 4] = new LabelElement("fullscreen", 205 / 2, 1450 / 2, ingameScreenSize.X - 400 / 2, "fullscreen_message", true, false, c_color, "smallFont", false, false);
-            elements[elements.Length - 5] = new LabelElement("score", 195 / 2, 570 / 2, ingameScreenSize.X - 400 / 2, Id2Str("score") + " " + score.ToString(), false, false, c_color, "mediumFont", false, false);
-            elements[elements.Length - 6] = new LabelElement("max_score", 195 / 2, 670 / 2, ingameScreenSize.X - 400 / 2, Id2Str("top_result") + " " + maxScore.ToString(), false, false, c_color, "mediumFont", false, false);
-            elements[elements.Length - 7] = new LabelElement("volume", 320 / 2, 80 / 2, 1000 / 2, "volume", true, true, c_color, "smallFont", false, false);
+            elements[elements.Length - 5] = new LabelElement("score", 195 / 2, 570 / 2, ingameScreenSize.X - 400 / 2, "", false, false, c_color, "mediumFont", false, false);
+            elements[elements.Length - 6] = new LabelElement("max_score", 195 / 2, 670 / 2, ingameScreenSize.X - 400 / 2, "", false, false, c_color, "mediumFont", false, false);
+            elements[elements.Length - 7] = new LabelElement("volume", 320 / 2, 70 / 2, 1000 / 2, "volume", true, true, c_color, "smallFont", false, false);
             //
             modes.Add("main", new Mode((Mode)modes["game_mode"], elements, 3.5f, "main", FromAbove, null, false));
 
