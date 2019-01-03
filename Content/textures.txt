@@ -17,3 +17,4 @@ actionPanel;menu/actionPanel;game
 resources;menu/resources;game
 demolish;game/demolish;game
 emptyModule;game/emptyModule;game
+motherFire;game/motherFire;game

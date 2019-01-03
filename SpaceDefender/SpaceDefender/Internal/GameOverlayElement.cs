@@ -52,8 +52,8 @@ namespace GameMaker
                             if (gameElement.TempScene.PlayerShip.Positions[i].TempModule != gameElement.TempScene.PlayerShip.EngineModule &&
                                 gameElement.TempScene.PlayerShip.Positions[i].TempModule != gameElement.TempScene.PlayerShip.CoreModule)
                             {
-                                float realX = gameElement.TempScene.PlayerShip.Positions[i].XShift + gameElement.TempScene.PlayerShip.X + 1280;
-                                float realY = gameElement.TempScene.PlayerShip.Positions[i].YShift + gameElement.TempScene.PlayerShip.Y + 800;
+                                float realX = gameElement.TempScene.PlayerShip.Positions[i].XShift + gameElement.TempScene.PlayerShip.X + 640;
+                                float realY = gameElement.TempScene.PlayerShip.Positions[i].YShift + gameElement.TempScene.PlayerShip.Y + 400;
                                 if (realX >= state.MousePosition.X - Width / 2 - 1 &&
                                     realX <= state.MousePosition.X + Width / 2 + 1 &&
                                     realY >= state.MousePosition.Y - Height / 2 - 1 &&
@@ -67,8 +67,8 @@ namespace GameMaker
                         this.SpriteName = tempSkillButton.PressedSpriteName;
                         if (tempPosition != null)
                         {
-                            float realX = gameElement.TempScene.PlayerShip.Positions[tempPosition.Value].XShift + gameElement.TempScene.PlayerShip.X + 1280;
-                            float realY = gameElement.TempScene.PlayerShip.Positions[tempPosition.Value].YShift + gameElement.TempScene.PlayerShip.Y + 800;
+                            float realX = gameElement.TempScene.PlayerShip.Positions[tempPosition.Value].XShift + gameElement.TempScene.PlayerShip.X + 640;
+                            float realY = gameElement.TempScene.PlayerShip.Positions[tempPosition.Value].YShift + gameElement.TempScene.PlayerShip.Y + 400;
                             this.X = (int)realX - Width / 2;
                             this.Y = (int)realY - Width / 2;
                             this.Color = Color.Green;

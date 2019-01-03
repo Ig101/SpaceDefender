@@ -12,6 +12,7 @@ namespace Game.Engine
         float speed;
         float acceleration;
         float targetSpeed;
+        float defaultSpeed;
 
         float height;
         int team;
@@ -23,7 +24,14 @@ namespace Game.Engine
 
         float resources;
         float resourceGeneration;
-
+        Sprite engineFire;
+        float engineX;
+        float engineY;
+        
+        public Sprite EngineFire { get { return engineFire; } }
+        public float EngineX { get { return engineX; } }
+        public float EngineY { get { return engineY; } }
+        public float DefaultSpeed { get { return defaultSpeed; } }
         public float ResourceGeneration { get { return resourceGeneration; } }
         public int EnginePosition { get { return enginePosition; } }
         public int CorePosition { get { return corePosition; } }
@@ -39,15 +47,19 @@ namespace Game.Engine
         public ModulePosition[] Positions { get { return positions; } }
 
         public Ship(Scene parent, float x, float y, float speed, Sprite sprite, ModulePosition[] positions, int enginePosition, 
-            int corePosition, DeathEffect death, float height, int team, int resources, float resourceGeneration)
+            int corePosition, DeathEffect death, float height, int team, int resources, float resourceGeneration, Sprite engineFire, float engineX, float engineY)
     :       base(parent, x, y, sprite)
         {
+            this.engineFire = engineFire;
+            this.engineX = engineX;
+            this.engineY = engineY;
             this.resourceGeneration = resourceGeneration;
             this.resources = resources;
             this.height = height;
             this.team = team;
             this.death = death;
             this.speed = speed;
+            this.defaultSpeed = speed;
             this.positions = positions;
             this.corePosition = corePosition;
             this.enginePosition = enginePosition;
@@ -55,10 +67,15 @@ namespace Game.Engine
 
         public override void Update(float milliseconds)
         {
-            if (!EngineModule.Working)
+            if (EngineModule==null || !EngineModule.Working)
             {
                 targetSpeed = 0;
-                acceleration = 40;
+                acceleration = 400;
+            }
+            else
+            {
+                targetSpeed = defaultSpeed;
+                acceleration = 1000;
             }
             Resources += resourceGeneration * milliseconds/1000;
             if (targetSpeed > speed)

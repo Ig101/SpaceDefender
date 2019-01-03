@@ -38,7 +38,7 @@ namespace GameMaker
         public Game1Shell(int loadingTime, string[] texturesOnStart, HudElement[] loadingScreenElements, HudElement[] mainElements,
             string profileFilePath,
             SetProfileString methodForSaveProfile, GetProfileString methodForLoadProfile, GameElementShell gameElement)
-            :base(new Vector2(-16, -16), 32, MathHelper.Pi + MathHelper.PiOver4, new Point(2560, 1600))
+            :base(new Vector2(-16, -16), 32, MathHelper.Pi + MathHelper.PiOver4, new Point(1280, 800))
         {
             this.gameElement = gameElement;
             this.loadingTime = loadingTime;
@@ -69,7 +69,7 @@ namespace GameMaker
                 tempLoadingElements = new HudElement[1];
             }
             tempLoadingElements[tempLoadingElements.Length - 1] = 
-                new LoadingWheelElement("loading", 2400, 1460, 200, 200, "loadingWheel", loadingTime, true, Color.White, 1,
+                new LoadingWheelElement("loading", 1200, 730, 100, 100, "loadingWheel", loadingTime, true, Color.White, 1,
                     Game1Shell.PreLoadingMethodBeforeStart, Game1Shell.PreLoadingMethodBeforeStart, false, false);
             modes.Add("loadingScreen", new Mode(null, tempLoadingElements, 5, "loadingScreen", Mode.BlackGlow, null, false));
             GoToLoadingMode(new object[] { this }, PreLoadingMethodBeforeStart, LoadingMethodBeforeStart, "main");
@@ -187,27 +187,29 @@ namespace GameMaker
         {
             HudElement[] elements = new HudElement[13];
             elements[0] = gameElement;
-            elements[1] = new GameButtonElement("pause", 50, 50, 150, 150, c_color, c_selected_color, c_pressed_color,
+            elements[1] = new GameButtonElement("pause", 25, 25, 75, 75, c_color, c_selected_color, c_pressed_color,
                 "pause_button", null, null, new Rectangle(0, 0, 512, 512), MenuActions.PauseGame, gameElement);
-            elements[2] = new GameSpriteElement("resources", 2210, 50, 300, 150,c_color, "resources", new Rectangle(0, 0, 1024, 512), gameElement);
-            elements[3] = new GameSpriteElement("actionPanel", 730, 1425, 1100, 170, c_color, "actionPanel", new Rectangle(0, 0, 3072, 512), gameElement);
-            elements[4] = new GameResourcesLabelElement("resources", 2305, 75, 200, "99", false, false, Color.White, "largeFont", gameElement);
-            elements[5] = new GameSkillButtonElement("blaster", 766, 1446, 128, 128, Color.White, new Color(230,230,230), new Color(0, 0, 0, 255),
+            elements[2] = new GameSpriteElement("resources", 1105, 25, 150, 75,c_color, "resources", new Rectangle(0, 0, 1024, 512), gameElement);
+            elements[3] = new GameSpriteElement("actionPanel", 365, 713, 550, 85, c_color, "actionPanel", new Rectangle(0, 0, 3072, 512), gameElement);
+            elements[4] = new GameResourcesLabelElement("resources", 1153, 38, 100, "99", false, false, Color.White, "largeFont", gameElement);
+            elements[5] = new GameSkillButtonElement("blaster", 383, 1446/2, 128/2, 128/2, Color.White, new Color(230,230,230), new Color(0, 0, 0, 255),
                 "blaster", "blaster", "blaster", new Rectangle(0, 0, 64, 64), (GameElement)gameElement,1, Delegates.AssembleBlasterModule);
-            elements[6] = new GameSkillButtonElement("actionPanel", 916, 1446, 128, 128, Color.White, new Color(230, 230, 230), new Color(0, 0, 0, 255),
+            elements[6] = new GameSkillButtonElement("actionPanel", 916/2, 1446/2, 128/2, 128/2, Color.White, new Color(230, 230, 230), new Color(0, 0, 0, 255),
                 "rocket", "rocket", "rocket", new Rectangle(0, 0, 64, 64), (GameElement)gameElement,1, Delegates.AssembleRocketModule);
-            elements[7] = new GameSkillButtonElement("actionPanel", 1066, 1446, 128, 128, Color.White, new Color(230, 230, 230), new Color(0, 0, 0, 255),
+            elements[7] = new GameSkillButtonElement("actionPanel", 1066/2, 1446/2, 128/2, 128/2, Color.White, new Color(230, 230, 230), new Color(0, 0, 0, 255),
                 "annihilator", "annihilator", "annihilator", new Rectangle(0, 0, 64, 64), (GameElement)gameElement,1, Delegates.AssembleAnniModule);
-            elements[8] = new GameSkillButtonElement("actionPanel", 1216, 1446, 128, 128, Color.White, new Color(230, 230, 230), new Color(0, 0, 0, 255),
+            elements[8] = new GameSkillButtonElement("actionPanel", 1216/2, 1446/2, 128/2, 128/2, Color.White, new Color(230, 230, 230), new Color(0, 0, 0, 255),
                 "generator", "generator", "generator", new Rectangle(0, 0, 64, 64), (GameElement)gameElement,1, Delegates.AssembleGeneratorModule);
-            elements[9] = new GameSkillButtonElement("actionPanel", 1366, 1446, 128, 128, Color.White, new Color(230, 230, 230), new Color(0, 0, 0, 255),
+            elements[9] = new GameSkillButtonElement("actionPanel", 1366/2, 1446/2, 128/2, 128/2, Color.White, new Color(230, 230, 230), new Color(0, 0, 0, 255),
                 "armor", "armor", "armor", new Rectangle(0, 0, 64, 64), (GameElement)gameElement,1, Delegates.AssembleArmorModule);
-            elements[10] = new GameSkillButtonElement("actionPanel", 1516, 1446, 128, 128, Color.White, new Color(230, 230, 230), new Color(0, 0, 0, 255),
+            elements[10] = new GameSkillButtonElement("actionPanel", 1516/2, 1446/2, 128/2, 128/2, Color.White, new Color(230, 230, 230), new Color(0, 0, 0, 255),
                 "shield", "shield", "shield", new Rectangle(0, 0, 64, 64), (GameElement)gameElement,1, Delegates.AssembleShieldModule);
-            elements[11] = new GameSkillButtonElement("actionPanel", 1666, 1446, 128, 128, Color.White, new Color(230, 230, 230), new Color(0, 0, 0, 255),
+            elements[11] = new GameSkillButtonElement("actionPanel", 1666/2, 1446/2, 128/2, 128/2, Color.White, new Color(230, 230, 230), new Color(0, 0, 0, 255),
                 "demolish", "demolish", "emptyModule", new Rectangle(0, 0, 64, 64), (GameElement)gameElement,0, Delegates.DemolishModule);
-            elements[12] = new GameOverlayElement("skill_overlay", 128, 128, new Rectangle(0, 0, 64, 64), (GameElement)gameElement);
+            elements[12] = new GameOverlayElement("skill_overlay", 128 / 2, 128 / 2, new Rectangle(0, 0, 64, 64), (GameElement)gameElement);
             modes.Add("game_mode", new Mode(null, elements, 5, "game", Mode.BlackGlow, null, false));
+            mainElements = new HudElement[1];
+            mainElements[0] = new SpriteElement("shade", 490, 150, 300, 600, "play_shade", new Color(0, 0, 0, 150), new Rectangle(0, 0, 512, 1024), false, false);
             if (mainElements != null)
             {
                 elements = new HudElement[mainElements.Length + 7];
@@ -221,35 +223,36 @@ namespace GameMaker
                 elements = new HudElement[7];
             }
             //DownloadAdditiveElements
-            elements[elements.Length - 1] = new SpriteButtonElement("play", ingameScreenSize.X / 2 - 200, ingameScreenSize.Y / 2, 400, 400, "", "", c_color,
+            elements[elements.Length - 1] = new SpriteButtonElement("play", ingameScreenSize.X / 2 - 200 / 2, ingameScreenSize.Y / 2, 400 / 2, 400 / 2, "", "", c_color,
                 c_selected_color,c_pressed_color,c_color, "play_button", null, null, new Rectangle(0, 0, 512, 512),
                 MenuActions.StartGame, false, false);
-            elements[elements.Length - 2] = new SpriteButtonElement("exit", 50, 50, 150, 150, null, null, c_color,
+            elements[elements.Length - 2] = new SpriteButtonElement("exit", 50 / 2, 50 / 2, 150 / 2, 150 / 2, null, null, c_color,
                 c_selected_color, c_pressed_color, c_color, "exit_button", null, null, new Rectangle(0, 0, 512, 512),
                 MenuActions.Exit, false, false);
-            elements[elements.Length - 3] = new SlideElement("soundReg", 550, 75, 400, 50, "slider", c_color, c_selected_color, c_pressed_color,
+            elements[elements.Length - 3] = new SlideElement("soundReg", 550 / 2, 75 / 2, 400 / 2, 50 / 2, "slider", c_color, c_selected_color, c_pressed_color,
                 MenuActions.SoundVolume, 130, false, true, 0.13f, false, false);
             ((SlideElement)elements[elements.Length - 3]).Position = volume / 100f;
-            elements[elements.Length - 4] = new LabelElement("fullscreen", 205, 1450, ingameScreenSize.X - 400, "fullscreen_message", true, false, c_color, "smallFont", false, false);
-            elements[elements.Length - 5] = new LabelElement("score", 195, 570, ingameScreenSize.X - 400, Id2Str("score") + " " + score.ToString(), false, false, c_color, "mediumFont", false, false);
-            elements[elements.Length - 6] = new LabelElement("max_score", 195, 670, ingameScreenSize.X - 400, Id2Str("top_result") + " " + maxScore.ToString(), false, false, c_color, "mediumFont", false, false);
-            elements[elements.Length - 7] = new LabelElement("volume", 320, 80, 1000, "volume", true, true, c_color, "smallFont", false, false);
+            elements[elements.Length - 4] = new LabelElement("fullscreen", 205 / 2, 1450 / 2, ingameScreenSize.X - 400 / 2, "fullscreen_message", true, false, c_color, "smallFont", false, false);
+            elements[elements.Length - 5] = new LabelElement("score", 195 / 2, 570 / 2, ingameScreenSize.X - 400 / 2, Id2Str("score") + " " + score.ToString(), false, false, c_color, "mediumFont", false, false);
+            elements[elements.Length - 6] = new LabelElement("max_score", 195 / 2, 670 / 2, ingameScreenSize.X - 400 / 2, Id2Str("top_result") + " " + maxScore.ToString(), false, false, c_color, "mediumFont", false, false);
+            elements[elements.Length - 7] = new LabelElement("volume", 320 / 2, 80 / 2, 1000 / 2, "volume", true, true, c_color, "smallFont", false, false);
             //
             modes.Add("main", new Mode((Mode)modes["game_mode"], elements, 3.5f, "main", FromAbove, null, false));
 
             modes.Add("game_mode_context", new Mode((Mode)modes["game_mode"], new HudElement[]
             {
-                new ButtonElement("continue",600,650,ingameScreenSize.X-1200,100,Id2Str("continue"),"largeFont",false,
+                new SpriteElement("shade",390,280,500,250,"context_shade",new Color(0,0,0,150),new Rectangle(0,0,1024,512),false,false),
+                new ButtonElement("continue",600/2,650/2,ingameScreenSize.X-1200/2,100/2,Id2Str("continue"),"largeFont",false,
                 c_color,c_selected_color,c_pressed_color,MenuActions.ContinueGame,false,false),
-                new ButtonElement("end",600,850,ingameScreenSize.X-1200,100,Id2Str("end"),"largeFont",false,
+                new ButtonElement("end",600/2,850/2,ingameScreenSize.X-1200/2,100/2,Id2Str("end"),"largeFont",false,
                 c_color,c_selected_color,c_pressed_color,MenuActions.EndGame,false,false)
             }, 3.5f, "context", FromAbove, null, false));
 
             modes.Add("game_mode_result", new Mode((Mode)modes["game_mode"], new HudElement[]
             {
-                new LabelElement("score", 20, 570, ingameScreenSize.X - 400, Id2Str("score") + " " + score.ToString(), false, false, c_color, "largeFont", false, false),
-                new LabelElement("top_score", 200, 770, ingameScreenSize.X - 400, Id2Str("top_result") + " " + maxScore.ToString(), false, false, c_color, "largeFont", false, false),
-                new LabelElement("any_key", 200, 1400, ingameScreenSize.X - 400, "any_key_message", true, false, c_color, "mediumFont", false, false),
+                new LabelElement("score", 20/2, 570/2, ingameScreenSize.X - 400/2, Id2Str("score") + " " + score.ToString(), false, false, c_color, "largeFont", false, false),
+                new LabelElement("top_score", 200/2, 770/2, ingameScreenSize.X - 400/2, Id2Str("top_result") + " " + maxScore.ToString(), false, false, c_color, "largeFont", false, false),
+                new LabelElement("any_key", 200/2, 1400/2, ingameScreenSize.X - 400/2, "any_key_message", true, false, c_color, "mediumFont", false, false),
                 new AnyKeyElement("result",MenuActions.EndGame)
             }, 3.5f, "result", FromAbove, null, false));
             //LoadFile
@@ -301,6 +304,8 @@ namespace GameMaker
             content.Add("slider", Content.Load<Texture2D>("menu//Slider"));
             content.Add("slider_slide", Content.Load<Texture2D>("menu//Slider_slide"));
             content.Add("slider_arrow", Content.Load<Texture2D>("menu//Slider_arrow"));
+            content.Add("context_shade", Content.Load<Texture2D>("menu//ContextShade"));
+            content.Add("play_shade", Content.Load<Texture2D>("menu//PlayShade"));
         }
 
         #region loading

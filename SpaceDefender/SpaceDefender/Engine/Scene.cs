@@ -48,7 +48,7 @@ namespace Game.Engine
             this.score = 0;
             globalRandom = new Random();
             StarsGenerationFirst();
-            playerShip = CreateShip("mothership", 0, 75, 0, 0);
+            playerShip = CreateShip("mothership", 0, 30, 0, 0);
 
         }
 
@@ -56,9 +56,6 @@ namespace Game.Engine
         {
             if (PlayerShip != null)
             {
-                PlayerShip.TargetSpeed = 3000;
-                PlayerShip.Acceleration = 3000;
-
                 for (int i = 0; i < missles.Count; i++)
                 {
                     if (missles[i].IsAlive)
@@ -77,6 +74,7 @@ namespace Game.Engine
                     if (ships[i].IsAlive)
                     {
                         ships[i].Update(milliseconds);
+                        ships[i].EngineFire.Update(milliseconds);
                     }
                     if (!ships[i].IsAlive || (ships[i].Speed == 0 && Math.Abs(playerShip.Y - ships[i].Y) > 2000))
                     {
@@ -120,8 +118,8 @@ namespace Game.Engine
             {
                 int variation = globalRandom.Next(100);
                 Color color = variation <= 60 ? Color.White : variation <= 80 ? Color.Yellow : Color.AliceBlue;
-                stars.Add(new Star(this, (float)globalRandom.NextDouble() * 4000f - 2000f, (float)globalRandom.NextDouble() * 3000f - 1500f,
-                    new Sprite("star", 8, 8, 1, (float)globalRandom.NextDouble() + 1.6f, 1, color)));
+                stars.Add(new Star(this, (float)globalRandom.NextDouble() * 2000f - 1000f, (float)globalRandom.NextDouble() * 1500f - 750f,
+                    new Sprite("star", 8, 8, 1, (float)globalRandom.NextDouble()/2 + 0.5f, 1, color)));
             }
         }
 
@@ -146,7 +144,7 @@ namespace Game.Engine
             Ship ship = new Ship(this, x, y, native.Speed,
                 new Sprite(native.Sprite.SpriteName, native.Sprite.Width, native.Sprite.Height,
                 native.Sprite.MaxFrame, native.Sprite.Size, native.Sprite.MaxAnimation, native.Sprite.Color),
-                modules, native.EnginePosition, native.CorePosition, native.Death, height, team,(int)native.Resources, native.ResourceGeneration);
+                modules, native.EnginePosition, native.CorePosition, native.Death, height, team,(int)native.Resources, native.ResourceGeneration, native.EngineFire, native.EngineX, native.EngineY);
             for (int i = 0; i < modules.Length; i++)
             {
                 if (native.Positions[i].TempModule != null)
@@ -165,43 +163,43 @@ namespace Game.Engine
         public bool AssembleBlasterModule(Ship ship, int position)
         {
             if (ship.Positions.Length <= position) return false;
-            ship.AssembleModule(new Module(ship, 128, 128, 1f, 0, Delegates.BlasterAttack, new float[] { 1, 1, 1 },
-                new Sprite("blaster", 64, 64, 1, 2, 1, Color.White), 1, 1, Delegates.DefaultDeath, false), position);
+            ship.AssembleModule(new Module(ship, 64, 64, 1f, 0, Delegates.BlasterAttack, new float[] { 1, 1, 1 },
+                new Sprite("blaster", 64, 64, 1, 1, 1, Color.White), 1, 1, Delegates.DefaultDeath, false), position);
             return true;
         }
         public bool AssembleRocketModule(Ship ship, int position)
         {
             if (ship.Positions.Length <= position) return false;
-            ship.AssembleModule(new Module(ship, 128, 128, 1f, 0, Delegates.RocketAttack, new float[] { 1, 1, 1 },
-                new Sprite("rocket", 64, 64, 1, 2, 1, Color.White), 1, 1, Delegates.DefaultDeath, false), position);
+            ship.AssembleModule(new Module(ship, 64, 64, 1f, 0, Delegates.RocketAttack, new float[] { 1, 1, 1 },
+                new Sprite("rocket", 64, 64, 1, 1, 1, Color.White), 1, 1, Delegates.DefaultDeath, false), position);
             return true;
         }
         public bool AssembleAnniModule(Ship ship, int position)
         {
             if (ship.Positions.Length <= position) return false;
-            ship.AssembleModule(new Module(ship, 128, 128, 2f, 0.2f, Delegates.AnnihilatorAttack, new float[] { 1, 1, 1 },
-                new Sprite("annihilator", 64, 64, 1, 2, 1, Color.White), 1, 1, Delegates.DefaultDeath, false), position);
+            ship.AssembleModule(new Module(ship, 64, 64, 2f, 0.2f, Delegates.AnnihilatorAttack, new float[] { 1, 1, 1 },
+                new Sprite("annihilator", 64, 64, 1, 1, 1, Color.White), 1, 1, Delegates.DefaultDeath, false), position);
             return true;
         }
         public bool AssembleGeneratorModule(Ship ship, int position)
         {
             if (ship.Positions.Length <= position) return false;
-            ship.AssembleModule(new Module(ship, 128, 128, 1f, 0, Delegates.GenerateResource, new float[] { 1, 1, 1 },
-                new Sprite("generator", 64, 64, 1, 2, 1, Color.White), 2, 1, Delegates.DefaultDeath, false), position);
+            ship.AssembleModule(new Module(ship, 64, 64, 1f, 0, Delegates.GenerateResource, new float[] { 1, 1, 1 },
+                new Sprite("generator", 64, 64, 1, 1, 1, Color.White), 2, 1, Delegates.DefaultDeath, false), position);
             return true;
         }
         public bool AssembleArmorModule(Ship ship, int position)
         {
             if (ship.Positions.Length <= position) return false;
-            ship.AssembleModule(new Module(ship, 128, 128, 1f, 0, null, new float[] { 0.1f, 1, 1 },
-                new Sprite("armor", 64, 64, 1, 2, 5, Color.White), 2, 1, null, false), position);
+            ship.AssembleModule(new Module(ship, 64, 64, 1f, 0, null, new float[] { 0.1f, 1, 1 },
+                new Sprite("armor", 64, 64, 1, 1, 5, Color.White), 2, 1, null, false), position);
             return true;
         }
         public bool AssembleShieldModule(Ship ship, int position)
         {
             if (ship.Positions.Length <= position) return false;
-            ship.AssembleModule(new Module(ship, 128, 128, 1f, 0, null, new float[] { 1, 0.1f, 1 },
-                new Sprite("shield", 64, 64, 1, 2, 5, Color.White), 2, 1, null, false), position);
+            ship.AssembleModule(new Module(ship, 64, 64, 1f, 0, null, new float[] { 1, 0.1f, 1 },
+                new Sprite("shield", 64, 64, 1, 1, 5, Color.White), 2, 1, null, false), position);
             return true;
         }
     }
