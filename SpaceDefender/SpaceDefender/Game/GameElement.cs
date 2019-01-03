@@ -34,9 +34,15 @@ namespace Game
                 new Engine.Sprite("motherCore", 64, 512, 1, 1, 5, Color.White), 100, 0, null, true));
             catalogue.ModuleNatives.Add("motherEngine", new Module(null, 64, 64, 1, 0, null, new float[] { 1, 1, 1 },
                 new Engine.Sprite("motherEngine", 64, 64, 1, 1, 5, Color.White), 50, 0, null, true));
+            catalogue.ModuleNatives.Add("enemyBlasterCore", new Module(null, 64, 64, 1, 0, Delegates.EnemyBlasterAttack, new float[] { 1, 1, 0 },
+                new Engine.Sprite("enemyBlasterCore", 64, 64, 1, 1, 3, Color.White), 10, 0, null, false));
+            catalogue.ModuleNatives.Add("enemyRocketCore", new Module(null, 64, 64, 1, 0, Delegates.EnemyRocketAttack, new float[] { 1, 1, 0 },
+                new Engine.Sprite("enemyRocketCore", 64, 64, 1, 1, 3, Color.White), 10, 0, null, false));
+            catalogue.ModuleNatives.Add("enemyCore", new Module(null, 64, 64, 1, 0, null, new float[] { 1, 1, 0 },
+                new Engine.Sprite("enemyCore", 64, 64, 1, 1, 3, Color.White), 20, 0, null, false));
             /////////////////////Ships
             Ship ship = new Ship(null, 0, 0, 3000/2, new Engine.Sprite("mothership",512,512,1,1,1, Color.White), new Engine.ModulePosition[36], 1, 0, null, 0, 0,10,0.2f,
-                new Engine.Sprite("motherFire",64,64,4,1,1,Color.White),0,259);
+                new Engine.Sprite("motherFire",64,64,4,1,1,Color.White),0,259,false);
             ship.Positions[0] = new Engine.ModulePosition(0, 0, Direction.Right);
             ship.Positions[0].TempModule = (Module)catalogue.ModuleNatives["motherCore"];
             ship.Positions[1] = new Engine.ModulePosition(0, 404/2, Direction.Right);
@@ -77,6 +83,31 @@ namespace Game
             ship.Positions[34] = new Engine.ModulePosition(366 / 2, 274 / 2, Direction.Right);
             ship.Positions[35] = new Engine.ModulePosition(-366 / 2, 274 / 2, Direction.Left);
             catalogue.ShipNatives.Add("mothership", new ShipNative(ship,0,0,0));
+
+            ship = new Ship(null, 0, 0, 1500, new Engine.Sprite("spawn", 128, 128, 1, 1, 1, Color.White), new ModulePosition[]
+            {
+                new ModulePosition(0,0,Direction.Right)
+            }, 0, 0, Delegates.SpawnDeath, 0, 0, 0, 0, new Engine.Sprite("spawnFire", 128, 64, 8, 1, 1, Color.White), -3, 67,true);
+            ship.Positions[0].TempModule = (Module)catalogue.ModuleNatives["enemyBlasterCore"];
+            catalogue.ShipNatives.Add("spawnBlasterRight", new ShipNative(ship,0,0,0));
+            ship = new Ship(null, 0, 0, 1500, new Engine.Sprite("spawn", 128, 128, 1, 1, 1, Color.White), new ModulePosition[]
+                {
+                new ModulePosition(0,0,Direction.Left)
+                }, 0, 0, Delegates.SpawnDeath, 0, 0, 0, 0, new Engine.Sprite("spawnFire", 128, 64, 8, 1, 1, Color.White), -3, 67,true);
+            ship.Positions[0].TempModule = (Module)catalogue.ModuleNatives["enemyBlasterCore"];
+            catalogue.ShipNatives.Add("spawnBlasterLeft", new ShipNative(ship, 0, 0, 0));
+            ship = new Ship(null, 0, 0, 1500, new Engine.Sprite("spawn", 128, 128, 1, 1, 1, Color.White), new ModulePosition[]
+            {
+                new ModulePosition(0,0,Direction.Right)
+            }, 0, 0, Delegates.SpawnDeath, 0, 0, 0, 0, new Engine.Sprite("spawnFire", 128, 64, 8, 1, 1, Color.White), -3, 67,true);
+            ship.Positions[0].TempModule = (Module)catalogue.ModuleNatives["enemyRocketCore"];
+            catalogue.ShipNatives.Add("spawnRocketRight", new ShipNative(ship, 0, 0, 0));
+            ship = new Ship(null, 0, 0, 1500, new Engine.Sprite("spawn", 128, 128, 1, 1, 1, Color.White), new ModulePosition[]
+            {
+                new ModulePosition(0,0,Direction.Left)
+            }, 0, 0, Delegates.SpawnDeath, 0, 0, 0, 0, new Engine.Sprite("spawnFire", 128, 64, 8, 1, 1, Color.White), -3, 67,true);
+            ship.Positions[0].TempModule = (Module)catalogue.ModuleNatives["enemyRocketCore"];
+            catalogue.ShipNatives.Add("spawnRocketLeft", new ShipNative(ship, 0, 0, 0));
         }
 
         protected override void DrawAll(IgnitusGame game, Color fonColor)
@@ -91,14 +122,15 @@ namespace Game
                         game.DrawSprite(ship.Sprite.SpriteName,
                             new Rectangle((int)ship.X + 640, (int)ship.Y + 400, ship.Sprite.AbsoluteWidth, ship.Sprite.AbsoluteHeight),
                             new Rectangle(ship.Sprite.Width * (int)ship.Sprite.Frame, ship.Sprite.Height * ship.Sprite.Animation, ship.Sprite.Width, ship.Sprite.Height),
-                            ship.Sprite.Color, 0, new Vector2(ship.Sprite.Width / 2, ship.Sprite.Height / 2), SpriteEffects.None, ship.Height);
+                            ship.CoreModule==null || ship.CoreModule.DamageTimer > 0 ? Color.Red: ship.Sprite.Color, 0, new Vector2(ship.Sprite.Width / 2, ship.Sprite.Height / 2), SpriteEffects.None, ship.Height);
                         if (ship.EngineModule != null && ship.EngineModule.Working)
                         {
                             game.DrawSprite(ship.EngineFire.SpriteName,
                                 new Rectangle((int)(ship.X + ship.EngineX) + 640, (int)(ship.Y + ship.EngineY) + 400, ship.EngineFire.AbsoluteWidth, ship.EngineFire.AbsoluteHeight),
                                 new Rectangle(ship.EngineFire.Width * (int)ship.EngineFire.Frame, ship.EngineFire.Height * ship.EngineFire.Animation, 
                                 ship.EngineFire.Width, ship.EngineFire.Height),
-                                ship.EngineFire.Color, 0, new Vector2(ship.EngineFire.Width / 2, ship.EngineFire.Height / 2), SpriteEffects.None, ship.Height+0.1f);
+                                (ship.CoreModule == null || ship.CoreModule.DamageTimer > 0) && ship.ColorEngine?Color.Red:ship.EngineFire.Color,
+                                0, new Vector2(ship.EngineFire.Width / 2, ship.EngineFire.Height / 2), SpriteEffects.None, ship.Height-0.1f);
                         }
                         foreach (Engine.ModulePosition pos in ship.Positions)
                         {
@@ -112,6 +144,16 @@ namespace Game
                                     pos.TempModule.DamageTimer>0? Color.Red : pos.TempModule.Sprite.Color, 
                                     0, new Vector2(pos.TempModule.Sprite.Width / 2, pos.TempModule.Sprite.Height / 2),
                                     pos.Direction == Direction.Right ? SpriteEffects.None : SpriteEffects.FlipHorizontally, ship.Height + 2f);
+                            }
+                            if(pos.TempModule == null && ship == tempScene.PlayerShip)
+                            {
+                                game.DrawSprite("emptyModule",
+                                    new Rectangle((int)(pos.XShift + ship.X) + 640, (int)(pos.YShift + ship.Y) + 400,
+                                    64, 64),
+                                    new Rectangle(0,0,64,64),
+                                    Color.White,
+                                    0, new Vector2(32, 32),
+                                    SpriteEffects.None, ship.Height + 2f);
                             }
                         }
                     }

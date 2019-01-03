@@ -27,7 +27,9 @@ namespace Game.Engine
         Sprite engineFire;
         float engineX;
         float engineY;
+        bool colorEngine;
         
+        public bool ColorEngine { get { return colorEngine; } }
         public Sprite EngineFire { get { return engineFire; } }
         public float EngineX { get { return engineX; } }
         public float EngineY { get { return engineY; } }
@@ -47,9 +49,11 @@ namespace Game.Engine
         public ModulePosition[] Positions { get { return positions; } }
 
         public Ship(Scene parent, float x, float y, float speed, Sprite sprite, ModulePosition[] positions, int enginePosition, 
-            int corePosition, DeathEffect death, float height, int team, int resources, float resourceGeneration, Sprite engineFire, float engineX, float engineY)
+            int corePosition, DeathEffect death, float height, int team, int resources, float resourceGeneration, Sprite engineFire, float engineX, float engineY,
+            bool colorEngine)
     :       base(parent, x, y, sprite)
         {
+            this.colorEngine = colorEngine;
             this.engineFire = engineFire;
             this.engineX = engineX;
             this.engineY = engineY;
@@ -102,7 +106,7 @@ namespace Game.Engine
                     }
                 }
             }
-            if (!CoreModule.Working) this.IsAlive = false;
+            if (CoreModule == null || !CoreModule.Working) this.IsAlive = false;
             base.Update(milliseconds);
         }
 

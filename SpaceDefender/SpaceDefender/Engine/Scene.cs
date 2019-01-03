@@ -49,7 +49,10 @@ namespace Game.Engine
             globalRandom = new Random();
             StarsGenerationFirst();
             playerShip = CreateShip("mothership", 0, 30, 0, 0);
-
+            CreateShip("spawnBlasterRight", -400, 32, 1, 1);
+            CreateShip("spawnRocketRight", -350, -150, 1, 1);
+            CreateShip("spawnBlasterRight", -500, 200, 1, 1);
+            CreateShip("spawnRocketRight", -600, -32, 1, 1);
         }
 
         public void Update(float milliseconds)
@@ -144,7 +147,7 @@ namespace Game.Engine
             Ship ship = new Ship(this, x, y, native.Speed,
                 new Sprite(native.Sprite.SpriteName, native.Sprite.Width, native.Sprite.Height,
                 native.Sprite.MaxFrame, native.Sprite.Size, native.Sprite.MaxAnimation, native.Sprite.Color),
-                modules, native.EnginePosition, native.CorePosition, native.Death, height, team,(int)native.Resources, native.ResourceGeneration, native.EngineFire, native.EngineX, native.EngineY);
+                modules, native.EnginePosition, native.CorePosition, native.Death, height, team,(int)native.Resources, native.ResourceGeneration, native.EngineFire, native.EngineX, native.EngineY, native.ColorEngine);
             for (int i = 0; i < modules.Length; i++)
             {
                 if (native.Positions[i].TempModule != null)

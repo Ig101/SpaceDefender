@@ -18,3 +18,11 @@ resources;menu/resources;game
 demolish;game/demolish;game
 emptyModule;game/emptyModule;game
 motherFire;game/motherFire;game
+enemyBlasterCore;enemies/enemyBlasterCore;game
+enemyBlasterMissle;enemies/enemyBlasterMissle;game
+enemyCore;enemies/enemyCore;game
+enemyRocketCore;enemies/enemyRocketCore;game
+enemyRocketMissle;enemies/enemyRocketMissle;game
+spawn;enemies/spawn;game
+spawnFire;enemies/spawnFire;game
+spawnDeath;enemies/spawn_death;game

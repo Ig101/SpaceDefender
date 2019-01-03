@@ -23,7 +23,7 @@ namespace Game.Catalogues
         {
             bool direction = owner.Parent.Positions[owner.TempPosition].Direction == Direction.Right;
             scene.Missles.Add(new Missle(scene, owner.AbsoluteX + (owner.Width / 2f * (direction ? 1 : -1)),
-                owner.AbsoluteY, new Sprite("rocketMissle", 16, 16, 1, 1, 1, Color.White), 2, 1300, direction ? 0 : MathHelper.Pi, DefaultMoveRule, DefaultPhysicalDamage,
+                owner.AbsoluteY, new Sprite("rocketMissle", 16, 16, 1, 1, 1, Color.White), 2, 1200, direction ? 0 : MathHelper.Pi, DefaultMoveRule, DefaultPhysicalDamage,
                 1, owner.Parent, null));
             return true;
         }
@@ -139,6 +139,30 @@ namespace Game.Catalogues
             if (ship.Positions.Length <= position) return false;
             ship.Positions[position].TempModule = null;
             return true;
+        }
+
+
+        public static bool EnemyBlasterAttack(Scene scene, Module owner)
+        {
+            bool direction = owner.Parent.Positions[owner.TempPosition].Direction == Direction.Right;
+            scene.Missles.Add(new Missle(scene, owner.AbsoluteX + (owner.Width / 2.5f * (direction ? 1 : -1)),
+                owner.AbsoluteY, new Sprite("enemyBlasterMissle", 16, 16, 1, 1, 1, Color.White), 2, 1500, direction ? 0 : MathHelper.Pi, DefaultMoveRule, DefaultEnergyDamage,
+                1, owner.Parent, null));
+            return true;
+        }
+
+        public static bool EnemyRocketAttack(Scene scene, Module owner)
+        {
+            bool direction = owner.Parent.Positions[owner.TempPosition].Direction == Direction.Right;
+            scene.Missles.Add(new Missle(scene, owner.AbsoluteX + (owner.Width / 2f * (direction ? 1 : -1)),
+                owner.AbsoluteY, new Sprite("enemyRocketMissle", 16, 16, 1, 1, 1, Color.White), 2, 1200, direction ? 0 : MathHelper.Pi, DefaultMoveRule, DefaultPhysicalDamage,
+                1, owner.Parent, null));
+            return true;
+        }
+
+        public static void SpawnDeath(Scene scene, float x, float y)
+        {
+            scene.Effects.Add(new SpecEffect(scene, x, y, new Sprite("spawnDeath", 128, 128, 6, 1, 1, Color.White), 0.19f, scene.GlobalRandom));
         }
     }
 }
