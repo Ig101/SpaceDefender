@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Game;
 using Ignitus;
 
 namespace GameMaker
@@ -24,6 +25,7 @@ namespace GameMaker
 
         public static void EndGame(IgnitusGame game, Mode mode, HudElement element)
         {
+            ((GameElement)(((Mode)game.Modes["game_mode"]).Elements[0])).TempManager = null;
             game.GoToMode("main");
         }
 
@@ -33,7 +35,7 @@ namespace GameMaker
             if (gameMode.Elements.Length > 1)
             {
                 GameElementShell gameElement = (GameElementShell)(gameMode).Elements[0];
-                gameElement.PrepareForFirstUse();
+                gameElement.PrepareForFirstUse(game);
             }
             //TODO
             game.GoToMode("game_mode");

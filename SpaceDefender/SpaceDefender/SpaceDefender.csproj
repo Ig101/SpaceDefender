@@ -60,6 +60,10 @@
     <Compile Include="Catalogues\Delegates.cs" />
     <Compile Include="Catalogues\ShipNative.cs" />
     <Compile Include="Engine\GameObject.cs" />
+    <Compile Include="Internal\LevelScaleElement.cs" />
+    <Compile Include="Progress\Level.cs" />
+    <Compile Include="Progress\LevelEnemySpawn.cs" />
+    <Compile Include="Progress\LevelManager.cs" />
     <Compile Include="Engine\Misc.cs" />
     <Compile Include="Engine\Missle.cs" />
     <Compile Include="Engine\Module.cs" />
@@ -70,12 +74,10 @@
     <Compile Include="Engine\Sprite.cs" />
     <Compile Include="Engine\Star.cs" />
     <Compile Include="Internal\GameSkillButtonElement.cs" />
-    <Compile Include="Internal\GameLabelElement.cs" />
+    <Compile Include="Internal\GameResourcesLabelElement.cs" />
     <Compile Include="Internal\GameOverlayElement.cs" />
     <Compile Include="Internal\GameSpriteElement.cs" />
-    <Compile Include="Templates\ConstsTemplate.cs" />
     <Compile Include="Game\Consts.cs" />
-    <Compile Include="Templates\GameElementTemplate.cs" />
     <Compile Include="Game\GameElement.cs" />
     <Compile Include="Internal\Game1Shell.cs" />
     <Compile Include="Internal\GameButtonElement.cs" />
@@ -108,7 +110,9 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Templates\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

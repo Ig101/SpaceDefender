@@ -40,7 +40,7 @@ namespace GameMaker
         {
             if (!screenshotShow)
             {
-                UpdateAll(this, state, prevState, milliseconds);
+                UpdateAll(game, this, state, prevState, milliseconds);
             }
             if (screenshotDone) game.GoToMode(targetMode);
         }
@@ -133,11 +133,11 @@ namespace GameMaker
 
         protected abstract void DrawAll(IgnitusGame game, Color fonColor);
 
-        protected abstract void UpdateAll(GameElementShell gameElement, ControlsState state, ControlsState prevState, float milliseconds);
+        protected abstract void UpdateAll(IgnitusGame game, GameElementShell gameElement, ControlsState state, ControlsState prevState, float milliseconds);
 
         protected abstract void UpdateButtons(GameElementShell gameElement, ControlsState state, ControlsState prevState, float milliseconds);
 
-        protected abstract void FirstTimeUpdate(GameElementShell gameElement);
+        protected abstract void FirstTimeUpdate(IgnitusGame game, GameElementShell gameElement);
 
         Color UpdateFonColor (Color fonColor)
         {
@@ -150,12 +150,12 @@ namespace GameMaker
             return buttonAnimationProgress;
         }
 
-        public void PrepareForFirstUse()
+        public void PrepareForFirstUse(IgnitusGame game)
         {
             animationProgress = 0;
             PrepareTo();
             buttonDirection = false;
-            FirstTimeUpdate(this);
+            FirstTimeUpdate(game, this);
         }
 
         public void PrepareTo()

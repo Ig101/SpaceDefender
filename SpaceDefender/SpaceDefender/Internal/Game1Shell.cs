@@ -241,22 +241,42 @@ namespace GameMaker
 
             modes.Add("game_mode_context", new Mode((Mode)modes["game_mode"], new HudElement[]
             {
-                new SpriteElement("shade",390,280,500,250,"context_shade",new Color(0,0,0,150),new Rectangle(0,0,1024,512),false,false),
-                new ButtonElement("continue",600/2,650/2,ingameScreenSize.X-1200/2,100/2,Id2Str("continue"),"largeFont",false,
+                new SpriteElement("shade",340,250,600,300,"context_shade",new Color(0,0,0,150),new Rectangle(0,0,1024,512),false,false),
+                new LevelScaleElement("scale",490,480,300,16,Color.White,null),
+                new ButtonElement("continue",600/2,610/2,ingameScreenSize.X-1200/2,100/2,Id2Str("continue"),"largeFont",false,
                 c_color,c_selected_color,c_pressed_color,MenuActions.ContinueGame,false,false),
-                new ButtonElement("end",600/2,850/2,ingameScreenSize.X-1200/2,100/2,Id2Str("end"),"largeFont",false,
+                new ButtonElement("end",600/2,770/2,ingameScreenSize.X-1200/2,100/2,Id2Str("end"),"largeFont",false,
                 c_color,c_selected_color,c_pressed_color,MenuActions.EndGame,false,false)
             }, 3.5f, "context", FromAbove, null, false));
 
             modes.Add("game_mode_result", new Mode((Mode)modes["game_mode"], new HudElement[]
             {
-                new LabelElement("score", 20/2, 570/2, ingameScreenSize.X - 400/2, Id2Str("score") + " " + score.ToString(), false, false, c_color, "largeFont", false, false),
-                new LabelElement("top_score", 200/2, 770/2, ingameScreenSize.X - 400/2, Id2Str("top_result") + " " + maxScore.ToString(), false, false, c_color, "largeFont", false, false),
+               new SpriteElement("shade",340,250,600,300,"context_shade",new Color(0,0,0,150),new Rectangle(0,0,1024,512),false,false),
+                new LabelElement("defeat", 200/2, 600/2, ingameScreenSize.X - 400/2, Id2Str("defeat"), false, false, c_color, "largeFont", false, false),
+                new LabelElement("killed", 200/2, 840/2, ingameScreenSize.X - 400/2, Id2Str("killed") + " " + maxScore.ToString(), false, false, c_color, "mediumFont", false, false),
+                new LevelScaleElement("scale",490,480,300,16,Color.White,null),
+                new LabelElement("any_key", 200/2, 1400/2, ingameScreenSize.X - 400/2, "any_key_message", true, false, c_color, "mediumFont", false, false),
+                new AnyKeyElement("result",MenuActions.EndGame)
+            }, 3.5f, "result", FromAbove, null, false));
+            modes.Add("game_mode_victory", new Mode((Mode)modes["game_mode"], new HudElement[]
+            {
+               new SpriteElement("shade",340,250,600,300,"context_shade",new Color(0,0,0,150),new Rectangle(0,0,1024,512),false,false),
+                new LabelElement("defeat", 200/2, 600/2, ingameScreenSize.X - 400/2, Id2Str("victory"), false, false, c_color, "largeFont", false, false),
+                new LabelElement("killed", 200/2, 840/2, ingameScreenSize.X - 400/2, Id2Str("killed") + " " + maxScore.ToString(), false, false, c_color, "mediumFont", false, false),
+                new LabelElement("any_key", 200/2, 1400/2, ingameScreenSize.X - 400/2, "any_key_message", true, false, c_color, "mediumFont", false, false),
+                new AnyKeyElement("result",MenuActions.EndGame)
+            }, 3.5f, "result", FromAbove, null, false));
+            modes.Add("game_mode_nextlevel", new Mode((Mode)modes["game_mode"], new HudElement[]
+            {
+               new SpriteElement("shade",340,250,600,300,"context_shade",new Color(0,0,0,150),new Rectangle(0,0,1024,512),false,false),
+                new LabelElement("defeat", 200/2, 600/2, ingameScreenSize.X - 400/2, Id2Str("success"), false, false, c_color, "largeFont", false, false),
+                new LabelElement("killed", 200/2, 840/2, ingameScreenSize.X - 400/2, Id2Str("killed") + " " + maxScore.ToString(), false, false, c_color, "mediumFont", false, false),
+                new LevelScaleElement("scale",490,480,300,16,Color.White,null),
                 new LabelElement("any_key", 200/2, 1400/2, ingameScreenSize.X - 400/2, "any_key_message", true, false, c_color, "mediumFont", false, false),
                 new AnyKeyElement("result",MenuActions.EndGame)
             }, 3.5f, "result", FromAbove, null, false));
             //LoadFile
-            if(File.Exists(profileFilePath+@"\profile.mrc"))
+            if (File.Exists(profileFilePath+@"\profile.mrc"))
             {
                 byte[] bytes = Magic.Restore(profileFilePath + @"\profile.mrc");
                 string str = Encoding.UTF8.GetString(bytes);
@@ -306,6 +326,8 @@ namespace GameMaker
             content.Add("slider_arrow", Content.Load<Texture2D>("menu//Slider_arrow"));
             content.Add("context_shade", Content.Load<Texture2D>("menu//ContextShade"));
             content.Add("play_shade", Content.Load<Texture2D>("menu//PlayShade"));
+            content.Add("scale", Content.Load<Texture2D>("menu//scale"));
+            content.Add("scale_marker", Content.Load<Texture2D>("menu//scale_marker"));
         }
 
         #region loading

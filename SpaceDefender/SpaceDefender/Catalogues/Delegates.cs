@@ -1,4 +1,5 @@
 ﻿using Game.Engine;
+using Game.Progress;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -146,7 +147,7 @@ namespace Game.Catalogues
         {
             bool direction = owner.Parent.Positions[owner.TempPosition].Direction == Direction.Right;
             scene.Missles.Add(new Missle(scene, owner.AbsoluteX + (owner.Width / 2.5f * (direction ? 1 : -1)),
-                owner.AbsoluteY, new Sprite("enemyBlasterMissle", 16, 16, 1, 1, 1, Color.White), 2, 1500, direction ? 0 : MathHelper.Pi, DefaultMoveRule, DefaultEnergyDamage,
+                owner.AbsoluteY, new Sprite("enemyBlasterMissle", 32, 32, 1, 1, 1, Color.White), 2, 750, direction ? 0 : MathHelper.Pi, DefaultMoveRule, DefaultEnergyDamage,
                 1, owner.Parent, null));
             return true;
         }
@@ -155,7 +156,7 @@ namespace Game.Catalogues
         {
             bool direction = owner.Parent.Positions[owner.TempPosition].Direction == Direction.Right;
             scene.Missles.Add(new Missle(scene, owner.AbsoluteX + (owner.Width / 2f * (direction ? 1 : -1)),
-                owner.AbsoluteY, new Sprite("enemyRocketMissle", 16, 16, 1, 1, 1, Color.White), 2, 1200, direction ? 0 : MathHelper.Pi, DefaultMoveRule, DefaultPhysicalDamage,
+                owner.AbsoluteY, new Sprite("enemyRocketMissle", 32, 32, 1, 1, 1, Color.White), 2, 500, direction ? 0 : MathHelper.Pi, DefaultMoveRule, DefaultPhysicalDamage,
                 1, owner.Parent, null));
             return true;
         }
@@ -163,6 +164,16 @@ namespace Game.Catalogues
         public static void SpawnDeath(Scene scene, float x, float y)
         {
             scene.Effects.Add(new SpecEffect(scene, x, y, new Sprite("spawnDeath", 128, 128, 6, 1, 1, Color.White), 0.19f, scene.GlobalRandom));
+        }
+
+        public static bool WinConditionKillEmAll (Level level, Scene tempScene)
+        {
+            if (!tempScene.PlayerShip.EngineModule.Working) return false;
+            foreach(LevelEnemySpawn spawn in level.Spawns)
+            {
+                if (spawn.Enemy == null || spawn.Enemy.IsAlive) return false;
+            }
+            return true;
         }
     }
 }

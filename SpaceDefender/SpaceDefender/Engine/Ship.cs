@@ -43,7 +43,7 @@ namespace Game.Engine
         public float Resources { get { return resources; } set { resources = value>99.9f?99.9f:value; } }
         public Module EngineModule { get { return positions[enginePosition].TempModule; } }
         public Module CoreModule { get { return positions[corePosition].TempModule; } }
-        public float Speed { get { return speed; } }
+        public float Speed { get { return speed; } set { speed = value; } }
         public float TargetSpeed { get { return targetSpeed; } set { targetSpeed = value; } }
         public float Acceleration { get { return acceleration; } set { acceleration = value; } }
         public ModulePosition[] Positions { get { return positions; } }
@@ -71,25 +71,28 @@ namespace Game.Engine
 
         public override void Update(float milliseconds)
         {
-            if (EngineModule==null || !EngineModule.Working)
+            if (CoreModule != null)
             {
-                targetSpeed = 0;
-                acceleration = 400;
-            }
-            else
-            {
-                targetSpeed = defaultSpeed;
-                acceleration = 1000;
+                if (EngineModule == null || !EngineModule.Working && this!=Parent.PlayerShip)
+                {
+                    targetSpeed = 0;
+                    acceleration = 400;
+                }
+                else if (this == Parent.PlayerShip)
+                {
+                    targetSpeed = defaultSpeed;
+                    acceleration = 1000;
+                }
             }
             Resources += resourceGeneration * milliseconds/1000;
             if (targetSpeed > speed)
             {
-                speed += acceleration * milliseconds/1000;
+                speed += Math.Abs(acceleration) * milliseconds/1000;
                 if (speed > targetSpeed) speed = targetSpeed;
             }
             else if (targetSpeed < speed)
             {
-                speed -= acceleration * milliseconds/1000;
+                speed -= Math.Abs(acceleration) * milliseconds/1000;
                 if (speed < targetSpeed) speed = targetSpeed;
             }
             float absoluteSpeed = this.Speed - Parent.PlayerShip.Speed;
@@ -106,7 +109,24 @@ namespace Game.Engine
                     }
                 }
             }
-            if (CoreModule == null || !CoreModule.Working) this.IsAlive = false;
+            if (CoreModule == null || !CoreModule.Working)
+            {
+                if (this == Parent.PlayerShip && !Parent.Defeat)
+                {
+                    foreach(ModulePosition pos in positions)
+                    {
+                        if (pos.TempModule!=null)
+                        {
+                            pos.TempModule.Damage(100000, DamageType.Magic);
+                        }
+                    }
+                    Parent.IAdmitDefeat();
+                }
+                else if(this!=Parent.PlayerShip)
+                {
+                    this.IsAlive = false;
+                }
+            }
             base.Update(milliseconds);
         }
 

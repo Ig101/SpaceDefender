@@ -15,10 +15,10 @@ namespace Game.Engine
 
         }
 
-        public override void Update(float milliseconds)
+        public void Update(float milliseconds, float engineTime)
         {
-            this.Y += Parent.PlayerShip.Speed/2*milliseconds/1000;
-            if (this.Y > Parent.PlayerShip.Y + 750)
+            this.Y += (Parent.PlayerShip.Speed-engineTime)/2*milliseconds/1000;
+            if (this.Y > 750)
             {
                 this.Y -= 1500;
                 this.X = (float)Parent.GlobalRandom.NextDouble() * 2000f - 1000f;

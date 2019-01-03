@@ -57,7 +57,8 @@ namespace GameMaker
 
         public override void Update(IgnitusGame game, Mode mode, ControlsState state, ControlsState prevState, float milliseconds)
         {
-            if (gameElement.TempScene != null && gameElement.TempScene.PlayerShip != null && gameElement.TempScene.PlayerShip.Resources >= cost)
+            if (gameElement.TempScene != null && gameElement.TempScene.PlayerShip != null && gameElement.TempScene.PlayerShip.Resources >= cost
+                && gameElement.TempScene.TimerToEnd <= 0)
             {
                 allowed = true;
                 float coff = 0;

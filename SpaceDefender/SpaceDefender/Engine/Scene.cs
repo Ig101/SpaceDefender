@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Game.Catalogues;
+using Game.Progress;
 using Microsoft.Xna.Framework;
 
 namespace Game.Engine
@@ -11,9 +12,13 @@ namespace Game.Engine
     class Scene
     {
         bool defeat;
+        float defeatTimer;
+        float defeatCd;
 
         Ship playerShip;
         float score;
+
+        float timerToEnd;
 
         List<Ship> ships = new List<Ship>();
         List<Missle> missles = new List<Missle>();
@@ -21,11 +26,12 @@ namespace Game.Engine
         List<Star> stars = new List<Star>();
 
         Random globalRandom;
-        int sideMinShift;
-        int sideShiftRange;
-        int topShiftRange;
         float stage;
+        float engineTime;
 
+        public float EngineTime { get { return engineTime; } set { engineTime = value; } }
+        public float TimerToEnd { get { return timerToEnd; } }
+        public float DefeatTimer { get { return defeatTimer; } }
         public Random GlobalRandom { get { return globalRandom; } }
         public bool Defeat { get { return defeat; } }
         public float Score { get { return score; } }
@@ -34,31 +40,46 @@ namespace Game.Engine
         public List<Missle> Missles { get { return missles; } }
         public List<SpecEffect> Effects { get { return effects; } }
         public List<Star> Stars { get { return stars; } }
+        public Catalogue Catalogue { get { return catalogue; } }
+        public float Stage { get { return stage; } set { stage = value; } }
 
         Catalogue catalogue;
+        LevelManager tempLevelManager;
 
-        public Scene (Catalogue catalogue, int sideMinShift, int sideShiftRange, int topShiftRange)
+        public Scene (Catalogue catalogue, LevelManager manager)
         {
+            manager.TempScene = this;
+            this.tempLevelManager = manager;
             this.defeat = false;
             this.catalogue = catalogue;
-            this.sideMinShift = sideMinShift;
-            this.sideShiftRange = sideShiftRange;
-            this.topShiftRange = topShiftRange;
             this.stage = 0;
             this.score = 0;
             globalRandom = new Random();
             StarsGenerationFirst();
-            playerShip = CreateShip("mothership", 0, 30, 0, 0);
-            CreateShip("spawnBlasterRight", -400, 32, 1, 1);
-            CreateShip("spawnRocketRight", -350, -150, 1, 1);
-            CreateShip("spawnBlasterRight", -500, 200, 1, 1);
-            CreateShip("spawnRocketRight", -600, -32, 1, 1);
+            playerShip = manager.TempLevel.CreateMotherShip(this);
         }
 
         public void Update(float milliseconds)
         {
             if (PlayerShip != null)
             {
+                if(!playerShip.EngineModule.Working)
+                {
+                    engineTime += 400 * milliseconds / 1000;
+                }
+                else
+                {
+                    engineTime -= 400 * milliseconds / 1000;
+                }
+                if(engineTime<=0)
+                {
+                    engineTime = 0;
+                }
+                else if (engineTime >= playerShip.DefaultSpeed*2/3)
+                {
+                    engineTime = playerShip.DefaultSpeed * 2 / 3;
+                }
+                tempLevelManager.Update(milliseconds);
                 for (int i = 0; i < missles.Count; i++)
                 {
                     if (missles[i].IsAlive)
@@ -102,7 +123,7 @@ namespace Game.Engine
                 {
                     if (stars[i].IsAlive)
                     {
-                        stars[i].Update(milliseconds);
+                        stars[i].Update(milliseconds,engineTime);
                     }
                     if (!stars[i].IsAlive)
                     {
@@ -110,9 +131,57 @@ namespace Game.Engine
                         i--;
                     }
                 }
-                score += playerShip.Speed * milliseconds / 1000;
-                EnemyGeneration(milliseconds);
+                if(playerShip.EngineModule.Working)
+                    score += playerShip.Speed * milliseconds / 1000;
+                stage += milliseconds / 1000;
+                if (timerToEnd > 0) timerToEnd -= milliseconds / 1000;
+                if (defeat && defeatTimer > 0)
+                {
+                    playerShip.Sprite.Size = (Math.Min(10,defeatTimer))  / 10f;
+                    if (playerShip.Sprite.Size < 1f)
+                    {
+                        playerShip.TargetSpeed = playerShip.Speed;
+                    }
+                    else
+                    {
+                        playerShip.TargetSpeed = 0;
+                        playerShip.Acceleration = 600;
+                    }
+                    playerShip.EngineModule.Sprite.Size = playerShip.Sprite.Size;
+                    defeatTimer -= milliseconds / 1000;
+                    if (defeatCd > 0)
+                    {
+                        defeatCd -= milliseconds / 1000;
+                    }
+                    if (defeat && defeatCd <= 0)
+                    {
+                        for (int i = 0; i < 3 + (int)(GlobalRandom.NextDouble() * 7); i++)
+                        {
+                            ModulePosition position = playerShip.Positions[(int)(globalRandom.NextDouble() * playerShip.Positions.Length * 0.999f)];
+                            Effects.Add(new SpecEffect(this, (position.XShift + playerShip.X) * playerShip.Sprite.Size, 
+                                (position.YShift + playerShip.Y)*playerShip.Sprite.Size,
+                                new Sprite("explosion", 96, 96, 18, playerShip.Sprite.Size, 1, Color.White), 0.55f, GlobalRandom));
+                        }
+                        defeatCd = 0.2f + (float)GlobalRandom.NextDouble() * 0.2f;
+                    }
+                    if(defeatTimer <=0)
+                    {
+                        playerShip.IsAlive = false;
+                    }
+                }
             }
+        }
+
+        public void IAdmitDefeat()
+        {
+            this.defeat = true;
+            this.defeatTimer = 12;
+            this.timerToEnd = 1;
+        }
+
+        public void Victory()
+        {
+            this.timerToEnd = 1;
         }
 
         public void StarsGenerationFirst()
@@ -124,11 +193,6 @@ namespace Game.Engine
                 stars.Add(new Star(this, (float)globalRandom.NextDouble() * 2000f - 1000f, (float)globalRandom.NextDouble() * 1500f - 750f,
                     new Sprite("star", 8, 8, 1, (float)globalRandom.NextDouble()/2 + 0.5f, 1, color)));
             }
-        }
-
-        public void EnemyGeneration(float milliseconds)
-        {
-
         }
 
         public Ship CreateShip(string nativeName, int x, int y, float height, int team)
@@ -147,16 +211,25 @@ namespace Game.Engine
             Ship ship = new Ship(this, x, y, native.Speed,
                 new Sprite(native.Sprite.SpriteName, native.Sprite.Width, native.Sprite.Height,
                 native.Sprite.MaxFrame, native.Sprite.Size, native.Sprite.MaxAnimation, native.Sprite.Color),
-                modules, native.EnginePosition, native.CorePosition, native.Death, height, team,(int)native.Resources, native.ResourceGeneration, native.EngineFire, native.EngineX, native.EngineY, native.ColorEngine);
+                modules, native.EnginePosition, native.CorePosition, native.Death, height, team,(int)native.Resources, native.ResourceGeneration, 
+                new Sprite(native.EngineFire.SpriteName, native.EngineFire.Width, native.EngineFire.Height,native.EngineFire.MaxFrame,
+                native.EngineFire.Size,native.EngineFire.MaxAnimation,native.EngineFire.Color),
+                native.EngineX, native.EngineY, native.ColorEngine);
             for (int i = 0; i < modules.Length; i++)
             {
                 if (native.Positions[i].TempModule != null)
                 {
                     modules[i].TempModule = new Module(ship, native.Positions[i].TempModule.Width, native.Positions[i].TempModule.Height,
                         native.Positions[i].TempModule.Cooldown, native.Positions[i].TempModule.ActionCost, native.Positions[i].TempModule.Action,
-                        native.Positions[i].TempModule.Defence, native.Positions[i].TempModule.Sprite, native.Positions[i].TempModule.MaxHealth,
-                        native.Positions[i].TempModule.Cost, native.Positions[i].TempModule.Death, native.Positions[i].TempModule.Repairs);
-                    modules[i].TempModule.TempPosition = i;
+                        native.Positions[i].TempModule.Defence, 
+                        new Sprite(native.Positions[i].TempModule.Sprite.SpriteName, native.Positions[i].TempModule.Sprite.Width,
+                        native.Positions[i].TempModule.Sprite.Height,native.Positions[i].TempModule.Sprite.MaxFrame,
+                        native.Positions[i].TempModule.Sprite.Size, native.Positions[i].TempModule.Sprite.MaxAnimation,
+                        native.Positions[i].TempModule.Sprite.Color), native.Positions[i].TempModule.MaxHealth,
+                        native.Positions[i].TempModule.Cost, native.Positions[i].TempModule.Death, native.Positions[i].TempModule.Repairs)
+                    {
+                        TempPosition = i
+                    };
                 }
             }
             ships.Add(ship);

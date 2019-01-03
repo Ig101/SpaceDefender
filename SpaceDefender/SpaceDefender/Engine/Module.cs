@@ -63,14 +63,14 @@ namespace Game.Engine
         {
             get
             {
-                return parent.X + parent.Positions[tempPosition].XShift;
+                return parent.X + parent.Positions[tempPosition].XShift * parent.Sprite.Size;
             }
         }
         public float AbsoluteY
         {
             get
             {
-                return parent.Y + parent.Positions[tempPosition].YShift;
+                return parent.Y + parent.Positions[tempPosition].YShift * parent.Sprite.Size;
             }
         }
 
@@ -114,7 +114,7 @@ namespace Game.Engine
                     }
                 }
             }
-            if(repairs && !working)
+            if(repairs && !working && parent.CoreModule!=null)
             {
                 health += milliseconds / 30000 * maxHealth;
                 if(health>= maxHealth)
@@ -132,8 +132,12 @@ namespace Game.Engine
 
         public bool Damage (float amount, DamageType type)
         {
-            this.health -= amount * defence[(int)type];
-            damageTimer = 100;
+            float damage = amount * defence[(int)type];
+            if (damage > 0)
+            {
+                damageTimer = 100;
+                this.health -= damage;
+            }
             if(health <= 0)
             {
                 if(!repairs)
@@ -142,7 +146,9 @@ namespace Game.Engine
                 }
                 else
                 {
+                    isAlive = true;
                     working = false;
+                    this.health = 0.00001f;
                 }
             }
             return isAlive;
