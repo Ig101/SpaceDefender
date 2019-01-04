@@ -33,7 +33,7 @@ namespace Game.Progress
             GenerateLevels(catalogue);
             this.nextLevel = true;
             this.tempLevel = -1;
-            this.nextLevelTimer = 0.0001f;
+            this.nextLevelTimer = 0;
         }
 
         public void GenerateLevels (Catalogue catalogue)
