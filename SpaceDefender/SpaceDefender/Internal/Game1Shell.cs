@@ -185,7 +185,7 @@ namespace GameMaker
 
         protected override void LoadProfile()
         {
-            HudElement[] elements = new HudElement[13];
+            HudElement[] elements = new HudElement[14];
             elements[0] = gameElement;
             elements[1] = new GameButtonElement("pause", 25, 25, 75, 75, c_color, c_selected_color, c_pressed_color,
                 "pause_button", null, null, new Rectangle(0, 0, 512, 512), MenuActions.PauseGame, gameElement);
@@ -207,9 +207,11 @@ namespace GameMaker
             elements[11] = new GameSkillButtonElement("actionPanel", 1666/2, 1446/2, 128/2, 128/2, Color.White, new Color(230, 230, 230), new Color(0, 0, 0, 255),
                 "demolish", "demolish", "emptyModule", new Rectangle(0, 0, 64, 64), (GameElement)gameElement,0, Delegates.DemolishModule);
             elements[12] = new GameOverlayElement("skill_overlay", 128 / 2, 128 / 2, new Rectangle(0, 0, 64, 64), (GameElement)gameElement);
+            elements[13] = new GameNextLevelElement("next_level", 565, 0, 150, 75, c_color, c_selected_color, c_pressed_color, "next_level", "next_level", "next_level",
+                new Rectangle(0, 0, 1024, 512), MenuActions.NextLevel, gameElement);
             modes.Add("game_mode", new Mode(null, elements, 5, "game", Mode.BlackGlow, null, false));
-            mainElements = new HudElement[1];
-            mainElements[0] = new SpriteElement("shade", 490, 150, 300, 600, "play_shade", new Color(0, 0, 0, 150), new Rectangle(0, 0, 512, 1024), false, false);
+            //mainElements = new HudElement[1];
+            //mainElements[0] = new SpriteElement("shade", 490, 150, 300, 600, "play_shade", new Color(0, 0, 0, 150), new Rectangle(0, 0, 512, 1024), false, false);
             if (mainElements != null)
             {
                 elements = new HudElement[mainElements.Length + 7];
@@ -245,7 +247,7 @@ namespace GameMaker
                 new LevelScaleElement("scale",490,480,300,16,Color.White,null),
                 new ButtonElement("continue",600/2,610/2,ingameScreenSize.X-1200/2,100/2,Id2Str("continue"),"largeFont",false,
                 c_color,c_selected_color,c_pressed_color,MenuActions.ContinueGame,false,false),
-                new ButtonElement("end",600/2,770/2,ingameScreenSize.X-1200/2,100/2,Id2Str("end"),"largeFont",false,
+                new ButtonElement("end",600/2,770/2,ingameScreenSize.X-1200/2,100/2,Id2Str("concede"),"largeFont",false,
                 c_color,c_selected_color,c_pressed_color,MenuActions.EndGame,false,false)
             }, 3.5f, "context", FromAbove, null, false));
 
@@ -263,15 +265,6 @@ namespace GameMaker
                new SpriteElement("shade",340,250,600,300,"context_shade",new Color(0,0,0,150),new Rectangle(0,0,1024,512),false,false),
                 new LabelElement("defeat", 200/2, 600/2, ingameScreenSize.X - 400/2, Id2Str("victory"), false, false, c_color, "largeFont", false, false),
                 new LabelElement("killed", 200/2, 840/2, ingameScreenSize.X - 400/2, Id2Str("killed") + " " + maxScore.ToString(), false, false, c_color, "mediumFont", false, false),
-                new LabelElement("any_key", 200/2, 1400/2, ingameScreenSize.X - 400/2, "any_key_message", true, false, c_color, "mediumFont", false, false),
-                new AnyKeyElement("result",MenuActions.EndGame)
-            }, 3.5f, "result", FromAbove, null, false));
-            modes.Add("game_mode_nextlevel", new Mode((Mode)modes["game_mode"], new HudElement[]
-            {
-               new SpriteElement("shade",340,250,600,300,"context_shade",new Color(0,0,0,150),new Rectangle(0,0,1024,512),false,false),
-                new LabelElement("defeat", 200/2, 600/2, ingameScreenSize.X - 400/2, Id2Str("success"), false, false, c_color, "largeFont", false, false),
-                new LabelElement("killed", 200/2, 840/2, ingameScreenSize.X - 400/2, Id2Str("killed") + " " + maxScore.ToString(), false, false, c_color, "mediumFont", false, false),
-                new LevelScaleElement("scale",490,480,300,16,Color.White,null),
                 new LabelElement("any_key", 200/2, 1400/2, ingameScreenSize.X - 400/2, "any_key_message", true, false, c_color, "mediumFont", false, false),
                 new AnyKeyElement("result",MenuActions.EndGame)
             }, 3.5f, "result", FromAbove, null, false));
@@ -328,6 +321,7 @@ namespace GameMaker
             content.Add("play_shade", Content.Load<Texture2D>("menu//PlayShade"));
             content.Add("scale", Content.Load<Texture2D>("menu//scale"));
             content.Add("scale_marker", Content.Load<Texture2D>("menu//scale_marker"));
+            content.Add("next_level", Content.Load<Texture2D>("menu//Next_level"));
         }
 
         #region loading

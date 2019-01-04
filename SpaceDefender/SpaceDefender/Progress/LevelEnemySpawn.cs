@@ -29,6 +29,15 @@ namespace Game.Progress
         public bool Billed { get { return billed; } set { billed = true; } }
         public Ship Enemy { get { return enemy; } }
         public int TargetY {get{ return Level.sectorVerticalStart + Level.sectorHeight * (targetPosition) + shift; } }
+        public int Shift { get { return shift; } }
+        public int TargetPosition { get { return targetPosition; } }
+        public int Height { get { return height; } }
+        public int Width { get { return width; } }
+        public int ShipClass { get { return shipClass; } }
+        public Direction Direction { get { return direction; } }
+        public string EnemyName { get { return enemyName; } }
+        public float Stage { get { return stage; } }
+        public int Sector { get { return sector; } }
 
         public LevelEnemySpawn (Level level, float stage, int shipClass, string enemyName, Direction direction, int sector, int targetPosition)
         {
@@ -76,10 +85,14 @@ namespace Game.Progress
                 }
                 foreach(LevelEnemySpawn spawn in level.Spawns)
                 {
-                    if(spawn.enemy!=null && spawn.enemy.IsAlive && spawn.direction == direction && sectorsMinY[spawn.sector] < spawn.targetPosition + spawn.height)
+                    if(spawn.enemy!=null && spawn.enemy.IsAlive && spawn.direction == direction )
                     {
-                        sectorsMinY[spawn.sector] = spawn.targetPosition + spawn.height;
-                        holdedPositions[spawn.targetPosition] = true;
+                        if (spawn.shipClass > 2 || this.shipClass>2) return false;
+                        if (sectorsMinY[spawn.sector] < spawn.targetPosition + spawn.height)
+                        {
+                            sectorsMinY[spawn.sector] = spawn.targetPosition + spawn.height;
+                            holdedPositions[spawn.targetPosition] = true;
+                        }
                     }
                 }
                 if (targetPosition > Level.maxPositions)
@@ -124,7 +137,7 @@ namespace Game.Progress
                 }
                 x = level.ShipPosition + (Level.sectorMin + Level.sectorLength * sector)*(direction == Direction.Right?1:-1) + 
                     (int)(40*scene.GlobalRandom.NextDouble()-20);
-                y = Level.sectorVerticalStart + Level.sectorHeight * targetPosition + 2000;
+                y = Level.sectorVerticalStart + Level.sectorHeight * targetPosition + 2000 + (int)(scene.GlobalRandom.NextDouble()*500);
                 shift = (int)(16 * scene.GlobalRandom.NextDouble() - 8);
                 enemy = scene.CreateShip(targetShip.Ship, x, y, (float)(sector + 1 + scene.GlobalRandom.NextDouble())*0.1f, 1);
                 return true;

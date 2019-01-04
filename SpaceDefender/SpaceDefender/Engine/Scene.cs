@@ -27,14 +27,12 @@ namespace Game.Engine
 
         Random globalRandom;
         float stage;
-        float engineTime;
 
-        public float EngineTime { get { return engineTime; } set { engineTime = value; } }
         public float TimerToEnd { get { return timerToEnd; } }
         public float DefeatTimer { get { return defeatTimer; } }
         public Random GlobalRandom { get { return globalRandom; } }
         public bool Defeat { get { return defeat; } }
-        public float Score { get { return score; } }
+        public float Score { get { return score; } set { score = value; } }
         public Ship PlayerShip { get { return playerShip; } }
         public List<Ship> Ships { get { return ships; } }
         public List<Missle> Missles { get { return missles; } }
@@ -42,6 +40,7 @@ namespace Game.Engine
         public List<Star> Stars { get { return stars; } }
         public Catalogue Catalogue { get { return catalogue; } }
         public float Stage { get { return stage; } set { stage = value; } }
+        public LevelManager TempLevelManager { get { return tempLevelManager; } set { tempLevelManager = value; } }
 
         Catalogue catalogue;
         LevelManager tempLevelManager;
@@ -56,29 +55,14 @@ namespace Game.Engine
             this.score = 0;
             globalRandom = new Random();
             StarsGenerationFirst();
-            playerShip = manager.TempLevel.CreateMotherShip(this);
+            playerShip = manager.Levels[manager.TempLevelNumber+1].CreateMotherShip(this);
+            playerShip.Speed = 500;
         }
 
         public void Update(float milliseconds)
         {
             if (PlayerShip != null)
             {
-                if(!playerShip.EngineModule.Working)
-                {
-                    engineTime += 400 * milliseconds / 1000;
-                }
-                else
-                {
-                    engineTime -= 400 * milliseconds / 1000;
-                }
-                if(engineTime<=0)
-                {
-                    engineTime = 0;
-                }
-                else if (engineTime >= playerShip.DefaultSpeed*2/3)
-                {
-                    engineTime = playerShip.DefaultSpeed * 2 / 3;
-                }
                 tempLevelManager.Update(milliseconds);
                 for (int i = 0; i < missles.Count; i++)
                 {
@@ -123,7 +107,7 @@ namespace Game.Engine
                 {
                     if (stars[i].IsAlive)
                     {
-                        stars[i].Update(milliseconds,engineTime);
+                        stars[i].Update(milliseconds);
                     }
                     if (!stars[i].IsAlive)
                     {
@@ -131,8 +115,10 @@ namespace Game.Engine
                         i--;
                     }
                 }
-                if(playerShip.EngineModule.Working)
+                if (playerShip.EngineModule.Working)
+                {
                     score += playerShip.Speed * milliseconds / 1000;
+                }
                 stage += milliseconds / 1000;
                 if (timerToEnd > 0) timerToEnd -= milliseconds / 1000;
                 if (defeat && defeatTimer > 0)
@@ -234,49 +220,6 @@ namespace Game.Engine
             }
             ships.Add(ship);
             return ship;
-        }
-
-        public bool AssembleBlasterModule(Ship ship, int position)
-        {
-            if (ship.Positions.Length <= position) return false;
-            ship.AssembleModule(new Module(ship, 64, 64, 1f, 0, Delegates.BlasterAttack, new float[] { 1, 1, 1 },
-                new Sprite("blaster", 64, 64, 1, 1, 1, Color.White), 1, 1, Delegates.DefaultDeath, false), position);
-            return true;
-        }
-        public bool AssembleRocketModule(Ship ship, int position)
-        {
-            if (ship.Positions.Length <= position) return false;
-            ship.AssembleModule(new Module(ship, 64, 64, 1f, 0, Delegates.RocketAttack, new float[] { 1, 1, 1 },
-                new Sprite("rocket", 64, 64, 1, 1, 1, Color.White), 1, 1, Delegates.DefaultDeath, false), position);
-            return true;
-        }
-        public bool AssembleAnniModule(Ship ship, int position)
-        {
-            if (ship.Positions.Length <= position) return false;
-            ship.AssembleModule(new Module(ship, 64, 64, 2f, 0.2f, Delegates.AnnihilatorAttack, new float[] { 1, 1, 1 },
-                new Sprite("annihilator", 64, 64, 1, 1, 1, Color.White), 1, 1, Delegates.DefaultDeath, false), position);
-            return true;
-        }
-        public bool AssembleGeneratorModule(Ship ship, int position)
-        {
-            if (ship.Positions.Length <= position) return false;
-            ship.AssembleModule(new Module(ship, 64, 64, 1f, 0, Delegates.GenerateResource, new float[] { 1, 1, 1 },
-                new Sprite("generator", 64, 64, 1, 1, 1, Color.White), 2, 1, Delegates.DefaultDeath, false), position);
-            return true;
-        }
-        public bool AssembleArmorModule(Ship ship, int position)
-        {
-            if (ship.Positions.Length <= position) return false;
-            ship.AssembleModule(new Module(ship, 64, 64, 1f, 0, null, new float[] { 0.1f, 1, 1 },
-                new Sprite("armor", 64, 64, 1, 1, 5, Color.White), 2, 1, null, false), position);
-            return true;
-        }
-        public bool AssembleShieldModule(Ship ship, int position)
-        {
-            if (ship.Positions.Length <= position) return false;
-            ship.AssembleModule(new Module(ship, 64, 64, 1f, 0, null, new float[] { 1, 0.1f, 1 },
-                new Sprite("shield", 64, 64, 1, 1, 5, Color.White), 2, 1, null, false), position);
-            return true;
         }
     }
 }

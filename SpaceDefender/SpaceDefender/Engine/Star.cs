@@ -15,9 +15,9 @@ namespace Game.Engine
 
         }
 
-        public void Update(float milliseconds, float engineTime)
+        public void Update(float milliseconds)
         {
-            this.Y += (Parent.PlayerShip.Speed-engineTime)/2*milliseconds/1000;
+            this.Y += (Parent.PlayerShip.Speed)/2*milliseconds/1000;
             if (this.Y > 750)
             {
                 this.Y -= 1500;

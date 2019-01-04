@@ -25,8 +25,14 @@ namespace GameMaker
 
         public static void EndGame(IgnitusGame game, Mode mode, HudElement element)
         {
+
             ((GameElement)(((Mode)game.Modes["game_mode"]).Elements[0])).TempManager = null;
             game.GoToMode("main");
+        }
+
+        public static void NextLevel(IgnitusGame game, Mode mode, HudElement element)
+        {
+            ((GameNextLevelElement)element).NextLevel();
         }
 
         public static void StartGame(IgnitusGame game, Mode mode, HudElement element)

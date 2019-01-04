@@ -124,14 +124,14 @@ namespace Game.Catalogues
         public static bool AssembleArmorModule(Ship ship, int position)
         {
             if (ship.Positions.Length <= position) return false;
-            ship.AssembleModule(new Module(ship, 64, 64, 1f, 0, null, new float[] { 0.1f, 1, 1 },
+            ship.AssembleModule(new Module(ship, 64, 64, 1f, 0, null, new float[] { 0.15f, 1, 1 },
                 new Sprite("armor", 64, 64, 1, 1, 5, Color.White), 2, 1, null, false), position);
             return true;
         }
         public static bool AssembleShieldModule(Ship ship, int position)
         {
             if (ship.Positions.Length <= position) return false;
-            ship.AssembleModule(new Module(ship, 64, 64, 1f, 0, null, new float[] { 1, 0.1f, 1 },
+            ship.AssembleModule(new Module(ship, 64, 64, 1f, 0, null, new float[] { 1, 0.15f, 1 },
                 new Sprite("shield", 64, 64, 1, 1, 5, Color.White), 2, 1, null, false), position);
             return true;
         }
@@ -146,18 +146,38 @@ namespace Game.Catalogues
         public static bool EnemyBlasterAttack(Scene scene, Module owner)
         {
             bool direction = owner.Parent.Positions[owner.TempPosition].Direction == Direction.Right;
-            scene.Missles.Add(new Missle(scene, owner.AbsoluteX + (owner.Width / 2.5f * (direction ? 1 : -1)),
+            if (owner.Parent.LifeTime > 60)
+            {
+                scene.Effects.Add(new SpecEffect(scene, owner.AbsoluteX, owner.AbsoluteY, new Sprite("genEffect", 64, 64, 9, 1, 1, Color.Black), 0.28f, scene.GlobalRandom));
+                scene.Missles.Add(new Missle(scene, owner.AbsoluteX + (owner.Width / 2.5f * (direction ? 1 : -1)),
+                    owner.AbsoluteY, new Sprite("enemyBlasterMissleEnrage", 32, 32, 1, 1, 1, Color.White), 2, 750, direction ? 0 : MathHelper.Pi, DefaultMoveRule, DefaultEnergyDamage,
+                    10, owner.Parent, null));
+            }
+            else
+            {
+                scene.Missles.Add(new Missle(scene, owner.AbsoluteX + (owner.Width / 2.5f * (direction ? 1 : -1)),
                 owner.AbsoluteY, new Sprite("enemyBlasterMissle", 32, 32, 1, 1, 1, Color.White), 2, 750, direction ? 0 : MathHelper.Pi, DefaultMoveRule, DefaultEnergyDamage,
                 1, owner.Parent, null));
+            }
             return true;
         }
 
         public static bool EnemyRocketAttack(Scene scene, Module owner)
         {
             bool direction = owner.Parent.Positions[owner.TempPosition].Direction == Direction.Right;
-            scene.Missles.Add(new Missle(scene, owner.AbsoluteX + (owner.Width / 2f * (direction ? 1 : -1)),
-                owner.AbsoluteY, new Sprite("enemyRocketMissle", 32, 32, 1, 1, 1, Color.White), 2, 500, direction ? 0 : MathHelper.Pi, DefaultMoveRule, DefaultPhysicalDamage,
-                1, owner.Parent, null));
+            if (owner.Parent.LifeTime > 60)
+            {
+                scene.Effects.Add(new SpecEffect(scene, owner.AbsoluteX, owner.AbsoluteY, new Sprite("genEffect", 64, 64, 9, 1, 1, Color.Black), 0.28f, scene.GlobalRandom));
+                scene.Missles.Add(new Missle(scene, owner.AbsoluteX + (owner.Width / 2f * (direction ? 1 : -1)),
+                    owner.AbsoluteY, new Sprite("enemyRocketMissleEnrage", 32, 32, 1, 1, 1, Color.White), 2, 500, direction ? 0 : MathHelper.Pi, DefaultMoveRule, DefaultPhysicalDamage,
+                    10, owner.Parent, null));
+            }
+            else
+            {
+                scene.Missles.Add(new Missle(scene, owner.AbsoluteX + (owner.Width / 2f * (direction ? 1 : -1)),
+                    owner.AbsoluteY, new Sprite("enemyRocketMissle", 32, 32, 1, 1, 1, Color.White), 2, 500, direction ? 0 : MathHelper.Pi, DefaultMoveRule, DefaultPhysicalDamage,
+                    1, owner.Parent, null));
+            }
             return true;
         }
 
@@ -168,7 +188,7 @@ namespace Game.Catalogues
 
         public static bool WinConditionKillEmAll (Level level, Scene tempScene)
         {
-            if (!tempScene.PlayerShip.EngineModule.Working) return false;
+            if (level.MaxScore < tempScene.Score) return true;
             foreach(LevelEnemySpawn spawn in level.Spawns)
             {
                 if (spawn.Enemy == null || spawn.Enemy.IsAlive) return false;

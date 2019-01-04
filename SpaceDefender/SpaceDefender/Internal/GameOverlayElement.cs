@@ -45,7 +45,7 @@ namespace GameMaker
                 if (game.GetTempMode().Name == "game" && tempSkillButton != null &&
                 gameElement.TempScene != null && gameElement.TempScene.PlayerShip != null)
                 {
-                    if (gameElement.TempScene.TimerToEnd > 0)
+                    if (gameElement.TempScene.Defeat)
                     {
                         this.TempSkillButton = null;
                         return;

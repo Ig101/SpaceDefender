@@ -102,12 +102,13 @@ namespace Game.Engine
                 cooldownTimer -= milliseconds/1000;
                 if (cooldownTimer <= 0)
                 {
-                    if (actionCost > parent.Resources)
+                    if (actionCost > parent.Resources ||  Parent.Parent.TempLevelManager.NextLevel)
                     {
                         cooldownTimer = 0;
                     }
                     else
                     {
+                        
                         parent.Resources -= actionCost;
                         cooldownTimer = cooldown;
                         Action(parent.Parent, this);

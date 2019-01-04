@@ -60,6 +60,7 @@
     <Compile Include="Catalogues\Delegates.cs" />
     <Compile Include="Catalogues\ShipNative.cs" />
     <Compile Include="Engine\GameObject.cs" />
+    <Compile Include="Internal\GameNextLevelElement.cs" />
     <Compile Include="Internal\LevelScaleElement.cs" />
     <Compile Include="Progress\Level.cs" />
     <Compile Include="Progress\LevelEnemySpawn.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Internal\GameElementShell.cs" />
     <Compile Include="Internal\MenuActions.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Progress\LevelMissleSpawn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

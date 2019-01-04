@@ -28,7 +28,9 @@ namespace Game.Engine
         float engineX;
         float engineY;
         bool colorEngine;
+        float lifeTime;
         
+        public float LifeTime { get { return lifeTime; } set { lifeTime = value; } }
         public bool ColorEngine { get { return colorEngine; } }
         public Sprite EngineFire { get { return engineFire; } }
         public float EngineX { get { return engineX; } }
@@ -40,7 +42,7 @@ namespace Game.Engine
         public float Height { get { return height; } }
         public int Team { get { return team; } }
         public DeathEffect Death { get { return death; } }
-        public float Resources { get { return resources; } set { resources = value>99.9f?99.9f:value; } }
+        public float Resources { get { return resources; } set { resources = value>10.9f?10.9f:value; } }
         public Module EngineModule { get { return positions[enginePosition].TempModule; } }
         public Module CoreModule { get { return positions[corePosition].TempModule; } }
         public float Speed { get { return speed; } set { speed = value; } }
@@ -53,6 +55,7 @@ namespace Game.Engine
             bool colorEngine)
     :       base(parent, x, y, sprite)
         {
+            this.lifeTime = 0;
             this.colorEngine = colorEngine;
             this.engineFire = engineFire;
             this.engineX = engineX;
@@ -71,6 +74,7 @@ namespace Game.Engine
 
         public override void Update(float milliseconds)
         {
+            if (this.IsAlive && this.Y < 600 && this.Y > -600) this.lifeTime += milliseconds / 1000;
             if (CoreModule != null)
             {
                 if (EngineModule == null || !EngineModule.Working && this!=Parent.PlayerShip)
@@ -78,13 +82,12 @@ namespace Game.Engine
                     targetSpeed = 0;
                     acceleration = 400;
                 }
-                else if (this == Parent.PlayerShip)
-                {
-                    targetSpeed = defaultSpeed;
-                    acceleration = 1000;
-                }
+                
             }
-            Resources += resourceGeneration * milliseconds/1000;
+            if (EngineModule.Working && !Parent.TempLevelManager.NextLevel)
+            {
+                Resources += resourceGeneration * milliseconds / 1000;
+            }
             if (targetSpeed > speed)
             {
                 speed += Math.Abs(acceleration) * milliseconds/1000;

@@ -93,7 +93,7 @@ namespace Game
                             new Rectangle(missle.Sprite.Width * (int)missle.Sprite.Frame, missle.Sprite.Height * missle.Sprite.Animation,
                             missle.Sprite.Width, missle.Sprite.Height),
                             missle.Sprite.Color, missle.Angle, new Vector2(missle.Sprite.Width / 2, missle.Sprite.Height / 2),
-                            SpriteEffects.None, missle.Owner.Height + (missle.Owner == tempScene.PlayerShip ? 9f:4f));
+                            SpriteEffects.None, missle.Owner!=null?missle.Owner.Height + (missle.Owner == tempScene.PlayerShip ? 9f:4f):4f);
                     }
                 }
                 foreach (SpecEffect effect in tempScene.Effects)
@@ -129,7 +129,7 @@ namespace Game
             if(tempScene!=null)
             {
                 tempScene.Update(milliseconds);
-                if(tempScene.Defeat && tempScene.TimerToEnd<=0 && tempLevelManager!=null)
+                if(tempScene.Defeat && tempScene.TimerToEnd<=0 && tempLevelManager!=null && tempLevelManager.TempLevelNumber>=0)
                 {
                     foreach (LevelEnemySpawn spawn in tempLevelManager.TempLevel.Spawns)
                     {
@@ -146,31 +146,73 @@ namespace Game
             }
             if(tempLevelManager!=null && tempLevelManager.NextLevel)
             {
-                if(tempScene.TimerToEnd <=0)
+                foreach(Ship ship in tempScene.Ships)
                 {
-                    if (tempLevelManager.Levels.Length - 1 > tempLevelManager.TempLevelNumber)
+                    if (ship == tempScene.PlayerShip)
                     {
-                        ((LabelElement)((Mode)game.Modes["game_mode_nextlevel"]).Elements[2]).Text = game.Id2Str("killed") + " " + tempLevelManager.KilledCount;
-                        ((LevelScaleElement)((Mode)game.Modes["game_mode_nextlevel"]).Elements[3]).Manager = tempLevelManager;
-                        PrepareFrom(game, "game_mode_nextlevel");
+                        ship.TargetSpeed = 500;
+                        ship.Acceleration = 400;
                     }
                     else
                     {
-                        foreach (LevelEnemySpawn spawn in tempLevelManager.TempLevel.Spawns)
+                        ship.TargetSpeed = 0;
+                        ship.Acceleration = 1000;
+                    }
+                }
+                if (tempScene.PlayerShip.CoreModule.Health < tempScene.PlayerShip.CoreModule.MaxHealth)
+                {
+                    tempScene.PlayerShip.CoreModule.Health += tempScene.PlayerShip.CoreModule.MaxHealth * milliseconds / 5000;
+                }
+                else
+                {
+                    tempScene.PlayerShip.CoreModule.Health = tempScene.PlayerShip.CoreModule.MaxHealth;
+                }
+                if (tempScene.PlayerShip.EngineModule.Health < tempScene.PlayerShip.EngineModule.MaxHealth)
+                {
+                    tempScene.PlayerShip.EngineModule.Health += tempScene.PlayerShip.EngineModule.MaxHealth * milliseconds / 5000;
+                }
+                else
+                {
+                    tempScene.PlayerShip.EngineModule.Health = tempScene.PlayerShip.EngineModule.MaxHealth;
+                }
+                if(tempLevelManager.NextLevelEntity!=null)
+                {
+                    if(tempScene.PlayerShip.X > tempLevelManager.NextLevelEntity.ShipPosition)
+                    {
+                        tempScene.PlayerShip.X -= milliseconds;
+                        if(tempScene.PlayerShip.X >= tempLevelManager.NextLevelEntity.ShipPosition)
                         {
-                            if (spawn.Enemy != null && !spawn.Enemy.IsAlive && !spawn.Billed)
-                            {
-                                tempLevelManager.KilledCount++;
-                                spawn.Billed = true;
-                            }
+                            tempScene.PlayerShip.X = tempLevelManager.NextLevelEntity.ShipPosition;
                         }
+                    }
+                    else if (tempScene.PlayerShip.X < tempLevelManager.NextLevelEntity.ShipPosition)
+                    {
+                        tempScene.PlayerShip.X += milliseconds;
+                        if (tempScene.PlayerShip.X <= tempLevelManager.NextLevelEntity.ShipPosition)
+                        {
+                            tempScene.PlayerShip.X = tempLevelManager.NextLevelEntity.ShipPosition;
+                        }
+                    }
+                }
+                if (tempScene.TimerToEnd <=0 && tempLevelManager.TempLevelNumber>=0)
+                {
+                    foreach (LevelEnemySpawn spawn in tempLevelManager.TempLevel.Spawns)
+                    {
+                        if (spawn.Enemy != null && !spawn.Enemy.IsAlive && !spawn.Billed)
+                        {
+                            tempLevelManager.KilledCount++;
+                            spawn.Billed = true;
+                        }
+                    }
+                    if (tempLevelManager.NextLevelEntity==null)
+                    {
+                        tempScene.PlayerShip.Speed = 0;
+                        tempScene.PlayerShip.TargetSpeed = 0;
+                        tempScene.PlayerShip.Y -= (milliseconds / 1000) * tempScene.PlayerShip.DefaultSpeed;
                         ((LabelElement)((Mode)game.Modes["game_mode_victory"]).Elements[2]).Text = game.Id2Str("killed") + " " + tempLevelManager.KilledCount;
                         PrepareFrom(game, "game_mode_victory");
                     }
                 }
-                tempScene.PlayerShip.Speed = 0;
-                tempScene.PlayerShip.TargetSpeed = 0;
-                tempScene.PlayerShip.Y -= (milliseconds / 1000) * tempScene.PlayerShip.DefaultSpeed;
             }
         }
 

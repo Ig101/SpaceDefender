@@ -28,29 +28,45 @@ namespace Game.Progress
         int levelPreference;
 
         LevelManager manager;
+        float maxScore;
 
         int shipPosition;
 
         List<LevelEnemySpawn> spawns = new List<LevelEnemySpawn>();
+        List<LevelMissleSpawn> missles = new List<LevelMissleSpawn>();
         WinCondition winCondition;
 
+        public float MaxScore { get { return maxScore; } }
         public int ShipPosition { get { return shipPosition; } }
         public List<LevelEnemySpawn> Spawns { get { return spawns; } }
+        public List<LevelMissleSpawn> Missles { get { return missles; } }
         public int LevelPreference { get { return levelPreference; } }
+        public WinCondition WinCondition { get { return winCondition; } }
 
         public int SectorsCountLeft { get { return (Level.sectorBound - (Level.sectorMin - ShipPosition)) / Level.sectorLength + 1; } }
         public int SectorsCountRight { get { return (Level.sectorBound - (Level.sectorMin + ShipPosition)) / Level.sectorLength + 1; } }
 
-        public Level (LevelManager manager, WinCondition winCondition)
+        public Level (LevelManager manager, WinCondition winCondition, float maxScore, int shipPosition, int levelPreference)
         {
+            this.levelPreference = levelPreference;
+            this.shipPosition = shipPosition;
+            this.maxScore = maxScore;
             this.manager = manager;
-            this.spawns = spawns;
             this.winCondition = winCondition;
         }
 
-        public Level (Level native)
+        public Level (LevelManager manager, Level native)
         {
-
+            this.levelPreference = native.LevelPreference;
+            this.shipPosition = native.ShipPosition;
+            this.maxScore = native.MaxScore;
+            this.manager = manager;
+            this.winCondition = native.WinCondition;
+            for(int i =0; i<native.Spawns.Count;i++)
+            {
+                this.Spawns.Add(new LevelEnemySpawn(this, native.Spawns[i].Stage, native.Spawns[i].ShipClass, native.Spawns[i].EnemyName,
+                    native.Spawns[i].Direction, native.Spawns[i].Sector, native.Spawns[i].TargetPosition));
+            }
         }
 
         public Ship CreateMotherShip (Scene scene)
@@ -60,12 +76,13 @@ namespace Game.Progress
 
         public void Update(float milliseconds, Scene scene)
         {
-            foreach(LevelEnemySpawn spawn in spawns)
+            foreach (LevelEnemySpawn spawn in spawns)
             {
                 spawn.GenerateEnemy(scene);
                 spawn.Update(milliseconds, scene);
             }
-            manager.NextLevel = (!manager.NextLevel)?winCondition(this, scene):true;
+            scene.Victory();
+            manager.NextLevel = (!manager.NextLevel) ? winCondition(this, scene) : true;
         }
     }
 }

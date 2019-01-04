@@ -26,3 +26,5 @@ enemyRocketMissle;enemies/enemyRocketMissle;game
 spawn;enemies/spawn;game
 spawnFire;enemies/spawnFire;game
 spawnDeath;enemies/spawn_death;game
+enemyBlasterMissleEnrage;enemies/enemyBlasterMissleEnrage;game
+enemyRocketMissleEnrage;enemies/enemyRocketMissleEnrage;game
