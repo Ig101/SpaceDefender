@@ -28,7 +28,7 @@ namespace GameMaker
 
         public string FonName { get { return fonName; } }
 
-        public GameElementShell (string fonName)
+        public GameElement (string fonName)
             :base("game",int.MinValue/2,int.MinValue/2,int.MaxValue,int.MaxValue,false,false,false)
         {
             animationProgress = 1;
@@ -133,11 +133,11 @@ namespace GameMaker
 
         protected abstract void DrawAll(IgnitusGame game, Color fonColor);
 
-        protected abstract void UpdateAll(IgnitusGame game, GameElementShell gameElement, ControlsState state, ControlsState prevState, float milliseconds);
+        protected abstract void UpdateAll(IgnitusGame game, GameElement gameElement, ControlsState state, ControlsState prevState, float milliseconds);
 
-        protected abstract void UpdateButtons(GameElementShell gameElement, ControlsState state, ControlsState prevState, float milliseconds);
+        protected abstract void UpdateButtons(GameElement gameElement, ControlsState state, ControlsState prevState, float milliseconds);
 
-        protected abstract void FirstTimeUpdate(IgnitusGame game, GameElementShell gameElement);
+        protected abstract void FirstTimeUpdate(IgnitusGame game, GameElement gameElement);
 
         Color UpdateFonColor (Color fonColor)
         {

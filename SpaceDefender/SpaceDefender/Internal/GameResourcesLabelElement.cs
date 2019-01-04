@@ -11,10 +11,10 @@ namespace GameMaker
 {
     class GameResourcesLabelElement: LabelElement
     {
-        GameElementShell gameElement;
+        GameElement gameElement;
 
         public GameResourcesLabelElement(string name, int x, int y, int width, string text, bool convert, bool align, Color color,
-            string font, GameElementShell gameElement)
+            string font, GameElement gameElement)
             :base(name,x,y,width,text,convert,align,color,font,false,false)
         {
             this.gameElement = gameElement;

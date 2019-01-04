@@ -61,6 +61,7 @@
     <Compile Include="Catalogues\ShipNative.cs" />
     <Compile Include="Engine\GameObject.cs" />
     <Compile Include="Internal\GameNextLevelElement.cs" />
+    <Compile Include="Internal\GameHintElement.cs" />
     <Compile Include="Internal\LevelScaleElement.cs" />
     <Compile Include="Progress\Level.cs" />
     <Compile Include="Progress\LevelEnemySpawn.cs" />

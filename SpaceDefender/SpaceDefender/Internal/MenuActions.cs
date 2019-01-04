@@ -15,7 +15,7 @@ namespace GameMaker
             Mode gameMode = (Mode)game.Modes["game_mode"];
             if (gameMode.Elements.Length > 1)
             {
-                ((GameElementShell)(gameMode).Elements[0]).PrepareFrom(game,"game_mode_context");
+                ((GameElement)(gameMode).Elements[0]).PrepareFrom(game,"game_mode_context");
             }
             else
             {
@@ -40,7 +40,7 @@ namespace GameMaker
             Mode gameMode = (Mode)game.Modes["game_mode"];
             if (gameMode.Elements.Length > 1)
             {
-                GameElementShell gameElement = (GameElementShell)(gameMode).Elements[0];
+                GameElement gameElement = (GameElement)(gameMode).Elements[0];
                 gameElement.PrepareForFirstUse(game);
             }
             //TODO
@@ -52,7 +52,7 @@ namespace GameMaker
             Mode gameMode = (Mode)game.Modes["game_mode"];
             if (gameMode.Elements.Length > 1)
             {
-                ((GameElementShell)(gameMode).Elements[0]).PrepareTo();
+                ((GameElement)(gameMode).Elements[0]).PrepareTo();
             }
             game.GoToMode("game_mode");
         }

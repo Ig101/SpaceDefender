@@ -11,7 +11,7 @@ namespace GameMaker
 {
     class GameNextLevelElement: SpriteButtonElement
     {
-        GameElementShell gameElement;
+        GameElement gameElement;
 
         public void NextLevel ()
         {
@@ -19,7 +19,7 @@ namespace GameMaker
         }
 
         public GameNextLevelElement(string name, int x, int y, int width, int height, Color color, Color selectedColor, Color pressedColor,
-            string spriteName, string selectedSpriteName, string pressedSpriteName, Rectangle source, PressButtonAction action, GameElementShell gameElement)
+            string spriteName, string selectedSpriteName, string pressedSpriteName, Rectangle source, PressButtonAction action, GameElement gameElement)
             :base(name,x,y,width,height,"","",color,selectedColor,pressedColor,color,spriteName,selectedSpriteName,pressedSpriteName,
                  source,action,false,false)
         {

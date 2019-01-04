@@ -17,8 +17,8 @@ namespace GameMaker
         Color c_selected_color = new Color(240, 240, 240, 255);
         Color c_pressed_color = new Color(120, 120, 120, 255);
 
-        public delegate string SetProfileString(GameElementShell gameElement);
-        public delegate void GetProfileString(GameElementShell gameElement, string str);
+        public delegate string SetProfileString(GameElement gameElement);
+        public delegate void GetProfileString(GameElement gameElement, string str);
 
         SetProfileString methodForSaveProfile;
         GetProfileString methodForLoadProfile;
@@ -26,18 +26,18 @@ namespace GameMaker
         string[] texturesOnStart;
         HudElement[] loadingScreenElements;
         HudElement[] mainElements;
-        GameElementShell gameElement;
+        GameElement gameElement;
 
         int score;
         int maxScore;
         string profileFilePath;
 
-        public GameElementShell GameElement { get { return gameElement; } }
+        public GameElement GameElement { get { return gameElement; } }
 
 
         public Game1Shell(int loadingTime, string[] texturesOnStart, HudElement[] loadingScreenElements, HudElement[] mainElements,
             string profileFilePath,
-            SetProfileString methodForSaveProfile, GetProfileString methodForLoadProfile, GameElementShell gameElement)
+            SetProfileString methodForSaveProfile, GetProfileString methodForLoadProfile, GameElement gameElement)
             :base(new Vector2(0, 0), 64, 0, new Point(1280, 800))
         {
             this.gameElement = gameElement;

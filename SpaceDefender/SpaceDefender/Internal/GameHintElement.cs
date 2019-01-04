@@ -8,14 +8,14 @@ using Microsoft.Xna.Framework;
 
 namespace GameMaker
 {
-    class GameButtonElement: SpriteButtonElement
+    class GameHintElement: HudElement
     {
         GameElement gameElement;
+        float shown;
 
-        public GameButtonElement(string name, int x, int y, int width, int height, Color color, Color selectedColor, Color pressedColor,
-            string spriteName, string selectedSpriteName, string pressedSpriteName, Rectangle source, PressButtonAction action, GameElement gameElement)
-            :base(name,x,y,width,height,"","",color,selectedColor,pressedColor,color,spriteName,selectedSpriteName,pressedSpriteName,
-                 source,action,false,false)
+        public GameHintElement(string name, int x, int y, int width, int height, Color color,
+            string spriteName, Rectangle source, GameElement gameElement)
+            :base(name,x,y,width,height,true,false,false)
         {
             this.gameElement = gameElement;
         }
@@ -31,8 +31,6 @@ namespace GameMaker
             {
                 coff = gameElement.UpdateButtonCoff();
             }
-            if (coff>=0.2f)
-                base.Update(game, mode, state, prevState, milliseconds);
         }
 
         public override void Draw(IgnitusGame game, Matrix animation, Color fonColor, float milliseconds)
@@ -46,10 +44,20 @@ namespace GameMaker
             { 
                 coff = gameElement.UpdateButtonCoff();
             }
-            if (coff > 0)
+            if (coff > 0 && shown>0)
             {
-                base.Draw(game, animation, new Color((byte)(fonColor.R * coff), (byte)(fonColor.G * coff), (byte)(fonColor.B * coff), (byte)(fonColor.A * coff)),milliseconds);
+                
             }
+        }
+
+        public override void PassiveUpdate(IgnitusGame game, Mode mode, ControlsState state, ControlsState prevState, float milliseconds)
+        {
+            this.shown = gameElement
+        }
+
+        public override void DrawPreActionsUpdate(IgnitusGame game, Color fonColor)
+        {
+
         }
     }
 }

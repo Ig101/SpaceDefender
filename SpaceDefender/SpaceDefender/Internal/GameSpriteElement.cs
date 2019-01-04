@@ -10,10 +10,10 @@ namespace GameMaker
 {
     class GameSpriteElement: SpriteElement
     {
-        GameElementShell gameElement;
+        GameElement gameElement;
 
         public GameSpriteElement(string name, int x, int y, int width, int height, Color color,
-            string spriteName, Rectangle source, GameElementShell gameElement)
+            string spriteName, Rectangle source, GameElement gameElement)
             :base(name,x,y,width,height,spriteName,color,source,0,Vector2.Zero,Microsoft.Xna.Framework.Graphics.SpriteEffects.None,false,false)
         {
             this.gameElement = gameElement;
