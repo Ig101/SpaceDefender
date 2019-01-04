@@ -265,6 +265,7 @@ namespace GameMaker
                new SpriteElement("shade",340,250,600,300,"context_shade",new Color(0,0,0,150),new Rectangle(0,0,1024,512),false,false),
                 new LabelElement("defeat", 200/2, 600/2, ingameScreenSize.X - 400/2, Id2Str("victory"), false, false, c_color, "largeFont", false, false),
                 new LabelElement("killed", 200/2, 840/2, ingameScreenSize.X - 400/2, Id2Str("killed") + " " + maxScore.ToString(), false, false, c_color, "mediumFont", false, false),
+              new LabelElement("killed", 200/2, 480, ingameScreenSize.X - 400/2, Id2Str("to_be_continued"), false, false, c_color, "mediumFont", false, false),
                 new LabelElement("any_key", 200/2, 1400/2, ingameScreenSize.X - 400/2, "any_key_message", true, false, c_color, "mediumFont", false, false),
                 new AnyKeyElement("result",MenuActions.EndGame)
             }, 3.5f, "result", FromAbove, null, false));
