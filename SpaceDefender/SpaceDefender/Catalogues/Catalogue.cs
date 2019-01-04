@@ -1,4 +1,5 @@
 ﻿using Game.Engine;
+using Game.Progress;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections;
@@ -22,7 +23,16 @@ namespace Game.Catalogues
         public Catalogue()
         {
             /////////////////////Levels
-            
+            Level level = new Level(null, Delegates.WinConditionKillEmAll, 1500000, 0, 0);
+            level.Spawns.Add(new LevelEnemySpawn(level, 0, 1, null, Direction.Left, 1, 1));
+            level.Spawns.Add(new LevelEnemySpawn(level, 0, 1, null, Direction.Left, 0, 6));
+            level.Spawns.Add(new LevelEnemySpawn(level, 0, 1, null, Direction.Left, 2, 4));
+            this.LevelNatives.Add("first1",level);
+            level = new Level(null, Delegates.WinConditionKillEmAll, 1500000, 0, 1);
+            level.Spawns.Add(new LevelEnemySpawn(level, 0, 1, null, Direction.Right, 1, 1));
+            level.Spawns.Add(new LevelEnemySpawn(level, 0, 1, null, Direction.Right, 0, 6));
+            level.Spawns.Add(new LevelEnemySpawn(level, 0, 1, null, Direction.Right, 2, 4));
+            this.LevelNatives.Add("second1",level);
             /////////////////////Modules
             ModuleNatives.Add("motherCore", new Module(null, 36, 330, 1, 0, null, new float[] { 1, 1, 0 },
                 new Engine.Sprite("motherCore", 64, 512, 1, 1, 5, Color.White), 100, 0, null, false));

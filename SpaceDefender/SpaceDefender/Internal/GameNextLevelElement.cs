@@ -30,7 +30,14 @@ namespace GameMaker
         {
             if (((GameElement)gameElement).TempManager.NextLevel && ((GameElement)gameElement).TempManager.NextLevelTimer == 0)
             {
-                this.Y = 25 - (int)(((GameElement)gameElement).TempScene.TimerToEnd * 1200);
+                if (((GameElement)gameElement).TempManager.NextLevelEntity != null)
+                {
+                    this.Y = 25 - (int)(((GameElement)gameElement).TempScene.TimerToEnd * 1200);
+                }
+                else
+                {
+                    this.Y = -1000;
+                }
             }
             else
             {

@@ -89,7 +89,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Ignitus">
+    <Reference Include="Ignitus, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Ignitus\IgnitusProducts\bin\Debug\Ignitus.dll</HintPath>
     </Reference>
     <Reference Include="MonoGame.Framework">

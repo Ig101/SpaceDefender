@@ -78,8 +78,8 @@ namespace GameMaker
                     }
                     Selected = true;
                     selectedChange = true;
-                    Point correctedMousePos = base.TransformPointToElementCoords(state.MousePosition);
-                    if (base.CheckMousePositionInElement(state.MousePosition) &&
+                    Point correctedMousePos = TransformPointToElementCoords(state.MousePosition);
+                    if (CheckMousePositionInElement(state.MousePosition) &&
                         state.LeftButtonState && !prevState.LeftButtonState ||
                         state.KeysState[0] && !prevState.KeysState[0] && mode.KeyboardUse)
                     {

@@ -115,12 +115,11 @@ namespace Game.Engine
                     }
                 }
             }
-            if(repairs && !working && parent.CoreModule!=null)
+            if(repairs && parent.CoreModule!=null && !working)
             {
                 health += milliseconds / 30000 * maxHealth;
-                if(health>= maxHealth)
+                if(health>= maxHealth / sprite.MaxAnimation)
                 {
-                    health = maxHealth;
                     working = true;
                 }
             }
@@ -139,17 +138,20 @@ namespace Game.Engine
                 damageTimer = 100;
                 this.health -= damage;
             }
-            if(health <= 0)
+            if (!repairs)
             {
-                if(!repairs)
+                if (health <= 0)
                 {
                     isAlive = false;
                 }
-                else
+            }
+            else
+            {
+                if (health <= maxHealth/sprite.MaxAnimation)
                 {
                     isAlive = true;
                     working = false;
-                    this.health = 0.00001f;
+                    this.health = Math.Max(0.00001f,health);
                 }
             }
             return isAlive;

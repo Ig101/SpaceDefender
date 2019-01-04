@@ -81,8 +81,11 @@ namespace Game.Progress
                 spawn.GenerateEnemy(scene);
                 spawn.Update(milliseconds, scene);
             }
-            scene.Victory();
-            manager.NextLevel = (!manager.NextLevel) ? winCondition(this, scene) : true;
+            if (manager.NextLevel == false && winCondition(this, scene))
+            {
+                scene.Victory();
+                manager.NextLevel = true;
+            }
         }
     }
 }

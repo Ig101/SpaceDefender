@@ -56,7 +56,6 @@ namespace Game.Engine
             globalRandom = new Random();
             StarsGenerationFirst();
             playerShip = manager.Levels[manager.TempLevelNumber+1].CreateMotherShip(this);
-            playerShip.Speed = 500;
         }
 
         public void Update(float milliseconds)

@@ -38,16 +38,29 @@ namespace Game.Progress
 
         public void GenerateLevels (Catalogue catalogue)
         {
+            Random r = new Random();
             tempLevel = 0;
             levels = new Level[10];
-            levels[0] = new Level(this, Delegates.WinConditionKillEmAll,1500000,0,0);
-            levels[0].Spawns.Add(new LevelEnemySpawn(levels[0], 0, 1, null, Direction.Left, 1, 1));
-            levels[0].Spawns.Add(new LevelEnemySpawn(levels[0], 0, 1, null, Direction.Left, 0, 6));
-            levels[0].Spawns.Add(new LevelEnemySpawn(levels[0], 0, 1, null, Direction.Left, 2, 4));
-            levels[1] = new Level(this, Delegates.WinConditionKillEmAll,1500000,0,1);
-            levels[1].Spawns.Add(new LevelEnemySpawn(levels[0], 0, 1, null, Direction.Right, 1, 1));
-            levels[1].Spawns.Add(new LevelEnemySpawn(levels[0], 0, 1, null, Direction.Right, 0, 6));
-            levels[1].Spawns.Add(new LevelEnemySpawn(levels[0], 0, 1, null, Direction.Right, 2, 4));
+            for(int i = 0; i<levels.Length;i++)
+            {
+                List<Level> fittingNatives = new List<Level>();
+                foreach(Level level in catalogue.LevelNatives.Values)
+                {
+                    if(level.LevelPreference == i)
+                    {
+                        fittingNatives.Add(level);
+                    }
+                }
+                if(fittingNatives.Count==0)
+                {
+                    levels[i] = null;
+                }
+                else
+                {
+                    levels[i] = new Level(this, fittingNatives[(int)(r.NextDouble() * fittingNatives.Count * 0.9999f)]);
+                }
+                //levels[i] = new Level(this,)
+            }
         }
 
         public void NextLevelStart ()

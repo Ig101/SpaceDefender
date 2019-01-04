@@ -49,10 +49,11 @@ namespace Game
                             new Rectangle((int)ship.X + 640, (int)ship.Y + 400, ship.Sprite.AbsoluteWidth, ship.Sprite.AbsoluteHeight),
                             new Rectangle(ship.Sprite.Width * (int)ship.Sprite.Frame, ship.Sprite.Height * ship.Sprite.Animation, ship.Sprite.Width, ship.Sprite.Height),
                             ship.CoreModule==null || ship.CoreModule.DamageTimer > 0 ? Color.Red: ship.Sprite.Color, 0, new Vector2(ship.Sprite.Width / 2, ship.Sprite.Height / 2), SpriteEffects.None, ship.Height);
-                        if (ship.EngineModule != null && ship.EngineModule.Working)
+                        if (ship.EngineModule != null && ship.CoreModule!=null)
                         {
                             game.DrawSprite(ship.EngineFire.SpriteName,
-                                new Rectangle((int)(ship.X + ship.EngineX) + 640, (int)(ship.Y + ship.EngineY) + 400, ship.EngineFire.AbsoluteWidth, ship.EngineFire.AbsoluteHeight),
+                                new Rectangle((int)(ship.X + ship.EngineX) + 640, (int)(ship.Y + ship.EngineY) + 
+                                400, ship.EngineFire.AbsoluteWidth, ship.EngineFire.AbsoluteHeight),
                                 new Rectangle(ship.EngineFire.Width * (int)ship.EngineFire.Frame, ship.EngineFire.Height * ship.EngineFire.Animation, 
                                 ship.EngineFire.Width, ship.EngineFire.Height),
                                 (ship.CoreModule == null || ship.CoreModule.DamageTimer > 0) && ship.ColorEngine?Color.Red:ship.EngineFire.Color,
@@ -150,7 +151,7 @@ namespace Game
                 {
                     if (ship == tempScene.PlayerShip)
                     {
-                        ship.TargetSpeed = 500;
+                        ship.TargetSpeed = 900;
                         ship.Acceleration = 400;
                     }
                     else

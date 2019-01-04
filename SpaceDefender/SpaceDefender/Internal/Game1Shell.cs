@@ -38,7 +38,7 @@ namespace GameMaker
         public Game1Shell(int loadingTime, string[] texturesOnStart, HudElement[] loadingScreenElements, HudElement[] mainElements,
             string profileFilePath,
             SetProfileString methodForSaveProfile, GetProfileString methodForLoadProfile, GameElementShell gameElement)
-            :base(new Vector2(-16, -16), 32, MathHelper.Pi + MathHelper.PiOver4, new Point(1280, 800))
+            :base(new Vector2(0, 0), 64, 0, new Point(1280, 800))
         {
             this.gameElement = gameElement;
             this.loadingTime = loadingTime;

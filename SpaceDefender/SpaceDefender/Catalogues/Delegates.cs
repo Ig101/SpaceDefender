@@ -40,7 +40,8 @@ namespace Game.Catalogues
 
         public static bool GenerateResource(Scene scene, Module owner)
         {
-            owner.Parent.Resources += 0.1f;
+            if(owner.Parent.EngineModule.Working)
+                owner.Parent.Resources += 0.1f;
             scene.Effects.Add(new SpecEffect(scene, owner.AbsoluteX, owner.AbsoluteY, new Sprite("genEffect", 64, 64, 9, 1, 1, Color.White), 0.28f, scene.GlobalRandom));
             return true;
         }
