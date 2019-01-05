@@ -20,6 +20,8 @@ namespace Game
         GameOverlayElement overlay;
         LevelManager tempLevelManager;
 
+        public Catalogue Catalogue { get { return catalogue; } }
+
         public LevelManager TempManager { get { return tempLevelManager; } set { tempLevelManager = value; } }
         public GameOverlayElement Overlay
         {
@@ -147,6 +149,12 @@ namespace Game
             }
             if(tempLevelManager!=null && tempLevelManager.NextLevel)
             {
+                if(!tempScene.VictoryBilled)
+                {
+                    ((ButtonElement)((Mode)game.Modes["game_mode_context"]).Elements[3]).Text = game.Id2Str("save");
+                    ((Game1Shell)game).SaveProfilePublic();
+                    tempScene.VictoryBilled = true;
+                }
                 foreach(Ship ship in tempScene.Ships)
                 {
                     if (ship == tempScene.PlayerShip)
@@ -227,6 +235,7 @@ namespace Game
             if(tempLevelManager==null)
             {
                 tempLevelManager = new LevelManager(catalogue);
+                ((LevelScaleElement)((Mode)game.Modes["main"]).Elements[0]).Manager = tempLevelManager;
             }
             ((LevelScaleElement)((Mode)game.Modes["game_mode_context"]).Elements[1]).Manager = tempLevelManager;
             

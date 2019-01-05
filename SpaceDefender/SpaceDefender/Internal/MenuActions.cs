@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Game;
+using Game.Progress;
 using Ignitus;
 
 namespace GameMaker
@@ -25,14 +26,20 @@ namespace GameMaker
 
         public static void EndGame(IgnitusGame game, Mode mode, HudElement element)
         {
-
-            ((GameElement)(((Mode)game.Modes["game_mode"]).Elements[0])).TempManager = null;
+            GameElement elem = ((GameElement)((Mode)game.Modes["game_mode"]).Elements[0]);
+            if (!elem.TempManager.NextLevel || elem.TempManager.NextLevelTimer > 0 || elem.TempManager.NextLevelEntity == null)
+            {
+                elem.TempManager = null;
+                ((LevelScaleElement)((Mode)game.Modes["main"]).Elements[0]).Manager = null;
+            }
             game.GoToMode("main");
         }
 
         public static void NextLevel(IgnitusGame game, Mode mode, HudElement element)
         {
             ((GameNextLevelElement)element).NextLevel();
+            ((Game1Shell)game).SaveProfilePublic();
+            ((ButtonElement)((Mode)game.Modes["game_mode_context"]).Elements[3]).Text = game.Id2Str("concede");
         }
 
         public static void StartGame(IgnitusGame game, Mode mode, HudElement element)

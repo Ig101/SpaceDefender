@@ -26,7 +26,7 @@ namespace Game.Progress
         public Scene TempScene { get { return tempScene; } set { tempScene = value; } }
         public bool NextLevel { get { return nextLevel; } set { nextLevel = value; } }
         public Level[] Levels { get { return levels; } }
-        public int TempLevelNumber { get { return tempLevel; } }
+        public int TempLevelNumber { get { return tempLevel; }  set { tempLevel = value; } }
 
         public LevelManager (Catalogue catalogue)
         {
@@ -39,7 +39,6 @@ namespace Game.Progress
         public void GenerateLevels (Catalogue catalogue)
         {
             Random r = new Random();
-            tempLevel = 0;
             levels = new Level[10];
             for(int i = 0; i<levels.Length;i++)
             {

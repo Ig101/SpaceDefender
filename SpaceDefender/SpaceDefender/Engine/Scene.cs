@@ -14,6 +14,7 @@ namespace Game.Engine
         bool defeat;
         float defeatTimer;
         float defeatCd;
+        bool victoryBilled;
 
         Ship playerShip;
         float score;
@@ -28,6 +29,7 @@ namespace Game.Engine
         Random globalRandom;
         float stage;
 
+        public bool VictoryBilled { get { return victoryBilled; } set { victoryBilled = value; } }
         public float TimerToEnd { get { return timerToEnd; } }
         public float DefeatTimer { get { return defeatTimer; } }
         public Random GlobalRandom { get { return globalRandom; } }
@@ -47,6 +49,7 @@ namespace Game.Engine
 
         public Scene (Catalogue catalogue, LevelManager manager)
         {
+            victoryBilled = true;
             manager.TempScene = this;
             this.tempLevelManager = manager;
             this.defeat = false;
@@ -167,6 +170,7 @@ namespace Game.Engine
         public void Victory()
         {
             this.timerToEnd = 1;
+            victoryBilled = false;
         }
 
         public void StarsGenerationFirst()

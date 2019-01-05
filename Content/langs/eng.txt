@@ -1,10 +1,10 @@
 fullscreen_message@Press F4 to toggle fullscreen mode
 volume@Volume
-next_level_hint@Press to continue
+next_level_hint@Press to continue. If you see this button, you can quit without auto-defeat.
 resources_hint@ Amount of resources you can spend. Each module costs 1. Maximum is 10.
 skillButton_hint@ Drag modules on ship to deploy them. Select one to get more information.
 engine_hint@ Ship with hardly damaged engine cannot generate resources at all.
-core_hint@ If core is destroyed, you'll loose. Deploy modules to protect it. All ship cores is created by ethereal energy and immune to the damage from the same source. 
+core_hint@ If core is destroyed, you'll lose. Deploy modules to protect it. All ship cores is immune to ethereal damage. If you lose or concede, all progress will be dropped.
 blaster_hint@ Energy* damage dealer. Low health. 
 rocket_hint@ Physical* damage dealer. Low health. 
 annihilator_hint@ Ethereal* damage dealer. Spends resources per shoot. Low health. Ethereal missles cannot damage core.

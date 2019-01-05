@@ -40,16 +40,24 @@ namespace Game.Catalogues
             level.Spawns.Add(new LevelEnemySpawn(level, 54, 1, null, Direction.Right, 1, 4));
             level.Spawns.Add(new LevelEnemySpawn(level, 52, 1, null, Direction.Right, 0, 5));
             level.Spawns.Add(new LevelEnemySpawn(level, 51, 1, null, Direction.Right, 2, 1));
-            for(int i =0; i<10; i++)
+            level.Spawns.Add(new LevelEnemySpawn(level, 57, 1, null, Direction.Left, 0, 1));
+            level.Spawns.Add(new LevelEnemySpawn(level, 58, 1, null, Direction.Left, 2, 1));
+            level.Spawns.Add(new LevelEnemySpawn(level, 60, 1, null, Direction.Left, 1, 1));
+            level.Spawns.Add(new LevelEnemySpawn(level, 59, 1, null, Direction.Right, 0, 1));
+            level.Spawns.Add(new LevelEnemySpawn(level, 58, 1, null, Direction.Right, 1, 1));
+            level.Spawns.Add(new LevelEnemySpawn(level, 61, 1, null, Direction.Right, 2, 1));
+            this.LevelNatives.Add("first1", level);
+            level = new Level(null, Delegates.WinConditionKillEmAll, 1500000, 0, 1);
+            for (int i =0; i<10; i++)
             {
-                level.Spawns.Add(new LevelEnemySpawn(level, 57 + i * 12 + (float)(r.NextDouble()*4), 1, null, Direction.Left, 0, (int)(r.NextDouble() * 6 * 0.999 + 1)));
-                level.Spawns.Add(new LevelEnemySpawn(level, 57 + i * 12 + (float)(r.NextDouble() * 4), 1, null, Direction.Left, 1, (int)(r.NextDouble() * 6 * 0.999 + 1)));
-                level.Spawns.Add(new LevelEnemySpawn(level, 57 + i * 12 + (float)(r.NextDouble() * 4), 1, null, Direction.Left, 2, (int)(r.NextDouble() * 6 * 0.999 + 1)));
-                level.Spawns.Add(new LevelEnemySpawn(level, 57 + i * 12 + (float)(r.NextDouble() * 4), 1, null, Direction.Right, 0, (int)(r.NextDouble() * 6 * 0.999 + 1)));
-                level.Spawns.Add(new LevelEnemySpawn(level, 57 + i * 12 + (float)(r.NextDouble() * 4), 1, null, Direction.Right, 1, (int)(r.NextDouble() * 6 * 0.999 + 1)));
-                level.Spawns.Add(new LevelEnemySpawn(level, 57 + i * 12 + (float)(r.NextDouble() * 4), 1, null, Direction.Right, 2, (int)(r.NextDouble() * 6 * 0.999 + 1)));
+                level.Spawns.Add(new LevelEnemySpawn(level, i * 12 + (float)(r.NextDouble()*4), 1, null, Direction.Left, 0, (int)(r.NextDouble() * 6 * 0.999 + 1)));
+                level.Spawns.Add(new LevelEnemySpawn(level, i * 12 + (float)(r.NextDouble() * 4), 1, null, Direction.Left, 1, (int)(r.NextDouble() * 6 * 0.999 + 1)));
+                level.Spawns.Add(new LevelEnemySpawn(level, i * 12 + (float)(r.NextDouble() * 4), 1, null, Direction.Left, 2, (int)(r.NextDouble() * 6 * 0.999 + 1)));
+                level.Spawns.Add(new LevelEnemySpawn(level, i * 12 + (float)(r.NextDouble() * 4), 1, null, Direction.Right, 0, (int)(r.NextDouble() * 6 * 0.999 + 1)));
+                level.Spawns.Add(new LevelEnemySpawn(level, i * 12 + (float)(r.NextDouble() * 4), 1, null, Direction.Right, 1, (int)(r.NextDouble() * 6 * 0.999 + 1)));
+                level.Spawns.Add(new LevelEnemySpawn(level, i * 12 + (float)(r.NextDouble() * 4), 1, null, Direction.Right, 2, (int)(r.NextDouble() * 6 * 0.999 + 1)));
             }
-            this.LevelNatives.Add("first1",level);
+            this.LevelNatives.Add("second1",level);
             /////////////////////Modules
             ModuleNatives.Add("motherCore", new Module(null, 36, 330, 1, 0, null, new float[] { 1, 1, 0 },
                 new Engine.Sprite("motherCore", 64, 512, 1, 1, 5, Color.White), 100, 0, null, false));

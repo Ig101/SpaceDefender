@@ -25,27 +25,42 @@ namespace GameMaker
 
         public override void PassiveUpdate(IgnitusGame game, Mode mode, ControlsState state, ControlsState prevState, float milliseconds)
         {
-            migalkaTime -= milliseconds / 1000;
-            if(migalkaTime <=0)
-            {
-                shown = !shown;
-                migalkaTime = 0.6f;
-            }
-            base.PassiveUpdate(game, mode, state, prevState, milliseconds);
+                migalkaTime -= milliseconds / 1000;
+                if (migalkaTime <= 0)
+                {
+                    shown = !shown;
+                    migalkaTime = 0.6f;
+                }
+                base.PassiveUpdate(game, mode, state, prevState, milliseconds);
         }
 
         public override void Draw(IgnitusGame game, Matrix animation, Color fonColor, float milliseconds)
         {
-            int width = this.Width / manager.Levels.Length;
-            for(int i = 0; i<manager.Levels.Length;i++)
+            int levels;
+            int tempLevel;
+            bool nextLevel;
+            if (manager == null)
             {
-                game.DrawSprite("scale", new Rectangle(X + i*width, Y, width, Height), new Rectangle(0,0,width/(Height/16),16), new Color(Color.R * fonColor.R / 255,
-                    Color.G * fonColor.G / 255, Color.B * fonColor.B / 255, Color.A * fonColor.A / 255), 0, Vector2.Zero, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+                levels = 10;
+                tempLevel = -1;
+                nextLevel = true;
             }
-            game.DrawSprite("scale", new Rectangle(X + (manager.Levels.Length-1) * width, Y, width, Height), new Rectangle(0, 0, width / (Height / 16), 16), new Color(Color.R * fonColor.R / 255,
-                Color.G * fonColor.G / 255, Color.B * fonColor.B / 255, Color.A * fonColor.A / 255), 0, Vector2.Zero, Microsoft.Xna.Framework.Graphics.SpriteEffects.FlipHorizontally, 0);
-            if(shown) game.DrawSprite("scale_marker", new Rectangle(X + width/(manager.NextLevel?1:2) + manager.TempLevelNumber * width, Y, Height, Height), new Rectangle(0, 0, 16, 16), new Color(Color.R * fonColor.R / 255,
-                Color.G * fonColor.G / 255, Color.B * fonColor.B / 255, Color.A * fonColor.A / 255), 0, new Vector2(8,0), Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+            else
+            {
+                levels = manager.Levels.Length;
+                tempLevel = manager.TempLevelNumber;
+                nextLevel = manager.NextLevel;
+            }
+                int width = this.Width / levels;
+                for (int i = 0; i < levels; i++)
+                {
+                    game.DrawSprite("scale", new Rectangle(X + i * width, Y, width, Height), new Rectangle(0, 0, width / (Height / 16), 16), new Color(Color.R * fonColor.R / 255,
+                        Color.G * fonColor.G / 255, Color.B * fonColor.B / 255, Color.A * fonColor.A / 255), 0, Vector2.Zero, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+                }
+                game.DrawSprite("scale", new Rectangle(X + (levels - 1) * width, Y, width, Height), new Rectangle(0, 0, width / (Height / 16), 16), new Color(Color.R * fonColor.R / 255,
+                    Color.G * fonColor.G / 255, Color.B * fonColor.B / 255, Color.A * fonColor.A / 255), 0, Vector2.Zero, Microsoft.Xna.Framework.Graphics.SpriteEffects.FlipHorizontally, 0);
+                if (shown) game.DrawSprite("scale_marker", new Rectangle(X + width / (nextLevel ? 1 : 2) + tempLevel * width, Y, Height, Height), new Rectangle(0, 0, 16, 16), new Color(Color.R * fonColor.R / 255,
+                     Color.G * fonColor.G / 255, Color.B * fonColor.B / 255, Color.A * fonColor.A / 255), 0, new Vector2(8, 0), Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
         }
     }
 }

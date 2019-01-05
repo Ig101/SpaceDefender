@@ -41,6 +41,11 @@ namespace Game
         public static void LoadProfile(GameElementShell gameElementShell, string profile)
         {
             GameElement gameElement = (GameElement)gameElementShell;
+            if(profile!="")
+            {
+                gameElement.TempManager = new Game.Progress.LevelManager(gameElement.Catalogue);
+                gameElement.TempManager.TempLevelNumber = int.Parse(profile);
+            }
             //Put your logic here
         }
 
@@ -48,7 +53,10 @@ namespace Game
         public static string SaveProfile(GameElementShell gameElementShell)
         {
             GameElement gameElement = (GameElement)gameElementShell;
-            //Put your logic here
+            if(gameElement.TempManager.NextLevel && gameElement.TempManager.NextLevelEntity!=null && gameElement.TempManager.TempLevelNumber>=0 && gameElement.TempManager.NextLevelTimer<=0)
+            {
+                return (gameElement.TempManager.TempLevelNumber).ToString();
+            }
             return null;
         }
     }

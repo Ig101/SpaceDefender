@@ -7,6 +7,7 @@ using System;
 using System.Text;
 using Game;
 using Game.Catalogues;
+using Game.Progress;
 
 namespace GameMaker
 {
@@ -185,6 +186,23 @@ namespace GameMaker
 
         protected override void LoadProfile()
         {
+            //LoadFile
+            if (File.Exists(profileFilePath + @"\profile.mrc"))
+            {
+                byte[] bytes = Magic.Restore(profileFilePath + @"\profile.mrc");
+                string str = Encoding.UTF8.GetString(bytes);
+                string[] strs = str.Split(new char[] { '\n' });
+                string masterString = strs[0];
+                //Master
+                if (int.TryParse(masterString, out int result))
+                {
+                    maxScore = result;
+                }
+                string otherString = str.Remove(0, masterString.Length + 1);
+                //Other
+                methodForLoadProfile?.Invoke(gameElement, otherString);
+            }
+
             HudElement[] elements = new HudElement[19];
             elements[0] = gameElement;
             elements[1] = new GameButtonElement("pause", 25, 25, 75, 75, c_color, c_selected_color, c_pressed_color,
@@ -209,7 +227,7 @@ namespace GameMaker
             elements[12] = new GameOverlayElement("skill_overlay", 128 / 2, 128 / 2, new Rectangle(0, 0, 64, 64), (GameElement)gameElement);
             elements[13] = new GameNextLevelElement("next_level", 565, 0, 150, 75, c_color, c_selected_color, c_pressed_color, "next_level", "next_level", "next_level",
                 new Rectangle(0, 0, 1024, 512), MenuActions.NextLevel, gameElement);
-            elements[14] = new GameHintElement("hint_core", 525, 335, 600, 220, new Color(200, 0, 0, 150), Color.White, "core_hint", null,(GameElement)gameElement,true);
+            elements[14] = new GameHintElement("hint_core", 525, 320, 600, 250, new Color(200, 0, 0, 150), Color.White, "core_hint", null,(GameElement)gameElement,true);
             elements[15] = new GameHintElement("hint_engine", 540, 565, 600, 130, new Color(200, 0, 0, 150), Color.White, "engine_hint", null, (GameElement)gameElement,true);
             elements[16] = new GameHintElement("hint_next_level", 340, 85, 600, 100, new Color(0, 0, 0, 150), Color.White, "next_level_hint", null, (GameElement)gameElement,false);
             elements[17] = new GameHintElement("hint_resources", 830, 85, 600, 130, new Color(200, 0, 0, 150), Color.White, "resources_hint", null, (GameElement)gameElement, true);
@@ -224,8 +242,9 @@ namespace GameMaker
                     (GameSkillButtonElement)elements[11]
                 }, (GameElement)gameElement,true);
             modes.Add("game_mode", new Mode(null, elements, 5, "game", Mode.BlackGlow, null, false));
-            //mainElements = new HudElement[1];
-            //mainElements[0] = new SpriteElement("shade", 490, 150, 300, 600, "play_shade", new Color(0, 0, 0, 150), new Rectangle(0, 0, 512, 1024), false, false);
+            mainElements = new HudElement[1];
+            //mainElements[0] = new SpriteElement("shade", 490, 250, 300, 460, "play_shade", new Color(0, 0, 0, 150), new Rectangle(0, 0, 512, 1024), false, false);
+            mainElements[0] = new LevelScaleElement("scale", 150, 50, 300, 16,Color.White, ((GameElement)gameElement).TempManager);
             if (mainElements != null)
             {
                 elements = new HudElement[mainElements.Length + 5];
@@ -264,7 +283,10 @@ namespace GameMaker
                 new ButtonElement("end",600/2,770/2,ingameScreenSize.X-1200/2,100/2,Id2Str("concede"),"largeFont",false,
                 c_color,c_selected_color,c_pressed_color,MenuActions.EndGame,false,false)
             }, 3.5f, "context", FromAbove, null, false));
-
+            if (((GameElement)gameElement).TempManager != null && ((GameElement)gameElement).TempManager.TempLevelNumber >= 0)
+            {
+                ((ButtonElement)((Mode)Modes["game_mode_context"]).Elements[3]).Text = Id2Str("save");
+            }
             modes.Add("game_mode_result", new Mode((Mode)modes["game_mode"], new HudElement[]
             {
                new SpriteElement("shade",340,250,600,300,"context_shade",new Color(0,0,0,150),new Rectangle(0,0,1024,512),false,false),
@@ -283,22 +305,11 @@ namespace GameMaker
                 new LabelElement("any_key", 200/2, 1400/2, ingameScreenSize.X - 400/2, "any_key_message", true, false, c_color, "mediumFont", false, false),
                 new AnyKeyElement("result",MenuActions.EndGame)
             }, 3.5f, "result", FromAbove, null, false));
-            //LoadFile
-            if (File.Exists(profileFilePath+@"\profile.mrc"))
-            {
-                byte[] bytes = Magic.Restore(profileFilePath + @"\profile.mrc");
-                string str = Encoding.UTF8.GetString(bytes);
-                string[] strs = str.Split(new char[] { '\n' });
-                string masterString = strs[0];
-                //Master
-                if (int.TryParse(masterString, out int result))
-                {
-                    maxScore = result;
-                }
-                string otherString = str.Remove(0, masterString.Length + 1);
-                //Other
-                methodForLoadProfile?.Invoke(gameElement, otherString);
-            }
+        }
+
+        public void SaveProfilePublic()
+        {
+            this.SaveProfile();
         }
 
         protected override void SaveProfile()
