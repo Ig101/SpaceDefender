@@ -13,7 +13,7 @@ using Game.Progress;
 
 namespace Game
 {
-    class GameElement: GameMaker.GameElement
+    class GameElement: GameElementShell
     {
         Scene tempScene;
         Catalogue catalogue;
@@ -125,7 +125,7 @@ namespace Game
             game.EndDrawing();
             }
 
-        protected override void UpdateAll(IgnitusGame game, GameMaker.GameElement gameElement, ControlsState state, ControlsState prevState, float milliseconds)
+        protected override void UpdateAll(IgnitusGame game, GameElementShell gameElement, ControlsState state, ControlsState prevState, float milliseconds)
         {
             if(tempScene!=null)
             {
@@ -217,12 +217,12 @@ namespace Game
             }
         }
 
-        protected override void UpdateButtons(GameMaker.GameElement gameElement, ControlsState state, ControlsState prevState, float milliseconds)
+        protected override void UpdateButtons(GameElementShell gameElement, ControlsState state, ControlsState prevState, float milliseconds)
         {
             
         }
 
-        protected override void FirstTimeUpdate(IgnitusGame game, GameMaker.GameElement gameElement)
+        protected override void FirstTimeUpdate(IgnitusGame game, GameElementShell gameElement)
         {
             if(tempLevelManager==null)
             {

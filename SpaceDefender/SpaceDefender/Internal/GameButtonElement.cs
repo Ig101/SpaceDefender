@@ -10,10 +10,10 @@ namespace GameMaker
 {
     class GameButtonElement: SpriteButtonElement
     {
-        GameElement gameElement;
+        GameElementShell gameElement;
 
         public GameButtonElement(string name, int x, int y, int width, int height, Color color, Color selectedColor, Color pressedColor,
-            string spriteName, string selectedSpriteName, string pressedSpriteName, Rectangle source, PressButtonAction action, GameElement gameElement)
+            string spriteName, string selectedSpriteName, string pressedSpriteName, Rectangle source, PressButtonAction action, GameElementShell gameElement)
             :base(name,x,y,width,height,"","",color,selectedColor,pressedColor,color,spriteName,selectedSpriteName,pressedSpriteName,
                  source,action,false,false)
         {

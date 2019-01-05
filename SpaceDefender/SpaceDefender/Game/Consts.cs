@@ -38,14 +38,14 @@ namespace Game
         public static string profileSavePath = Environment.CurrentDirectory;
 
         //Method that brings profile information and analyse it
-        public static void LoadProfile(GameMaker.GameElement gameElementShell, string profile)
+        public static void LoadProfile(GameElementShell gameElementShell, string profile)
         {
             GameElement gameElement = (GameElement)gameElementShell;
             //Put your logic here
         }
 
         //Method that creates profile information string
-        public static string SaveProfile(GameMaker.GameElement gameElementShell)
+        public static string SaveProfile(GameElementShell gameElementShell)
         {
             GameElement gameElement = (GameElement)gameElementShell;
             //Put your logic here

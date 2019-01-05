@@ -10,11 +10,11 @@ namespace GameMaker
 {
     class GameHintElement: HudElement
     {
-        GameElement gameElement;
+        GameElementShell gameElement;
         float shown;
 
         public GameHintElement(string name, int x, int y, int width, int height, Color color,
-            string spriteName, Rectangle source, GameElement gameElement)
+            string spriteName, Rectangle source, GameElementShell gameElement)
             :base(name,x,y,width,height,true,false,false)
         {
             this.gameElement = gameElement;
@@ -52,7 +52,7 @@ namespace GameMaker
 
         public override void PassiveUpdate(IgnitusGame game, Mode mode, ControlsState state, ControlsState prevState, float milliseconds)
         {
-            this.shown = gameElement
+            //this.shown = gameElement
         }
 
         public override void DrawPreActionsUpdate(IgnitusGame game, Color fonColor)
