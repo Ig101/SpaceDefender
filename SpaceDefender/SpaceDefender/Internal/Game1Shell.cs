@@ -228,7 +228,7 @@ namespace GameMaker
             //mainElements[0] = new SpriteElement("shade", 490, 150, 300, 600, "play_shade", new Color(0, 0, 0, 150), new Rectangle(0, 0, 512, 1024), false, false);
             if (mainElements != null)
             {
-                elements = new HudElement[mainElements.Length + 7];
+                elements = new HudElement[mainElements.Length + 5];
                 for (int i = 0; i < mainElements.Length; i++)
                 {
                     elements[i] = mainElements[i];
@@ -236,7 +236,7 @@ namespace GameMaker
             }
             else
             {
-                elements = new HudElement[7];
+                elements = new HudElement[5];
             }
             //DownloadAdditiveElements
             elements[elements.Length - 1] = new SpriteButtonElement("play", ingameScreenSize.X / 2 - 200 / 2, ingameScreenSize.Y / 2, 400 / 2, 400 / 2, "", "", c_color,
@@ -245,13 +245,13 @@ namespace GameMaker
             elements[elements.Length - 2] = new SpriteButtonElement("exit", 50 / 2, 50 / 2, 150 / 2, 150 / 2, null, null, c_color,
                 c_selected_color, c_pressed_color, c_color, "exit_button", null, null, new Rectangle(0, 0, 512, 512),
                 MenuActions.Exit, false, false);
-            elements[elements.Length - 3] = new SlideElement("soundReg", 550 / 2, 75 / 2, 400 / 2, 50 / 2, "slider", c_color, c_selected_color, c_pressed_color,
-                MenuActions.SoundVolume, 130, false, true, 0.13f, false, false);
-            ((SlideElement)elements[elements.Length - 3]).Position = volume / 100f;
-            elements[elements.Length - 4] = new LabelElement("fullscreen", 205 / 2, 1450 / 2, ingameScreenSize.X - 400 / 2, "fullscreen_message", true, false, c_color, "smallFont", false, false);
-            elements[elements.Length - 5] = new LabelElement("score", 195 / 2, 570 / 2, ingameScreenSize.X - 400 / 2, "", false, false, c_color, "mediumFont", false, false);
-            elements[elements.Length - 6] = new LabelElement("max_score", 195 / 2, 670 / 2, ingameScreenSize.X - 400 / 2, "", false, false, c_color, "mediumFont", false, false);
-            elements[elements.Length - 7] = new LabelElement("volume", 320 / 2, 70 / 2, 1000 / 2, "volume", true, true, c_color, "smallFont", false, false);
+            //elements[elements.Length - 6] = new SlideElement("soundReg", 550 / 2, 75 / 2, 400 / 2, 50 / 2, "slider", c_color, c_selected_color, c_pressed_color,
+            //    MenuActions.SoundVolume, 130, false, true, 0.13f, false, false);
+            //((SlideElement)elements[elements.Length - 3]).Position = volume / 100f;
+            elements[elements.Length - 3] = new LabelElement("fullscreen", 205 / 2, 1450 / 2, ingameScreenSize.X - 400 / 2, "fullscreen_message", true, false, c_color, "smallFont", false, false);
+            elements[elements.Length - 4] = new LabelElement("score", 195 / 2, 570 / 2, ingameScreenSize.X - 400 / 2, "", false, false, c_color, "mediumFont", false, false);
+            elements[elements.Length - 5] = new LabelElement("max_score", 195 / 2, 670 / 2, ingameScreenSize.X - 400 / 2, "", false, false, c_color, "mediumFont", false, false);
+            //elements[elements.Length - 7] = new LabelElement("volume", 320 / 2, 70 / 2, 1000 / 2, "volume", true, true, c_color, "smallFont", false, false);
             //
             modes.Add("main", new Mode((Mode)modes["game_mode"], elements, 3.5f, "main", FromAbove, null, false));
 
@@ -375,8 +375,8 @@ namespace GameMaker
         {
             Game1Shell game = (Game1Shell)objs[0];
             game.LoadEngineContent();
-            game.LoadMainInformation();
             game.LoadMainContent();
+            game.LoadMainInformation();
             game.LoadTexturePack("game");
             game.GameElement.SetFon((Texture2D)game.ContentTex[game.GameElement.FonName]);
         }

@@ -12,9 +12,9 @@ generator_hint@ Generates 1 resource per 10 seconds. Medium health.
 armor_hint@ Protects from physical* damage. Medium health.
 shield_hint@ Protects from energy* damage. Medium health.
 demolish_hint@ Destroy any of deployed modules.   
-continue@Continue
-concede@Concede
-save@Save and close
+continue@continue
+concede@concede
+save@save and close
 killed@Killed:
 victory@VICTORY
 defeat@DEFEAT
