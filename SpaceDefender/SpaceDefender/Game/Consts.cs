@@ -1,4 +1,5 @@
-﻿using GameMaker;
+﻿using Game.Engine;
+using GameMaker;
 using Ignitus;
 using System;
 using System.Collections.Generic;
@@ -41,10 +42,17 @@ namespace Game
         public static void LoadProfile(GameElementShell gameElementShell, string profile)
         {
             GameElement gameElement = (GameElement)gameElementShell;
-            if(profile!="")
+            string[] strs = profile.Split(new char[] { ';' });
+            if(strs.Length>1)
             {
                 gameElement.TempManager = new Game.Progress.LevelManager(gameElement.Catalogue);
-                gameElement.TempManager.TempLevelNumber = int.Parse(profile);
+                gameElement.TempManager.TempLevelNumber = int.Parse(strs[0]);
+                string[] positions = new string[strs.Length - 3];
+                for(int i = 2; i<strs.Length-1;i++)
+                {
+                    positions[i - 2] = strs[i];
+                }
+                gameElement.SetShipStartCharacteristics(float.Parse(strs[1]),positions);
             }
             //Put your logic here
         }
@@ -55,7 +63,12 @@ namespace Game
             GameElement gameElement = (GameElement)gameElementShell;
             if(gameElement.TempManager.NextLevel && gameElement.TempManager.NextLevelEntity!=null && gameElement.TempManager.TempLevelNumber>=0 && gameElement.TempManager.NextLevelTimer<=0)
             {
-                return (gameElement.TempManager.TempLevelNumber).ToString();
+                string str = (gameElement.TempManager.TempLevelNumber).ToString() + ";" + gameElement.TempScene.PlayerShip.Resources+";";
+                foreach(ModulePosition pos in gameElement.TempScene.PlayerShip.Positions)
+                {
+                    str += (pos.TempModule == null ? "null" : pos.TempModule.Sprite.SpriteName)+":" + (pos.TempModule == null ? "null" : pos.TempModule.Health.ToString())+ ";";
+                }
+                return str;
             }
             return null;
         }

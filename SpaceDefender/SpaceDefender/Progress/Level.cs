@@ -1,4 +1,5 @@
-﻿using Game.Engine;
+﻿using Game.Catalogues;
+using Game.Engine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,9 +70,44 @@ namespace Game.Progress
             }
         }
 
-        public Ship CreateMotherShip (Scene scene)
+        public Ship CreateMotherShip(Scene scene, float resources, string[] positions)
         {
-            return scene.CreateShip("mothership", shipPosition, 30, 0, 0);
+            Ship ship = scene.CreateShip("mothership", shipPosition, 30, 0, 0);
+            ship.Resources = resources;
+            if (positions != null)
+            {
+                for (int i = 0; i < positions.Length; i++)
+                {
+                    string[] strs = positions[i].Split(new char[] { ':' });
+                    switch (strs[0])
+                    {
+                        case "blaster":
+                            Delegates.AssembleBlasterModule(ship, i);
+                            break;
+                        case "rocket":
+                            Delegates.AssembleRocketModule(ship, i);
+                            break;
+                        case "annihilator":
+                            Delegates.AssembleAnniModule(ship, i);
+                            break;
+                        case "generator":
+                            Delegates.AssembleGeneratorModule(ship, i);
+                            break;
+                        case "armor":
+                            Delegates.AssembleArmorModule(ship, i);
+                            break;
+                        case "shield":
+                            Delegates.AssembleShieldModule(ship, i);
+                            break;
+                    }
+                    if (ship.Positions[i].TempModule != null)
+                    {
+                        ship.Positions[i].TempModule.Health = float.Parse(strs[1]);
+                        ship.Positions[i].TempModule.Update(1);
+                    }
+                }
+            }
+            return ship;
         }
 
         public void Update(float milliseconds, Scene scene)

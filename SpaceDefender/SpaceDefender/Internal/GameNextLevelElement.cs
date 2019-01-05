@@ -28,21 +28,25 @@ namespace GameMaker
 
         public override void PassiveUpdate(IgnitusGame game, Mode mode, ControlsState state, ControlsState prevState, float milliseconds)
         {
-            if (((GameElement)gameElement).TempManager.NextLevel && ((GameElement)gameElement).TempManager.NextLevelTimer == 0)
+            if (((GameElement)gameElement).TempManager != null)
             {
-                if (((GameElement)gameElement).TempManager.NextLevelEntity != null)
+                if (((GameElement)gameElement).TempManager.NextLevel && ((GameElement)gameElement).TempManager.NextLevelTimer == 0)
                 {
-                    this.Y = 25 - (int)(((GameElement)gameElement).TempScene.TimerToEnd * 1200);
+                    if (((GameElement)gameElement).TempManager.NextLevelEntity != null)
+                    {
+                        this.Y = 25 - (int)(((GameElement)gameElement).TempScene.TimerToEnd * 1200);
+                    }
+                    else
+                    {
+                        this.Y = -1000;
+                    }
                 }
                 else
                 {
-                    this.Y = -1000;
+                    this.Y = -1175 + (int)(((GameElement)gameElement).TempManager.NextLevelTimer * 1200);
                 }
             }
-            else
-            {
-                this.Y = -1175 + (int)(((GameElement)gameElement).TempManager.NextLevelTimer * 1200);
-            }
+            else this.Y = -1000;
             base.PassiveUpdate(game, mode, state, prevState, milliseconds);
         }
 

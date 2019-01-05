@@ -19,6 +19,8 @@ namespace Game
         Catalogue catalogue;
         GameOverlayElement overlay;
         LevelManager tempLevelManager;
+        float resources;
+        string[] positions;
 
         public Catalogue Catalogue { get { return catalogue; } }
 
@@ -33,8 +35,15 @@ namespace Game
         public GameElement(string fon)
             :base(fon)
         {
+            resources = 10;
             catalogue = new Catalogue();
           
+        }
+
+        public void SetShipStartCharacteristics (float resources, string[] positions)
+        {
+            this.resources = resources;
+            this.positions = positions;
         }
 
         protected override void DrawAll(IgnitusGame game, Color fonColor)
@@ -152,6 +161,8 @@ namespace Game
                 if(!tempScene.VictoryBilled)
                 {
                     ((ButtonElement)((Mode)game.Modes["game_mode_context"]).Elements[3]).Text = game.Id2Str("save");
+                    if(tempLevelManager.NextLevelEntity == null)
+                        ((Game1Shell)game).SetScore(((Game1Shell)game).Score + 1);
                     ((Game1Shell)game).SaveProfilePublic();
                     tempScene.VictoryBilled = true;
                 }
@@ -220,6 +231,7 @@ namespace Game
                         tempScene.PlayerShip.Y -= (milliseconds / 1000) * tempScene.PlayerShip.DefaultSpeed;
                         ((LabelElement)((Mode)game.Modes["game_mode_victory"]).Elements[2]).Text = game.Id2Str("killed") + " " + tempLevelManager.KilledCount;
                         PrepareFrom(game, "game_mode_victory");
+                        //tempLevelManager = null;
                     }
                 }
             }
@@ -239,7 +251,7 @@ namespace Game
             }
             ((LevelScaleElement)((Mode)game.Modes["game_mode_context"]).Elements[1]).Manager = tempLevelManager;
             
-            tempScene = new Scene(catalogue, tempLevelManager);
+            tempScene = new Scene(catalogue, tempLevelManager, resources,positions);
         }
 
         void PlayerCommand (int keyIndex, bool state)

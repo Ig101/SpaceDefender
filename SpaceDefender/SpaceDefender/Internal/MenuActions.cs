@@ -31,6 +31,17 @@ namespace GameMaker
             {
                 elem.TempManager = null;
                 ((LevelScaleElement)((Mode)game.Modes["main"]).Elements[0]).Manager = null;
+                elem.SetShipStartCharacteristics(10, null);
+            }
+            else
+            {
+                string[] positions = new string[elem.TempScene.PlayerShip.Positions.Length];
+                for(int i = 0; i<positions.Length;i++)
+                {
+                    positions[i] = (elem.TempScene.PlayerShip.Positions[i].TempModule == null ? "null" : elem.TempScene.PlayerShip.Positions[i].TempModule.Sprite.SpriteName) + ":" +
+                        (elem.TempScene.PlayerShip.Positions[i].TempModule == null ? "null" : elem.TempScene.PlayerShip.Positions[i].TempModule.Health.ToString());
+                }
+                elem.SetShipStartCharacteristics(elem.TempScene.PlayerShip.Resources, positions);
             }
             game.GoToMode("main");
         }

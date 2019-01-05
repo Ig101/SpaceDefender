@@ -33,6 +33,7 @@ namespace GameMaker
         int maxScore;
         string profileFilePath;
 
+        public int Score { get { return score; } }
         public GameElementShell GameElement { get { return gameElement; } }
 
 
@@ -187,6 +188,7 @@ namespace GameMaker
         protected override void LoadProfile()
         {
             //LoadFile
+
             if (File.Exists(profileFilePath + @"\profile.mrc"))
             {
                 byte[] bytes = Magic.Restore(profileFilePath + @"\profile.mrc");
@@ -229,7 +231,7 @@ namespace GameMaker
                 new Rectangle(0, 0, 1024, 512), MenuActions.NextLevel, gameElement);
             elements[14] = new GameHintElement("hint_core", 525, 320, 600, 250, new Color(200, 0, 0, 150), Color.White, "core_hint", null,(GameElement)gameElement,true);
             elements[15] = new GameHintElement("hint_engine", 540, 565, 600, 130, new Color(200, 0, 0, 150), Color.White, "engine_hint", null, (GameElement)gameElement,true);
-            elements[16] = new GameHintElement("hint_next_level", 340, 85, 600, 100, new Color(0, 0, 0, 150), Color.White, "next_level_hint", null, (GameElement)gameElement,false);
+            elements[16] = new GameHintElement("hint_next_level", 340, 85, 600, 130, new Color(200, 0, 0, 150), Color.White, "next_level_hint", null, (GameElement)gameElement,false);
             elements[17] = new GameHintElement("hint_resources", 830, 85, 600, 130, new Color(200, 0, 0, 150), Color.White, "resources_hint", null, (GameElement)gameElement, true);
             elements[18] = new GameHintElement("hint_skillButton", -130, 638, 600, 160, new Color(200, 0, 0, 150), Color.White, "skillButton_hint", new GameSkillButtonElement[]
                 {
@@ -326,12 +328,12 @@ namespace GameMaker
             {
                 maxScore = score;
             }
-            Mode mode = (Mode)modes["main"];
-            ((LabelElement)mode.Elements[mode.Elements.Length - 5]).Text = Id2Str("score") + " " + score.ToString();
+            /*Mode mode = (Mode)modes["main"];
+            *((LabelElement)mode.Elements[mode.Elements.Length - 5]).Text = Id2Str("score") + " " + score.ToString();
             ((LabelElement)mode.Elements[mode.Elements.Length - 6]).Text = Id2Str("top_result") + " " + maxScore.ToString();
             mode = (Mode)modes["game_mode_result"];
             ((LabelElement)mode.Elements[0]).Text = Id2Str("score") + " " + score.ToString();
-            ((LabelElement)mode.Elements[1]).Text = Id2Str("top_result") + " " + maxScore.ToString();
+            ((LabelElement)mode.Elements[1]).Text = Id2Str("top_result") + " " + maxScore.ToString();*/
             return maxScore < score;
         }
 

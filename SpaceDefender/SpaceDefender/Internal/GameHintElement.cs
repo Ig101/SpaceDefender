@@ -82,19 +82,23 @@ namespace GameMaker
 
         public override void PassiveUpdate(IgnitusGame game, Mode mode, ControlsState state, ControlsState prevState, float milliseconds)
         {
-            this.shown = gameElement.TempManager.TempLevelNumber == -1 ? (gameElement.TempManager.NextLevelTimer > 0 ? gameElement.TempManager.NextLevelTimer : 1):0;
-            if(skillButtonsToHint!=null)
+            if (gameElement.TempManager != null)
             {
-                foreach(GameSkillButtonElement button in skillButtonsToHint)
+                this.shown = gameElement.TempManager.TempLevelNumber == -1 ? (gameElement.TempManager.NextLevelTimer > 0 ? gameElement.TempManager.NextLevelTimer : 1) : 0;
+                if (skillButtonsToHint != null)
                 {
-                    if(button.Selected || button.Pressed)
+                    foreach (GameSkillButtonElement button in skillButtonsToHint)
                     {
-                        this.text = button.Name + "_hint";
-                        return;
+                        if (button.Selected || button.Pressed)
+                        {
+                            this.text = button.Name + "_hint";
+                            return;
+                        }
                     }
+                    this.text = baseText;
                 }
-                this.text = baseText;
             }
+            else shown = 0;
         }
 
         public override void DrawPreActionsUpdate(IgnitusGame game, Color fonColor)

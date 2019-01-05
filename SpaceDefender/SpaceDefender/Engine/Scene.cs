@@ -47,7 +47,7 @@ namespace Game.Engine
         Catalogue catalogue;
         LevelManager tempLevelManager;
 
-        public Scene (Catalogue catalogue, LevelManager manager)
+        public Scene (Catalogue catalogue, LevelManager manager, float shipResources, string[] positions)
         {
             victoryBilled = true;
             manager.TempScene = this;
@@ -58,7 +58,7 @@ namespace Game.Engine
             this.score = 0;
             globalRandom = new Random();
             StarsGenerationFirst();
-            playerShip = manager.Levels[manager.TempLevelNumber+1].CreateMotherShip(this);
+            playerShip = manager.Levels[manager.TempLevelNumber+1].CreateMotherShip(this,shipResources, positions);
         }
 
         public void Update(float milliseconds)
