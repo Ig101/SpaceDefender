@@ -33,6 +33,7 @@ namespace GameMaker
         int maxScore;
         string profileFilePath;
 
+        public int Score { get { return score; } }
         public GameElementShell GameElement { get { return gameElement; } }
 
 

@@ -27,10 +27,18 @@ namespace GameMaker
         public static void EndGame(IgnitusGame game, Mode mode, HudElement element)
         {
             GameElement elem = ((GameElement)((Mode)game.Modes["game_mode"]).Elements[0]);
-            if (!elem.TempManager.NextLevel || elem.TempManager.NextLevelTimer > 0 || elem.TempManager.NextLevelEntity == null)
+            if(elem.TempManager.NextLevelEntity == null)
             {
                 elem.TempManager = null;
                 ((LevelScaleElement)((Mode)game.Modes["main"]).Elements[0]).Manager = null;
+                ((Game1Shell)game).SetScore(((Game1Shell)game).Score+1);
+            }
+            if (!elem.TempManager.NextLevel || elem.TempManager.NextLevelTimer > 0)
+            {
+                elem.TempManager.TempLevelNumber--;
+                elem.TempManager.NextLevel = true;
+                elem.TempManager.NextLevelTimer = 0;
+                elem.TempManager.KilledCount = 0;
             }
             game.GoToMode("main");
         }
@@ -38,8 +46,8 @@ namespace GameMaker
         public static void NextLevel(IgnitusGame game, Mode mode, HudElement element)
         {
             ((GameNextLevelElement)element).NextLevel();
-            ((Game1Shell)game).SaveProfilePublic();
-            ((ButtonElement)((Mode)game.Modes["game_mode_context"]).Elements[3]).Text = game.Id2Str("concede");
+            //((Game1Shell)game).SaveProfilePublic();
+            //((ButtonElement)((Mode)game.Modes["game_mode_context"]).Elements[3]).Text = game.Id2Str("concede");
         }
 
         public static void StartGame(IgnitusGame game, Mode mode, HudElement element)
