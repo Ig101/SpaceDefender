@@ -26,7 +26,7 @@ namespace Game.Catalogues
             /////////////////////Levels
             Level level = new Level(null, Delegates.WinConditionKillEmAll, 1500000, 0, 0);
             level.Spawns.Add(new LevelEnemySpawn(level, 0, 1, null, Direction.Left, 1, 2));
-           /* level.Spawns.Add(new LevelEnemySpawn(level, 20, 1, null, Direction.Left, 1, 5));
+            level.Spawns.Add(new LevelEnemySpawn(level, 20, 1, null, Direction.Left, 1, 5));
             level.Spawns.Add(new LevelEnemySpawn(level, 16, 1, null, Direction.Left, 2, 2));
             level.Spawns.Add(new LevelEnemySpawn(level, 18, 1, null, Direction.Left, 0, 3));
             level.Spawns.Add(new LevelEnemySpawn(level, 26, 1, null, Direction.Right, 1, 1));
@@ -45,7 +45,7 @@ namespace Game.Catalogues
             level.Spawns.Add(new LevelEnemySpawn(level, 60, 1, null, Direction.Left, 1, 1));
             level.Spawns.Add(new LevelEnemySpawn(level, 59, 1, null, Direction.Right, 0, 1));
             level.Spawns.Add(new LevelEnemySpawn(level, 58, 1, null, Direction.Right, 1, 1));
-            level.Spawns.Add(new LevelEnemySpawn(level, 61, 1, null, Direction.Right, 2, 1));*/
+            level.Spawns.Add(new LevelEnemySpawn(level, 61, 1, null, Direction.Right, 2, 1));
             this.LevelNatives.Add("first1", level);
             level = new Level(null, Delegates.WinConditionKillEmAll, 1500000, 0, 1);
             for (int i =0; i<10; i++)

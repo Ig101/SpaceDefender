@@ -52,6 +52,7 @@ namespace GameMaker
             this.profileFilePath = profileFilePath;
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            Window.Title = "Herald of Blood";
         }
 
         protected override void Initialize()
@@ -244,9 +245,10 @@ namespace GameMaker
                     (GameSkillButtonElement)elements[11]
                 }, (GameElement)gameElement,true);
             modes.Add("game_mode", new Mode(null, elements, 5, "game", Mode.BlackGlow, null, false));
-            mainElements = new HudElement[1];
+            mainElements = new HudElement[2];
             //mainElements[0] = new SpriteElement("shade", 490, 250, 300, 460, "play_shade", new Color(0, 0, 0, 150), new Rectangle(0, 0, 512, 1024), false, false);
             mainElements[0] = new LevelScaleElement("scale", 150, 50, 300, 16,Color.White, ((GameElement)gameElement).TempManager);
+            mainElements[1] = new SpriteElement("logo", 124, 180, 1024, 128, "logo", Color.White, new Rectangle(0, 0, 1024, 128), false, false);
             if (mainElements != null)
             {
                 elements = new HudElement[mainElements.Length + 5];
@@ -350,6 +352,7 @@ namespace GameMaker
             content.Add("scale", Content.Load<Texture2D>("menu//scale"));
             content.Add("scale_marker", Content.Load<Texture2D>("menu//scale_marker"));
             content.Add("next_level", Content.Load<Texture2D>("menu//Next_level"));
+            content.Add("logo", Content.Load<Texture2D>("menu//logo"));
         }
 
         #region loading
