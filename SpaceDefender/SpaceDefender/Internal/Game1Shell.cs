@@ -185,7 +185,7 @@ namespace GameMaker
 
         protected override void LoadProfile()
         {
-            HudElement[] elements = new HudElement[14];
+            HudElement[] elements = new HudElement[19];
             elements[0] = gameElement;
             elements[1] = new GameButtonElement("pause", 25, 25, 75, 75, c_color, c_selected_color, c_pressed_color,
                 "pause_button", null, null, new Rectangle(0, 0, 512, 512), MenuActions.PauseGame, gameElement);
@@ -194,21 +194,35 @@ namespace GameMaker
             elements[4] = new GameResourcesLabelElement("resources", 1153, 38, 100, "99", false, false, Color.White, "largeFont", gameElement);
             elements[5] = new GameSkillButtonElement("blaster", 383, 1446/2, 128/2, 128/2, Color.White, new Color(230,230,230), new Color(0, 0, 0, 255),
                 "blaster", "blaster", "blaster", new Rectangle(0, 0, 64, 64), (GameElement)gameElement,1, Delegates.AssembleBlasterModule);
-            elements[6] = new GameSkillButtonElement("actionPanel", 916/2, 1446/2, 128/2, 128/2, Color.White, new Color(230, 230, 230), new Color(0, 0, 0, 255),
+            elements[6] = new GameSkillButtonElement("rocket", 916/2, 1446/2, 128/2, 128/2, Color.White, new Color(230, 230, 230), new Color(0, 0, 0, 255),
                 "rocket", "rocket", "rocket", new Rectangle(0, 0, 64, 64), (GameElement)gameElement,1, Delegates.AssembleRocketModule);
-            elements[7] = new GameSkillButtonElement("actionPanel", 1066/2, 1446/2, 128/2, 128/2, Color.White, new Color(230, 230, 230), new Color(0, 0, 0, 255),
+            elements[7] = new GameSkillButtonElement("annihilator", 1066/2, 1446/2, 128/2, 128/2, Color.White, new Color(230, 230, 230), new Color(0, 0, 0, 255),
                 "annihilator", "annihilator", "annihilator", new Rectangle(0, 0, 64, 64), (GameElement)gameElement,1, Delegates.AssembleAnniModule);
-            elements[8] = new GameSkillButtonElement("actionPanel", 1216/2, 1446/2, 128/2, 128/2, Color.White, new Color(230, 230, 230), new Color(0, 0, 0, 255),
+            elements[8] = new GameSkillButtonElement("generator", 1216/2, 1446/2, 128/2, 128/2, Color.White, new Color(230, 230, 230), new Color(0, 0, 0, 255),
                 "generator", "generator", "generator", new Rectangle(0, 0, 64, 64), (GameElement)gameElement,1, Delegates.AssembleGeneratorModule);
-            elements[9] = new GameSkillButtonElement("actionPanel", 1366/2, 1446/2, 128/2, 128/2, Color.White, new Color(230, 230, 230), new Color(0, 0, 0, 255),
+            elements[9] = new GameSkillButtonElement("armor", 1366/2, 1446/2, 128/2, 128/2, Color.White, new Color(230, 230, 230), new Color(0, 0, 0, 255),
                 "armor", "armor", "armor", new Rectangle(0, 0, 64, 64), (GameElement)gameElement,1, Delegates.AssembleArmorModule);
-            elements[10] = new GameSkillButtonElement("actionPanel", 1516/2, 1446/2, 128/2, 128/2, Color.White, new Color(230, 230, 230), new Color(0, 0, 0, 255),
+            elements[10] = new GameSkillButtonElement("shield", 1516/2, 1446/2, 128/2, 128/2, Color.White, new Color(230, 230, 230), new Color(0, 0, 0, 255),
                 "shield", "shield", "shield", new Rectangle(0, 0, 64, 64), (GameElement)gameElement,1, Delegates.AssembleShieldModule);
-            elements[11] = new GameSkillButtonElement("actionPanel", 1666/2, 1446/2, 128/2, 128/2, Color.White, new Color(230, 230, 230), new Color(0, 0, 0, 255),
+            elements[11] = new GameSkillButtonElement("demolish", 1666/2, 1446/2, 128/2, 128/2, Color.White, new Color(230, 230, 230), new Color(0, 0, 0, 255),
                 "demolish", "demolish", "emptyModule", new Rectangle(0, 0, 64, 64), (GameElement)gameElement,0, Delegates.DemolishModule);
             elements[12] = new GameOverlayElement("skill_overlay", 128 / 2, 128 / 2, new Rectangle(0, 0, 64, 64), (GameElement)gameElement);
             elements[13] = new GameNextLevelElement("next_level", 565, 0, 150, 75, c_color, c_selected_color, c_pressed_color, "next_level", "next_level", "next_level",
                 new Rectangle(0, 0, 1024, 512), MenuActions.NextLevel, gameElement);
+            elements[14] = new GameHintElement("hint_core", 525, 335, 600, 220, new Color(200, 0, 0, 150), Color.White, "core_hint", null,(GameElement)gameElement,true);
+            elements[15] = new GameHintElement("hint_engine", 540, 565, 600, 130, new Color(200, 0, 0, 150), Color.White, "engine_hint", null, (GameElement)gameElement,true);
+            elements[16] = new GameHintElement("hint_next_level", 340, 85, 600, 100, new Color(0, 0, 0, 150), Color.White, "next_level_hint", null, (GameElement)gameElement,false);
+            elements[17] = new GameHintElement("hint_resources", 830, 85, 600, 130, new Color(200, 0, 0, 150), Color.White, "resources_hint", null, (GameElement)gameElement, true);
+            elements[18] = new GameHintElement("hint_skillButton", -130, 638, 600, 160, new Color(200, 0, 0, 150), Color.White, "skillButton_hint", new GameSkillButtonElement[]
+                {
+                    (GameSkillButtonElement)elements[5],
+                    (GameSkillButtonElement)elements[6],
+                    (GameSkillButtonElement)elements[7],
+                    (GameSkillButtonElement)elements[8],
+                    (GameSkillButtonElement)elements[9],
+                    (GameSkillButtonElement)elements[10],
+                    (GameSkillButtonElement)elements[11]
+                }, (GameElement)gameElement,true);
             modes.Add("game_mode", new Mode(null, elements, 5, "game", Mode.BlackGlow, null, false));
             //mainElements = new HudElement[1];
             //mainElements[0] = new SpriteElement("shade", 490, 150, 300, 600, "play_shade", new Color(0, 0, 0, 150), new Rectangle(0, 0, 512, 1024), false, false);
@@ -254,7 +268,7 @@ namespace GameMaker
             modes.Add("game_mode_result", new Mode((Mode)modes["game_mode"], new HudElement[]
             {
                new SpriteElement("shade",340,250,600,300,"context_shade",new Color(0,0,0,150),new Rectangle(0,0,1024,512),false,false),
-                new LabelElement("defeat", 200/2, 600/2, ingameScreenSize.X - 400/2, Id2Str("defeat"), false, false, c_color, "largeFont", false, false),
+                new LabelElement("defeat", 200/2, 600/2, ingameScreenSize.X - 400/2, "defeat", true, false, c_color, "largeFont", false, false),
                 new LabelElement("killed", 200/2, 840/2, ingameScreenSize.X - 400/2, Id2Str("killed") + " " + maxScore.ToString(), false, false, c_color, "mediumFont", false, false),
                 new LevelScaleElement("scale",490,480,300,16,Color.White,null),
                 new LabelElement("any_key", 200/2, 1400/2, ingameScreenSize.X - 400/2, "any_key_message", true, false, c_color, "mediumFont", false, false),
@@ -263,9 +277,9 @@ namespace GameMaker
             modes.Add("game_mode_victory", new Mode((Mode)modes["game_mode"], new HudElement[]
             {
                new SpriteElement("shade",340,250,600,300,"context_shade",new Color(0,0,0,150),new Rectangle(0,0,1024,512),false,false),
-                new LabelElement("defeat", 200/2, 600/2, ingameScreenSize.X - 400/2, Id2Str("victory"), false, false, c_color, "largeFont", false, false),
+                new LabelElement("defeat", 200/2, 600/2, ingameScreenSize.X - 400/2, "victory", true, false, c_color, "largeFont", false, false),
                 new LabelElement("killed", 200/2, 840/2, ingameScreenSize.X - 400/2, Id2Str("killed") + " " + maxScore.ToString(), false, false, c_color, "mediumFont", false, false),
-              new LabelElement("killed", 200/2, 480, ingameScreenSize.X - 400/2, Id2Str("to_be_continued"), false, false, c_color, "mediumFont", false, false),
+              new LabelElement("killed", 200/2, 480, ingameScreenSize.X - 400/2,"to_be_continued", true, false, c_color, "mediumFont", false, false),
                 new LabelElement("any_key", 200/2, 1400/2, ingameScreenSize.X - 400/2, "any_key_message", true, false, c_color, "mediumFont", false, false),
                 new AnyKeyElement("result",MenuActions.EndGame)
             }, 3.5f, "result", FromAbove, null, false));
