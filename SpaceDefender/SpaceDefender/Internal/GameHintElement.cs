@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Game;
 using Ignitus;
 using Microsoft.Xna.Framework;
 
@@ -10,14 +11,26 @@ namespace GameMaker
 {
     class GameHintElement: HudElement
     {
-        GameElementShell gameElement;
+        GameElement gameElement;
         float shown;
+        Color color;
+        Color textColor;
+        string text;
+        bool align;
+        string baseText;
+        GameSkillButtonElement[] skillButtonsToHint;
 
         public GameHintElement(string name, int x, int y, int width, int height, Color color,
-            string spriteName, Rectangle source, GameElementShell gameElement)
+            Color textColor, string text, GameSkillButtonElement[] skillButtonsToHint, GameElement gameElement, bool align)
             :base(name,x,y,width,height,true,false,false)
         {
+            this.baseText = text;
+            this.align = align;
+            this.skillButtonsToHint = skillButtonsToHint;
             this.gameElement = gameElement;
+            this.color = color;
+            this.textColor = textColor;
+            this.text = text;
         }
 
         public override void Update(IgnitusGame game, Mode mode, ControlsState state, ControlsState prevState, float milliseconds)
@@ -35,24 +48,53 @@ namespace GameMaker
 
         public override void Draw(IgnitusGame game, Matrix animation, Color fonColor, float milliseconds)
         {
-            float coff = 0;
-            if(gameElement == null && game.GetTempMode().Name == "game")
+            if (shown > 0)
             {
-                coff = 1;
-            }
-            if(gameElement!=null)
-            { 
-                coff = gameElement.UpdateButtonCoff();
-            }
-            if (coff > 0 && shown>0)
-            {
-                
+                float coff = 0;
+                if (gameElement == null && game.GetTempMode().Name == "game")
+                {
+                    coff = 1;
+                }
+                if (gameElement != null)
+                {
+                    coff = gameElement.UpdateButtonCoff();
+                }
+                if (coff > 0)
+                {
+                    Color c = new Color((byte)(color.R * fonColor.R / 255 * coff * shown),
+                        (byte)(color.G * fonColor.G / 255 * coff * shown), (byte)(color.B * fonColor.B / 255 * coff * shown),
+                        (byte)(color.A * fonColor.A / 255 * coff * shown));
+                    float size = 2f*Height / Width;
+                    game.DrawSprite("context_shade", new Rectangle(X, Y, Width, Height/2), new Rectangle(0,0,1024,(int)(256*size)), 
+                        c, 0, Vector2.Zero,
+                        Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+                    game.DrawSprite("context_shade", new Rectangle(X, Y + Height/2, Width, Height/2), new Rectangle(0, 512-(int)(256*size), 1024, (int)(256 * size)),
+                        c, 0, Vector2.Zero,
+                        Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+                    game.DrawString("smallFont", game.Id2Str(text), align, new Point(X + 150, Y + 20), Width - 300,
+                        new Color((byte)(textColor.R * fonColor.R / 255 * coff * shown),
+                        (byte)(textColor.G * fonColor.G / 255 * coff * shown), (byte)(textColor.B * fonColor.B / 255 * coff * shown),
+                        (byte)(textColor.A * fonColor.A / 255 * coff * shown))
+                        );
+                }
             }
         }
 
         public override void PassiveUpdate(IgnitusGame game, Mode mode, ControlsState state, ControlsState prevState, float milliseconds)
         {
-            //this.shown = gameElement
+            this.shown = gameElement.TempManager.TempLevelNumber == -1 ? (gameElement.TempManager.NextLevelTimer > 0 ? gameElement.TempManager.NextLevelTimer : 1):0;
+            if(skillButtonsToHint!=null)
+            {
+                foreach(GameSkillButtonElement button in skillButtonsToHint)
+                {
+                    if(button.Selected || button.Pressed)
+                    {
+                        this.text = button.Name + "_hint";
+                        return;
+                    }
+                }
+                this.text = baseText;
+            }
         }
 
         public override void DrawPreActionsUpdate(IgnitusGame game, Color fonColor)
