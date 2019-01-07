@@ -1,2 +1,2 @@
 # SpaceDefender
-Herald of Blood game home.
+Herald game home.
