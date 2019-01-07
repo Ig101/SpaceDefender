@@ -81,7 +81,7 @@ namespace Game.Progress
                 bool[] holdedPositions = new bool[Level.maxPositions + 1];
                 for(int i = 0; i<sectorsMinY.Length;i++)
                 {
-                    sectorsMinY[i] = -1;
+                    sectorsMinY[i] = level.FirstRow?-2:-1;
                 }
                 foreach(LevelEnemySpawn spawn in level.Spawns)
                 {

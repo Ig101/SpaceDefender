@@ -66,7 +66,8 @@ namespace GameMaker
                             for (int i = 0; i < gameElement.TempScene.PlayerShip.Positions.Length; i++)
                             {
                                 if (gameElement.TempScene.PlayerShip.Positions[i].TempModule != gameElement.TempScene.PlayerShip.EngineModule &&
-                                    gameElement.TempScene.PlayerShip.Positions[i].TempModule != gameElement.TempScene.PlayerShip.CoreModule)
+                                    gameElement.TempScene.PlayerShip.Positions[i].TempModule != gameElement.TempScene.PlayerShip.CoreModule &&
+                                    gameElement.TempScene.PlayerShip.Positions[i].Available)
                                 {
                                     float realX = gameElement.TempScene.PlayerShip.Positions[i].XShift + gameElement.TempScene.PlayerShip.X + 640;
                                     float realY = gameElement.TempScene.PlayerShip.Positions[i].YShift + gameElement.TempScene.PlayerShip.Y + 400;

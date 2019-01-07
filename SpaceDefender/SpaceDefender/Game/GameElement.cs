@@ -83,7 +83,7 @@ namespace Game
                                     0, new Vector2(pos.TempModule.Sprite.Width / 2, pos.TempModule.Sprite.Height / 2),
                                     pos.Direction == Direction.Right ? SpriteEffects.None : SpriteEffects.FlipHorizontally, ship.Height + (ship==tempScene.PlayerShip?8f:2f));
                             }
-                            if(pos.TempModule == null && ship == tempScene.PlayerShip && ship.CoreModule!= null && ship.CoreModule.IsAlive)
+                            if(pos.Available && pos.TempModule == null && ship == tempScene.PlayerShip && ship.CoreModule!= null && ship.CoreModule.IsAlive)
                             {
                                 game.DrawSprite("emptyModule",
                                     new Rectangle((int)(pos.XShift + ship.X) + 640, (int)(pos.YShift + ship.Y) + 400,
@@ -233,6 +233,10 @@ namespace Game
                         PrepareFrom(game, "game_mode_victory");
                         //tempLevelManager = null;
                     }
+                    else
+                    {
+                        tempLevelManager.NextLevelEntity.ChangeMothershipModules(tempScene, tempScene.PlayerShip, true);
+                    }
                 }
             }
         }
@@ -250,8 +254,8 @@ namespace Game
                 ((LevelScaleElement)((Mode)game.Modes["main"]).Elements[0]).Manager = tempLevelManager;
             }
             ((LevelScaleElement)((Mode)game.Modes["game_mode_context"]).Elements[1]).Manager = tempLevelManager;
-            
             tempScene = new Scene(catalogue, tempLevelManager, resources,positions);
+            tempLevelManager.NextLevelEntity.ChangeMothershipModules(tempScene, tempScene.PlayerShip,false);
         }
 
         void PlayerCommand (int keyIndex, bool state)

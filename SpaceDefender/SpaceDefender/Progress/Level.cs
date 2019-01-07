@@ -1,5 +1,6 @@
 ﻿using Game.Catalogues;
 using Game.Engine;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,17 +27,21 @@ namespace Game.Progress
         public const int sectorVerticalStart = -295;
         public const int maxPositions = 6;
 
+        bool[] availableModules;
         int levelPreference;
 
         LevelManager manager;
         float maxScore;
 
         int shipPosition;
+        bool firstRow;
 
         List<LevelEnemySpawn> spawns = new List<LevelEnemySpawn>();
         List<LevelMissleSpawn> missles = new List<LevelMissleSpawn>();
         WinCondition winCondition;
 
+        public bool FirstRow { get { return firstRow; } }
+        public bool[] AvailableModules { get { return availableModules; } }
         public float MaxScore { get { return maxScore; } }
         public int ShipPosition { get { return shipPosition; } }
         public List<LevelEnemySpawn> Spawns { get { return spawns; } }
@@ -47,13 +52,16 @@ namespace Game.Progress
         public int SectorsCountLeft { get { return (Level.sectorBound - (Level.sectorMin - ShipPosition)) / Level.sectorLength + 1; } }
         public int SectorsCountRight { get { return (Level.sectorBound - (Level.sectorMin + ShipPosition)) / Level.sectorLength + 1; } }
 
-        public Level (LevelManager manager, WinCondition winCondition, float maxScore, int shipPosition, int levelPreference)
+        public Level (LevelManager manager, WinCondition winCondition, float maxScore, int shipPosition, int levelPreference, bool firstRow, 
+            bool[] availableModules)
         {
+            this.availableModules = availableModules;
             this.levelPreference = levelPreference;
             this.shipPosition = shipPosition;
             this.maxScore = maxScore;
             this.manager = manager;
             this.winCondition = winCondition;
+            this.firstRow = firstRow;
         }
 
         public Level (LevelManager manager, Level native)
@@ -63,6 +71,7 @@ namespace Game.Progress
             this.maxScore = native.MaxScore;
             this.manager = manager;
             this.winCondition = native.WinCondition;
+            this.availableModules = native.AvailableModules;
             for(int i =0; i<native.Spawns.Count;i++)
             {
                 this.Spawns.Add(new LevelEnemySpawn(this, native.Spawns[i].Stage, native.Spawns[i].ShipClass, native.Spawns[i].EnemyName,
@@ -108,6 +117,27 @@ namespace Game.Progress
                 }
             }
             return ship;
+        }
+
+        public void ChangeMothershipModules (Scene tempScene, Ship ship, bool effect)
+        {
+            for(int i  =0; i<availableModules.Length;i++)
+            {
+                if (effect)
+                {
+                    if (!ship.Positions[i].Available && availableModules[i])
+                    {
+                        tempScene.Effects.Add(new SpecEffect(tempScene, ship.Positions[i].XShift + ship.X, ship.Positions[i].YShift + ship.Y,
+                            new Sprite("genEffect", 64, 64, 9, 1, 1, Color.White), 0.28f, tempScene.GlobalRandom));
+                    }
+                    if (ship.Positions[i].Available && !availableModules[i])
+                    {
+                        tempScene.Effects.Add(new SpecEffect(tempScene, ship.Positions[i].XShift + ship.X, ship.Positions[i].YShift + ship.Y,
+                            new Sprite("explosion", 96, 96, 18, 1, 1, Color.White), 0.55f, tempScene.GlobalRandom));
+                    }
+                }
+                ship.Positions[i].Available = availableModules[i];
+            }
         }
 
         public void Update(float milliseconds, Scene scene)

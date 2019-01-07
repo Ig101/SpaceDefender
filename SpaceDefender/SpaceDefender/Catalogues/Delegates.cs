@@ -187,6 +187,11 @@ namespace Game.Catalogues
             scene.Effects.Add(new SpecEffect(scene, x, y, new Sprite("spawnDeath", 128, 128, 6, 1, 1, Color.White), 0.19f, scene.GlobalRandom));
         }
 
+        public static void SpawnYellowDeath(Scene scene, float x, float y)
+        {
+            scene.Effects.Add(new SpecEffect(scene, x, y, new Sprite("spawnYellowDeath", 128, 128, 6, 1, 1, Color.White), 0.19f, scene.GlobalRandom));
+        }
+
         public static bool WinConditionKillEmAll (Level level, Scene tempScene)
         {
             if (level.MaxScore < tempScene.Score) return true;

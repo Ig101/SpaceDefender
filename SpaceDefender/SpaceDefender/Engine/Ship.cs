@@ -102,7 +102,7 @@ namespace Game.Engine
             this.Y -= absoluteSpeed * milliseconds / 1000;
             foreach(ModulePosition pos in positions)
             {
-                if (pos.TempModule != null)
+                if (pos.TempModule != null && pos.Available)
                 {
                     pos.TempModule.Update(milliseconds);
                     if(!pos.TempModule.IsAlive)

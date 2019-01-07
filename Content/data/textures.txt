@@ -24,7 +24,9 @@ enemyCore;enemies/enemyCore;game
 enemyRocketCore;enemies/enemyRocketCore;game
 enemyRocketMissle;enemies/enemyRocketMissle;game
 spawn;enemies/spawn;game
+spawnYellow;enemies/spawn_yellow;game
 spawnFire;enemies/spawnFire;game
 spawnDeath;enemies/spawn_death;game
+spawnYellowDeath;enemies/spawn_yellow_death;game
 enemyBlasterMissleEnrage;enemies/enemyBlasterMissleEnrage;game
 enemyRocketMissleEnrage;enemies/enemyRocketMissleEnrage;game

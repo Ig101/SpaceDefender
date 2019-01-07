@@ -12,14 +12,17 @@ namespace Game.Engine
         float xShift;
         float yShift;
         Direction direction;
+        bool available;
 
+        public bool Available { get { return available; } set { available = value; } }
         public Direction Direction { get { return direction; } }
-        public Module TempModule { get { return tempModule; } set { tempModule = value; } }
+        public Module TempModule { get { return available?tempModule:null; } set { tempModule = value; } }
         public float XShift { get { return xShift; } }
         public float YShift { get { return yShift; } }
 
         public ModulePosition (float xShift, float yShift, Direction direction)
         {
+            this.available = true;
             this.xShift = xShift;
             this.yShift = yShift;
             this.direction = direction;

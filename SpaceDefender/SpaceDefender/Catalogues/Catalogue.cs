@@ -24,30 +24,61 @@ namespace Game.Catalogues
         {
             Random r = new Random();
             /////////////////////Levels
-            Level level = new Level(null, Delegates.WinConditionKillEmAll, 1500000, 0, 0);
+            Level level = new Level(null, Delegates.WinConditionKillEmAll, 1500000, 0, 0, false, new bool[]{true, true,
+                false, false, false, false,
+                false, false, true, true,
+                false, false, true, true,
+                false, false, true, true,
+                false, false, true, true,
+                false, false, true, true,
+                false, false, true, true,
+                false,
+                                true,
+                false,
+                                true,
+                false,
+                                true
+                });
             level.Spawns.Add(new LevelEnemySpawn(level, 0, 1, null, Direction.Left, 1, 2));
-            level.Spawns.Add(new LevelEnemySpawn(level, 20, 1, null, Direction.Left, 1, 5));
-            level.Spawns.Add(new LevelEnemySpawn(level, 16, 1, null, Direction.Left, 2, 2));
-            level.Spawns.Add(new LevelEnemySpawn(level, 18, 1, null, Direction.Left, 0, 3));
-            level.Spawns.Add(new LevelEnemySpawn(level, 26, 1, null, Direction.Right, 1, 1));
-            level.Spawns.Add(new LevelEnemySpawn(level, 28, 1, null, Direction.Right, 0, 4));
-            level.Spawns.Add(new LevelEnemySpawn(level, 40, 1, null, Direction.Left, 1, 2));
-            level.Spawns.Add(new LevelEnemySpawn(level, 41, 1, null, Direction.Left, 2, 4));
-            level.Spawns.Add(new LevelEnemySpawn(level, 46, 1, null, Direction.Right, 2, 5));
-            level.Spawns.Add(new LevelEnemySpawn(level, 47, 1, null, Direction.Right, 0, 6));
-            level.Spawns.Add(new LevelEnemySpawn(level, 52, 1, null, Direction.Left, 0, 4));
-            level.Spawns.Add(new LevelEnemySpawn(level, 53, 1, null, Direction.Left, 2, 6));
-            level.Spawns.Add(new LevelEnemySpawn(level, 54, 1, null, Direction.Right, 1, 4));
-            level.Spawns.Add(new LevelEnemySpawn(level, 52, 1, null, Direction.Right, 0, 5));
-            level.Spawns.Add(new LevelEnemySpawn(level, 51, 1, null, Direction.Right, 2, 1));
-            level.Spawns.Add(new LevelEnemySpawn(level, 57, 1, null, Direction.Left, 0, 1));
-            level.Spawns.Add(new LevelEnemySpawn(level, 58, 1, null, Direction.Left, 2, 1));
-            level.Spawns.Add(new LevelEnemySpawn(level, 60, 1, null, Direction.Left, 1, 1));
-            level.Spawns.Add(new LevelEnemySpawn(level, 59, 1, null, Direction.Right, 0, 1));
-            level.Spawns.Add(new LevelEnemySpawn(level, 58, 1, null, Direction.Right, 1, 1));
-            level.Spawns.Add(new LevelEnemySpawn(level, 61, 1, null, Direction.Right, 2, 1));
+            level.Spawns.Add(new LevelEnemySpawn(level, 0, 1, null, Direction.Left, 1, 0));
+            level.Spawns.Add(new LevelEnemySpawn(level, 0, 1, null, Direction.Left, 1, 0));
+            level.Spawns.Add(new LevelEnemySpawn(level, 0, 1, null, Direction.Left, 1, 0));
+            /*  level.Spawns.Add(new LevelEnemySpawn(level, 20, 1, null, Direction.Left, 1, 5));
+              level.Spawns.Add(new LevelEnemySpawn(level, 16, 1, null, Direction.Left, 2, 2));
+              level.Spawns.Add(new LevelEnemySpawn(level, 18, 1, null, Direction.Left, 0, 3));
+              level.Spawns.Add(new LevelEnemySpawn(level, 26, 1, null, Direction.Right, 1, 1));
+              level.Spawns.Add(new LevelEnemySpawn(level, 28, 1, null, Direction.Right, 0, 4));
+              level.Spawns.Add(new LevelEnemySpawn(level, 40, 1, null, Direction.Left, 1, 2));
+              level.Spawns.Add(new LevelEnemySpawn(level, 41, 1, null, Direction.Left, 2, 4));
+              level.Spawns.Add(new LevelEnemySpawn(level, 46, 1, null, Direction.Right, 2, 5));
+              level.Spawns.Add(new LevelEnemySpawn(level, 47, 1, null, Direction.Right, 0, 6));
+              level.Spawns.Add(new LevelEnemySpawn(level, 52, 1, null, Direction.Left, 0, 4));
+              level.Spawns.Add(new LevelEnemySpawn(level, 53, 1, null, Direction.Left, 2, 6));
+              level.Spawns.Add(new LevelEnemySpawn(level, 54, 1, null, Direction.Right, 1, 4));
+              level.Spawns.Add(new LevelEnemySpawn(level, 52, 1, null, Direction.Right, 0, 5));
+              level.Spawns.Add(new LevelEnemySpawn(level, 51, 1, null, Direction.Right, 2, 1));
+              level.Spawns.Add(new LevelEnemySpawn(level, 57, 1, null, Direction.Left, 0, 1));
+              level.Spawns.Add(new LevelEnemySpawn(level, 58, 1, null, Direction.Left, 2, 1));
+              level.Spawns.Add(new LevelEnemySpawn(level, 60, 1, null, Direction.Left, 1, 1));
+              level.Spawns.Add(new LevelEnemySpawn(level, 59, 1, null, Direction.Right, 0, 1));
+              level.Spawns.Add(new LevelEnemySpawn(level, 58, 1, null, Direction.Right, 1, 1));
+              level.Spawns.Add(new LevelEnemySpawn(level, 61, 1, null, Direction.Right, 2, 1));*/
             this.LevelNatives.Add("first1", level);
-            level = new Level(null, Delegates.WinConditionKillEmAll, 1500000, 0, 1);
+            level = new Level(null, Delegates.WinConditionKillEmAll, 1500000, 0, 1, true, new bool[]{true, true,
+                false, false, false, false,
+                true, true, true, true,
+                true, true, true, true,
+                true, true, true, true,
+                true, true, true, true,
+                true, true, true, true,
+                true, true, true, true,
+                true,
+                                true,
+                true,
+                                true,
+                true,
+                                true
+                });
             for (int i =0; i<10; i++)
             {
                 level.Spawns.Add(new LevelEnemySpawn(level, i * 12 + (float)(r.NextDouble()*4), 1, null, Direction.Left, 0, (int)(r.NextDouble() * 6 * 0.999 + 1)));
@@ -86,7 +117,6 @@ namespace Game.Catalogues
             ship.Positions[5] = new Engine.ModulePosition(-198 / 2, -386 / 2, Direction.Left);
             ship.Positions[6] = new Engine.ModulePosition(102 / 2, -254 / 2, Direction.Right);
             ship.Positions[7] = new Engine.ModulePosition(234 / 2, -254 / 2, Direction.Right);
-            ship.Positions[7] = new Engine.ModulePosition(234 / 2, -254 / 2, Direction.Right);
             ship.Positions[8] = new Engine.ModulePosition(-102 / 2, -254 / 2, Direction.Left);
             ship.Positions[9] = new Engine.ModulePosition(-234 / 2, -254 / 2, Direction.Left);
             ship.Positions[10] = new Engine.ModulePosition(102 / 2, -122 / 2, Direction.Right);
@@ -117,16 +147,16 @@ namespace Game.Catalogues
             ship.Positions[35] = new Engine.ModulePosition(-366 / 2, 274 / 2, Direction.Left);
             ShipNatives.Add("mothership", new ShipNative(ship, 0, 0, 0,Direction.Left,0,0));
 
-            ship = new Ship(null, 0, 0, 2000, new Engine.Sprite("spawn", 128, 128, 1, 1, 1, Color.White), new ModulePosition[]
+            ship = new Ship(null, 0, 0, 2000, new Engine.Sprite("spawnYellow", 128, 128, 1, 1, 1, Color.White), new ModulePosition[]
             {
                 new ModulePosition(0,0,Direction.Right)
-            }, 0, 0, Delegates.SpawnDeath, 0, 0, 0, 0, new Engine.Sprite("spawnFire", 128, 64, 8, 1, 1, Color.White), -3, 67, true);
+            }, 0, 0, Delegates.SpawnYellowDeath, 0, 0, 0, 0, new Engine.Sprite("spawnFire", 128, 64, 8, 1, 1, Color.White), -3, 67, true);
             ship.Positions[0].TempModule = (Module)ModuleNatives["enemyBlasterCore"];
             ShipNatives.Add("spawnBlasterLeft", new ShipNative(ship, 0, 3, 1,Direction.Left,0,1));
-            ship = new Ship(null, 0, 0, 2000, new Engine.Sprite("spawn", 128, 128, 1, 1, 1, Color.White), new ModulePosition[]
+            ship = new Ship(null, 0, 0, 2000, new Engine.Sprite("spawnYellow", 128, 128, 1, 1, 1, Color.White), new ModulePosition[]
                 {
                 new ModulePosition(0,0,Direction.Left)
-                }, 0, 0, Delegates.SpawnDeath, 0, 0, 0, 0, new Engine.Sprite("spawnFire", 128, 64, 8, 1, 1, Color.White), -3, 67, true);
+                }, 0, 0, Delegates.SpawnYellowDeath, 0, 0, 0, 0, new Engine.Sprite("spawnFire", 128, 64, 8, 1, 1, Color.White), -3, 67, true);
             ship.Positions[0].TempModule = (Module)ModuleNatives["enemyBlasterCore"];
             ShipNatives.Add("spawnBlasterRight", new ShipNative(ship, 0, 3, 1,Direction.Right,0,1));
             ship = new Ship(null, 0, 0, 2000, new Engine.Sprite("spawn", 128, 128, 1, 1, 1, Color.White), new ModulePosition[]

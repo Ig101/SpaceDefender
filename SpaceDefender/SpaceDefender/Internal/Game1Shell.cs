@@ -248,7 +248,7 @@ namespace GameMaker
             mainElements = new HudElement[2];
             //mainElements[0] = new SpriteElement("shade", 490, 250, 300, 460, "play_shade", new Color(0, 0, 0, 150), new Rectangle(0, 0, 512, 1024), false, false);
             mainElements[0] = new LevelScaleElement("scale", 150, 50, 300, 16,Color.White, ((GameElement)gameElement).TempManager);
-            mainElements[1] = new SpriteElement("logo", 124, 180, 1024, 128, "logo", Color.White, new Rectangle(0, 0, 1024, 128), false, false);
+            mainElements[1] = new SpriteElement("logo", 375, 180, 512, 128, "logo", Color.White, new Rectangle(0, 0, 512, 128), false, false);
             if (mainElements != null)
             {
                 elements = new HudElement[mainElements.Length + 5];
