@@ -19,11 +19,16 @@ namespace GameMaker
         bool align;
         string baseText;
         GameSkillButtonElement[] skillButtonsToHint;
+        int levelToHide;
+        bool nextGame;
 
         public GameHintElement(string name, int x, int y, int width, int height, Color color,
-            Color textColor, string text, GameSkillButtonElement[] skillButtonsToHint, GameElement gameElement, bool align)
+            Color textColor, string text, GameSkillButtonElement[] skillButtonsToHint, GameElement gameElement, bool align, int levelToHide,
+            bool nextGame)
             :base(name,x,y,width,height,true,false,false)
         {
+            this.nextGame = nextGame;
+            this.levelToHide = levelToHide;
             this.baseText = text;
             this.align = align;
             this.skillButtonsToHint = skillButtonsToHint;
@@ -84,7 +89,21 @@ namespace GameMaker
         {
             if (gameElement.TempManager != null)
             {
-                this.shown = gameElement.TempManager.TempLevelNumber == -1 ? (gameElement.TempManager.NextLevelTimer > 0 ? gameElement.TempManager.NextLevelTimer : 1) : 0;
+                if (gameElement.TempManager.TempLevelNumber < levelToHide)
+                {
+                    this.shown = 1;
+                }
+                else
+                {
+                    if (nextGame)
+                    {
+                        this.shown = gameElement.TempManager.TempLevelNumber == levelToHide ? (gameElement.TempManager.NextLevelTimer > 0 ? gameElement.TempManager.NextLevelTimer : 1) : 0;
+                    }
+                    else
+                    {
+                        this.shown = gameElement.TempManager.TempLevelNumber == levelToHide ? (gameElement.TempScene.TimerToEnd > 0 ? gameElement.TempScene.TimerToEnd : gameElement.TempManager.NextLevel? 0 : 1) : 0;
+                    }
+                }
                 if (skillButtonsToHint != null)
                 {
                     foreach (GameSkillButtonElement button in skillButtonsToHint)
@@ -95,6 +114,7 @@ namespace GameMaker
                             return;
                         }
                     }
+                    this.shown = 0;
                     this.text = baseText;
                 }
             }

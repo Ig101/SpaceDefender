@@ -52,7 +52,7 @@ namespace GameMaker
             this.profileFilePath = profileFilePath;
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            Window.Title = "Herald of Blood";
+            Window.Title = "Abordage";
         }
 
         protected override void Initialize()
@@ -230,10 +230,10 @@ namespace GameMaker
             elements[12] = new GameOverlayElement("skill_overlay", 128 / 2, 128 / 2, new Rectangle(0, 0, 64, 64), (GameElement)gameElement);
             elements[13] = new GameNextLevelElement("next_level", 565, 0, 150, 75, c_color, c_selected_color, c_pressed_color, "next_level", "next_level", "next_level",
                 new Rectangle(0, 0, 1024, 512), MenuActions.NextLevel, gameElement);
-            elements[14] = new GameHintElement("hint_core", 525, 320, 600, 250, new Color(200, 0, 0, 150), Color.White, "core_hint", null,(GameElement)gameElement,true);
-            elements[15] = new GameHintElement("hint_engine", 540, 565, 600, 130, new Color(200, 0, 0, 150), Color.White, "engine_hint", null, (GameElement)gameElement,true);
-            elements[16] = new GameHintElement("hint_next_level", 340, 85, 600, 130, new Color(200, 0, 0, 150), Color.White, "next_level_hint", null, (GameElement)gameElement,false);
-            elements[17] = new GameHintElement("hint_resources", 830, 85, 600, 130, new Color(200, 0, 0, 150), Color.White, "resources_hint", null, (GameElement)gameElement, true);
+            elements[14] = new GameHintElement("hint_core", 525, 305, 600, 250, new Color(200, 0, 0, 150), Color.White, "core_hint", null,(GameElement)gameElement,true,0,false);
+            elements[15] = new GameHintElement("hint_engine", 540, 565, 600, 130, new Color(200, 0, 0, 150), Color.White, "engine_hint", null, (GameElement)gameElement,true,0,false);
+            elements[16] = new GameHintElement("hint_next_level", 340, 85, 600, 130, new Color(200, 0, 0, 150), Color.White, "next_level_hint", null, (GameElement)gameElement,false,-1,true);
+            elements[17] = new GameHintElement("hint_resources", 830, 85, 600, 130, new Color(200, 0, 0, 150), Color.White, "resources_hint", null, (GameElement)gameElement, true,0,false);
             elements[18] = new GameHintElement("hint_skillButton", -130, 638, 600, 160, new Color(200, 0, 0, 150), Color.White, "skillButton_hint", new GameSkillButtonElement[]
                 {
                     (GameSkillButtonElement)elements[5],
@@ -243,7 +243,7 @@ namespace GameMaker
                     (GameSkillButtonElement)elements[9],
                     (GameSkillButtonElement)elements[10],
                     (GameSkillButtonElement)elements[11]
-                }, (GameElement)gameElement,true);
+                }, (GameElement)gameElement,true,0,true);
             modes.Add("game_mode", new Mode(null, elements, 5, "game", Mode.BlackGlow, null, false));
             mainElements = new HudElement[2];
             //mainElements[0] = new SpriteElement("shade", 490, 250, 300, 460, "play_shade", new Color(0, 0, 0, 150), new Rectangle(0, 0, 512, 1024), false, false);

@@ -75,7 +75,7 @@ namespace Game.Progress
             for(int i =0; i<native.Spawns.Count;i++)
             {
                 this.Spawns.Add(new LevelEnemySpawn(this, native.Spawns[i].Stage, native.Spawns[i].ShipClass, native.Spawns[i].EnemyName,
-                    native.Spawns[i].Direction, native.Spawns[i].Sector, native.Spawns[i].TargetPosition));
+                    native.Spawns[i].Direction, native.Spawns[i].Sector, native.Spawns[i].TargetPosition,native.Spawns[i].Dependencies));
             }
         }
 

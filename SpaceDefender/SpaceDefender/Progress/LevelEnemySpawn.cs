@@ -26,6 +26,9 @@ namespace Game.Progress
         int shift;
         bool billed;
 
+        int[] dependencies;
+
+        public int[] Dependencies { get { return dependencies; } }
         public bool Billed { get { return billed; } set { billed = true; } }
         public Ship Enemy { get { return enemy; } }
         public int TargetY {get{ return Level.sectorVerticalStart + Level.sectorHeight * (targetPosition) + shift; } }
@@ -39,7 +42,8 @@ namespace Game.Progress
         public float Stage { get { return stage; } }
         public int Sector { get { return sector; } }
 
-        public LevelEnemySpawn (Level level, float stage, int shipClass, string enemyName, Direction direction, int sector, int targetPosition)
+        public LevelEnemySpawn (Level level, float stage, int shipClass, string enemyName, Direction direction, int sector, int targetPosition,
+            int[] dependencies)
         {
             this.level = level;
             this.stage = stage;
@@ -48,12 +52,18 @@ namespace Game.Progress
             this.direction = direction;
             this.sector = sector;
             this.targetPosition = targetPosition;
+            this.dependencies = dependencies;
         }
 
         public bool GenerateEnemy(Scene scene)
         {
             if (scene.Stage >= stage && enemy==null)
             {
+                if(dependencies!=null)
+                    foreach(int spawn in dependencies)
+                    {
+                        if (level.Spawns[spawn].Enemy == null || level.Spawns[spawn].Enemy.IsAlive) return false;
+                    }
                 ShipNative targetShip;
                 if (enemyName != null)
                 {

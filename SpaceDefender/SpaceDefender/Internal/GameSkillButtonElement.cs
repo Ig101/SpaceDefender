@@ -26,6 +26,7 @@ namespace GameMaker
             :base(name,x,y,width,height,"","",color,selectedColor,pressedColor,color,spriteName,selectedSpriteName,pressedSpriteName,
                  source,null,false,false)
         {
+
             this.cost = cost;
             this.skillMethod = skillMethod;
             this.gameElement = gameElement;

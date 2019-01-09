@@ -4,14 +4,14 @@ next_level_hint@Press to continue. If you see this button, you can quit without 
 resources_hint@ Amount of resources you can spend. Each module costs 1. Maximum is 10.
 skillButton_hint@ Drag modules on ship to deploy them. Select one to get more information.
 engine_hint@ Ship with hardly damaged engine cannot generate resources at all.
-core_hint@ If core is destroyed, you'll lose. Deploy modules to protect it. All ship cores is immune to ethereal damage. If you lose or concede, all progress will be dropped.
-blaster_hint@ Energy* damage dealer. Low health. 
-rocket_hint@ Physical* damage dealer. Low health. 
-annihilator_hint@ Ethereal* damage dealer. Spends resources per shoot. Low health. Ethereal missles cannot damage core.
-generator_hint@ Generates 1 resource per 10 seconds. Medium health.
-armor_hint@ Protects from physical* damage. Medium health.
-shield_hint@ Protects from energy* damage. Medium health.
-demolish_hint@ Destroy any of deployed modules.   
+core_hint@ Drag module from panel below to ship to deploy it. If core is destroyed, you'll lose, so you have to protect it by your fortifications. All ship cores are immune to *ethereal* damage.
+blaster_hint@ WEAPON                     *Energy* damage dealer. Low health. 
+rocket_hint@ WEAPON                     *Physical* damage dealer. Low health. 
+annihilator_hint@ WEAPON                     *Ethereal* damage dealer. Low health. Spends resources per shoot.
+generator_hint@ GENERATOR                     Generates 1 resource per 10 seconds. Medium health.
+armor_hint@ ARMOR                           Protects from *physical* damage. Medium health.
+shield_hint@ ARMOR                           Protects from *energy* damage. Medium health.
+demolish_hint@ DEMOLISH                     Destroy any of deployed modules. You will return 50% of its cost.  
 continue@continue
 concede@concede
 save@save and close
