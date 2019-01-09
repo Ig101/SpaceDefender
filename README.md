@@ -1,2 +1,2 @@
 # SpaceDefender
-Herald game home.
+Abordage game home.
