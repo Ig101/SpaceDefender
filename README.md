@@ -1,2 +1,1 @@
-# SpaceDefender
-Abordage game home.
+# Abordage
